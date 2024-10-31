@@ -287,31 +287,49 @@
             }
         }
 
-        // Modificar la función generarPDF
+        // Modificar la función generarPDF para manejar mejor los errores
         async function generarPDF() {
             try {
-                // Verificar si gapi está inicializado
-                if (!gapi.auth2) {
-                    await initializeGoogleDrive();
-                }
-
-                // Verificar autenticación
-                const authInstance = gapi.auth2.getAuthInstance();
-                if (!authInstance.isSignedIn.get()) {
-                    await authInstance.signIn();
-                }
-
                 const contenido = tinymce.get('editor').getContent();
+                if (!contenido) {
+                    throw new Error('El editor está vacío');
+                }
+
                 const elementoTemporal = document.createElement('div');
                 elementoTemporal.innerHTML = contenido;
-
-                const pdf = await html2pdf().from(elementoTemporal).output('blob');
-                const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
                 
-                await uploadToDrive(file);
+                const opciones = {
+                    margin: 10,
+                    filename: 'documento.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // Generar el PDF primero
+                const pdf = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
+                
+                // Verificar si el PDF se generó correctamente
+                if (!pdf || pdf.size === 0) {
+                    throw new Error('Error al generar el PDF');
+                }
+
+                // Solo intentar subir a Drive si el PDF se generó correctamente
+                if (gapi.auth2) {
+                    const authInstance = gapi.auth2.getAuthInstance();
+                    if (!authInstance.isSignedIn.get()) {
+                        await authInstance.signIn();
+                    }
+                    
+                    const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
+                    await uploadToDrive(file);
+                } else {
+                    // Si no hay acceso a Drive, descargar localmente
+                    html2pdf().set(opciones).from(elementoTemporal).save();
+                }
             } catch (error) {
-                console.error('Error al generar o subir el PDF:', error);
-                alert('Error al generar o subir el PDF: ' + error.message);
+                console.error('Error detallado:', error);
+                alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
             }
         }
 
