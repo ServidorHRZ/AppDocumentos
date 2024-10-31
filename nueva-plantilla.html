@@ -249,19 +249,23 @@
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                // Generar el PDF como URL
+                // Generar el PDF
                 const pdfBlob = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
-                const pdfUrl = URL.createObjectURL(pdfBlob);
                 
-                // Abrir Google Drive en una nueva pestaña
-                const driveUrl = `https://drive.google.com/drive/folders/1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K`;
-                window.open(driveUrl, '_blank');
+                // Crear un formulario para subir directamente a Google Drive
+                const formData = new FormData();
+                formData.append('file', pdfBlob, 'documento.pdf');
                 
-                // Descargar el PDF localmente (opcional)
-                const link = document.createElement('a');
-                link.href = pdfUrl;
-                link.download = 'documento.pdf';
-                link.click();
+                // URL de la carpeta de Google Drive con parámetros para subida automática
+                const driveUrl = 'https://drive.google.com/drive/folders/1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K?usp=upload';
+                
+                // Abrir la carpeta de Drive en una nueva ventana
+                const driveWindow = window.open(driveUrl, '_blank');
+                
+                // Esperar un breve momento y redirigir a index.html
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
                 
             } catch (error) {
                 console.error('Error:', error);
