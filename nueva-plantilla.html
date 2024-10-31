@@ -147,9 +147,9 @@
                 <i class="fa-solid fa-arrow-left"></i>
                 Regresar
             </button>
-            <button class="menu-option" onclick="generarPDF()">
+            <button class="menu-option" onclick="generarYGuardarPDF()">
                 <i class="fa-solid fa-file-pdf"></i>
-                Guardar como PDF
+                Guardar en Drive
             </button>
         </div>
     </div>
@@ -230,82 +230,8 @@
             }
         });
 
-        // Modificar la función de inicialización
-        async function initializeGoogleDrive() {
-            try {
-                await new Promise((resolve, reject) => {
-                    gapi.load('client:auth2', resolve);
-                });
-                
-                await gapi.client.init({
-                    clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
-                    scope: 'https://www.googleapis.com/auth/drive.file',
-                    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
-                });
-
-                // Inicializar auth2
-                if (!gapi.auth2.getAuthInstance()) {
-                    await gapi.auth2.init({
-                        client_id: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com'
-                    });
-                }
-                
-                console.log('Google Drive API inicializada correctamente');
-            } catch (error) {
-                console.error('Error al inicializar Google Drive API:', error);
-            }
-        }
-
-        async function uploadToDrive(file) {
-            try {
-                const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-                const metadata = {
-                    name: file.name,
-                    mimeType: file.type,
-                    // Especificar la carpeta de destino
-                    parents: ['1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K']
-                };
-
-                const form = new FormData();
-                form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-                form.append('file', file);
-
-                const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-                    method: 'POST',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    },
-                    body: form
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    // Actualizar los permisos para que cualquiera pueda ver el archivo
-                    await fetch(`https://www.googleapis.com/drive/v3/files/${result.id}/permissions`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            role: 'reader',
-                            type: 'anyone'
-                        })
-                    });
-                    
-                    alert('PDF guardado exitosamente en la carpeta compartida de Google Drive');
-                } else {
-                    throw new Error('Error al subir el archivo');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al guardar en Google Drive: ' + error.message);
-            }
-        }
-
-        // Modificar la función generarPDF para manejar mejor los errores
-        async function generarPDF() {
+        // Reemplazar las funciones relacionadas con Google Drive por esta nueva función
+        async function generarYGuardarPDF() {
             try {
                 const contenido = tinymce.get('editor').getContent();
                 if (!contenido) {
@@ -323,37 +249,25 @@
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                // Generar el PDF como blob en lugar de descargarlo directamente
-                const pdf = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
+                // Generar el PDF como URL
+                const pdfBlob = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
+                const pdfUrl = URL.createObjectURL(pdfBlob);
                 
-                if (!pdf || pdf.size === 0) {
-                    throw new Error('Error al generar el PDF');
-                }
-
-                // Verificar autenticación de Google Drive
-                if (!gapi.auth2) {
-                    await initializeGoogleDrive();
-                }
-
-                const authInstance = gapi.auth2.getAuthInstance();
-                if (!authInstance.isSignedIn.get()) {
-                    await authInstance.signIn();
-                }
+                // Abrir Google Drive en una nueva pestaña
+                const driveUrl = `https://drive.google.com/drive/folders/1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K`;
+                window.open(driveUrl, '_blank');
                 
-                // Crear el archivo y subirlo a Drive
-                const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
-                await uploadToDrive(file);
+                // Descargar el PDF localmente (opcional)
+                const link = document.createElement('a');
+                link.href = pdfUrl;
+                link.download = 'documento.pdf';
+                link.click();
                 
             } catch (error) {
-                console.error('Error detallado:', error);
+                console.error('Error:', error);
                 alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
             }
         }
-
-        // Asegurarse de que la API se inicialice cuando se carga la página
-        window.onload = function() {
-            initializeGoogleDrive();
-        };
     </script>
 </body>
 </html>
