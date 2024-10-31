@@ -238,8 +238,7 @@
                 });
                 
                 await gapi.client.init({
-                    apiKey: 'TU_API_KEY', // Agrega tu API Key de Google Cloud
-                    clientId: '501571469982-r8mn990p54vhe6uv7iknsv4o47sq71o8.apps.googleusercontent.com',
+                    clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
                     scope: 'https://www.googleapis.com/auth/drive.file',
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
                 });
@@ -247,7 +246,7 @@
                 // Inicializar auth2
                 if (!gapi.auth2.getAuthInstance()) {
                     await gapi.auth2.init({
-                        client_id: '501571469982-r8mn990p54vhe6uv7iknsv4o47sq71o8.apps.googleusercontent.com'
+                        client_id: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com'
                     });
                 }
                 
@@ -262,8 +261,7 @@
                 const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
                 const metadata = {
                     name: file.name,
-                    mimeType: file.type,
-                    parents: ['1zfS_NFm1FA4Ol-WdmG6ZHA5LQgOgMmC1'] // ID de tu carpeta en Drive
+                    mimeType: file.type
                 };
 
                 const form = new FormData();
