@@ -304,24 +304,65 @@
             }
         }
 
+        async function uploadToGitHub(file) {
+            try {
+                // Token de acceso personal de GitHub (debes crear uno en GitHub)
+                const GITHUB_TOKEN = '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';
+                const GITHUB_USERNAME = 'servidorhrz';
+                const REPO_NAME = 'AppDocumentos';
+                
+                // Convertir el archivo a base64
+                const base64Data = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const base64 = reader.result.split(',')[1];
+                        resolve(base64);
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // Crear el nombre del archivo con fecha y hora
+                const fecha = new Date().toISOString().replace(/[:.]/g, '-');
+                const fileName = `pdfs/documento-${fecha}.pdf`;
+
+                // Configurar la petición
+                const response = await fetch(
+                    `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${fileName}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${GITHUB_TOKEN}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: `Subiendo documento ${fileName}`,
+                            content: base64Data
+                        })
+                    }
+                );
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(`Error al subir: ${error.message}`);
+                }
+
+                const result = await response.json();
+                console.log('Archivo subido exitosamente a GitHub:', result);
+                alert('Documento subido exitosamente a GitHub');
+                
+                // Devolver el URL del archivo
+                return result.content.html_url;
+
+            } catch (error) {
+                console.error('Error al subir a GitHub:', error);
+                alert('Error al subir a GitHub: ' + error.message);
+                throw error;
+            }
+        }
+
         // Modificar la función generarPDF
         async function generarPDF() {
             try {
-                console.log('Iniciando proceso de generación de PDF...');
-                
-                // Verificar si gapi está inicializado
-                if (!gapi.auth2) {
-                    console.log('Inicializando Google Drive API...');
-                    await initializeGoogleDrive();
-                }
-
-                // Verificar autenticación
-                const authInstance = gapi.auth2.getAuthInstance();
-                if (!authInstance.isSignedIn.get()) {
-                    console.log('Usuario no autenticado, solicitando inicio de sesión...');
-                    await authInstance.signIn();
-                }
-
                 console.log('Generando PDF desde el contenido del editor...');
                 const contenido = tinymce.get('editor').getContent();
                 if (!contenido) {
@@ -332,11 +373,21 @@
                 elementoTemporal.innerHTML = contenido;
 
                 console.log('Convirtiendo contenido a PDF...');
-                const pdf = await html2pdf().from(elementoTemporal).output('blob');
+                const pdf = await html2pdf()
+                    .from(elementoTemporal)
+                    .set({
+                        margin: 10,
+                        filename: 'documento.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    })
+                    .output('blob');
+
                 const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
                 
                 console.log('PDF generado, procediendo a subir...');
-                await uploadToDrive(file);
+                await uploadToGitHub(file);
             } catch (error) {
                 console.error('Error en generarPDF:', error);
                 alert('Error al generar o subir el PDF: ' + error.message);
