@@ -323,27 +323,27 @@
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
-                // Generar el PDF primero
+                // Generar el PDF como blob en lugar de descargarlo directamente
                 const pdf = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
                 
-                // Verificar si el PDF se generó correctamente
                 if (!pdf || pdf.size === 0) {
                     throw new Error('Error al generar el PDF');
                 }
 
-                // Solo intentar subir a Drive si el PDF se generó correctamente
-                if (gapi.auth2) {
-                    const authInstance = gapi.auth2.getAuthInstance();
-                    if (!authInstance.isSignedIn.get()) {
-                        await authInstance.signIn();
-                    }
-                    
-                    const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
-                    await uploadToDrive(file);
-                } else {
-                    // Si no hay acceso a Drive, descargar localmente
-                    html2pdf().set(opciones).from(elementoTemporal).save();
+                // Verificar autenticación de Google Drive
+                if (!gapi.auth2) {
+                    await initializeGoogleDrive();
                 }
+
+                const authInstance = gapi.auth2.getAuthInstance();
+                if (!authInstance.isSignedIn.get()) {
+                    await authInstance.signIn();
+                }
+                
+                // Crear el archivo y subirlo a Drive
+                const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
+                await uploadToDrive(file);
+                
             } catch (error) {
                 console.error('Error detallado:', error);
                 alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
