@@ -258,7 +258,19 @@
 
         async function uploadToDrive(file) {
             try {
-                const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+                // Verificar que tenemos acceso al token
+                const authInstance = gapi.auth2.getAuthInstance();
+                if (!authInstance || !authInstance.currentUser.get()) {
+                    throw new Error('No se ha iniciado sesión en Google');
+                }
+
+                const accessToken = authInstance.currentUser.get().getAuthResponse().access_token;
+                if (!accessToken) {
+                    throw new Error('No se pudo obtener el token de acceso');
+                }
+
+                console.log('Token de acceso obtenido correctamente');
+
                 const metadata = {
                     name: file.name,
                     mimeType: file.type
@@ -268,6 +280,7 @@
                 form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
                 form.append('file', file);
 
+                console.log('Iniciando subida del archivo...');
                 const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
                     method: 'POST',
                     headers: {
@@ -276,41 +289,56 @@
                     body: form
                 });
 
-                if (response.ok) {
-                    alert('PDF guardado exitosamente en Google Drive');
-                } else {
-                    throw new Error('Error al subir el archivo');
+                const responseData = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(`Error en la respuesta: ${response.status} - ${JSON.stringify(responseData)}`);
                 }
+
+                console.log('Archivo subido exitosamente:', responseData);
+                alert('PDF guardado exitosamente en Google Drive');
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error detallado en uploadToDrive:', error);
                 alert('Error al guardar en Google Drive: ' + error.message);
+                throw error;
             }
         }
 
         // Modificar la función generarPDF
         async function generarPDF() {
             try {
+                console.log('Iniciando proceso de generación de PDF...');
+                
                 // Verificar si gapi está inicializado
                 if (!gapi.auth2) {
+                    console.log('Inicializando Google Drive API...');
                     await initializeGoogleDrive();
                 }
 
                 // Verificar autenticación
                 const authInstance = gapi.auth2.getAuthInstance();
                 if (!authInstance.isSignedIn.get()) {
+                    console.log('Usuario no autenticado, solicitando inicio de sesión...');
                     await authInstance.signIn();
                 }
 
+                console.log('Generando PDF desde el contenido del editor...');
                 const contenido = tinymce.get('editor').getContent();
+                if (!contenido) {
+                    throw new Error('El editor está vacío');
+                }
+
                 const elementoTemporal = document.createElement('div');
                 elementoTemporal.innerHTML = contenido;
 
+                console.log('Convirtiendo contenido a PDF...');
                 const pdf = await html2pdf().from(elementoTemporal).output('blob');
                 const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
                 
+                console.log('PDF generado, procediendo a subir...');
                 await uploadToDrive(file);
             } catch (error) {
-                console.error('Error al generar o subir el PDF:', error);
+                console.error('Error en generarPDF:', error);
                 alert('Error al generar o subir el PDF: ' + error.message);
             }
         }
