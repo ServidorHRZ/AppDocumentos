@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de Plantillas</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/TU_API_KEY/tinymce/6/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script>
+        function actualizarHora() {
+            const ahora = new Date();
+            const hora = ahora.getHours();
+            const minutos = ahora.getMinutes();
+            
+            const saludoTexto = document.getElementById('saludoTexto');
+            const saludoIcono = document.getElementById('saludoIcono');
+            const reloj = document.getElementById('reloj');
+            
+            // Formato hora:minutos
+            reloj.textContent = `${hora.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+
+            if (hora >= 5 && hora < 12) {
+                saludoTexto.textContent = '¡Buenos días!';
+                saludoIcono.textContent = 'light_mode';
+            } else if (hora >= 12 && hora < 19) {
+                saludoTexto.textContent = '¡Buenas tardes!';
+                saludoIcono.textContent = 'wb_sunny';
+            } else {
+                saludoTexto.textContent = '¡Buenas noches!';
+                saludoIcono.textContent = 'dark_mode';
+            }
+        }
+
+        // Actualizar cada minuto en lugar de cada segundo
+        setInterval(actualizarHora, 60000);
+        window.onload = actualizarHora;
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fc;
+            min-height: 100vh;
+            position: relative;
+            color: #0a0a0a;
+        }
+
+        .nav-bar {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0a0a0a;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            padding: 95px 24px 32px;
+            max-width: 640px;
+            margin: 0 auto;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .welcome-card {
+            background: linear-gradient(145deg, #1a1a1a, #2c3e50);
+            border-radius: 28px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .saludo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .saludo-icono {
+            font-size: 2.8rem;
+            color: #ffd700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .saludo-texto {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #e2e2e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reloj {
+            font-size: 5.5rem;  /* Aumentado para mayor impacto */
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: rgba(255, 255, 255, 0.95);
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .actions-container {
+            display: grid;
+            gap: 1.4rem;
+        }
+
+        .btn {
+            padding: 1.6rem;
+            border-radius: 24px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            border: none;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-new {
+            background: linear-gradient(135deg, #059669, #065f46);
+            box-shadow: 0 15px 30px rgba(5, 150, 105, 0.25);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn-edit:hover {
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-new:hover {
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.35);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover .btn-icon {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-icon .material-icons-round {
+            font-size: 26px;
+            color: #ffffff;
+        }
+
+        .btn-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .btn-title {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .btn-description {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .btn-arrow {
+            color: rgba(255, 255, 255, 0.85);
+            margin-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover .btn-arrow {
+            transform: translateX(4px);
+            color: #ffffff;
+        }
+
+        /* Efecto de brillo en los bordes */
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        /* Mejora para dispositivos móviles */
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 2rem;
+                gap: 1.5rem;
+            }
+
+            .saludo-texto {
+                font-size: 1.8rem;
+            }
+
+            .saludo-icono {
+                font-size: 2.2rem;
+            }
+
+            .reloj {
+                font-size: 4rem;  /* Ajustado para móviles */
+            }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-title">Mis Plantillas</div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-card">
+            <div class="saludo-container">
+                <span class="material-icons-round saludo-icono" id="saludoIcono">light_mode</span>
+                <div class="saludo-texto" id="saludoTexto">¡Buenos días!</div>
+            </div>
+            <div class="reloj" id="reloj">00:00</div>
+        </div>
+
+        <div class="actions-container">
+            <button class="btn btn-edit" onclick="window.location.href='editar-plantilla.html'">
+                <div class="btn-icon">
+                    <span class="material-icons-round">edit</span>
+                </div>
+                <div class="btn-content">
+                    <div class="btn-title">Editar Plantilla</div>
+                    <div class="btn-description">Modifica tus plantillas</div>
+                </div>
+                <span class="material-icons-round btn-arrow">arrow_forward</span>
+            </button>
+
+            <button class="btn btn-new" onclick="window.location.href='nueva-plantilla.html'">
+                <div class="btn-icon">
+                    <span class="material-icons-round">add_circle</span>
+                </div>
+                <div class="btn-content">
+                    <div class="btn-title">Nueva Plantilla</div>
+                    <div class="btn-description">Crea una nueva plantilla</div>
+                </div>
+                <span class="material-icons-round btn-arrow">arrow_forward</span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
