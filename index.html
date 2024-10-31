@@ -18,9 +18,14 @@
             const saludoTexto = document.getElementById('saludoTexto');
             const saludoIcono = document.getElementById('saludoIcono');
             const reloj = document.getElementById('reloj');
+            const fecha = document.getElementById('fecha');
             
             // Formato hora:minutos
             reloj.textContent = `${hora.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+
+            // Formato fecha
+            const opciones = { day: 'numeric', month: 'long', year: 'numeric' };
+            fecha.textContent = ahora.toLocaleDateString('es-ES', opciones);
 
             if (hora >= 5 && hora < 12) {
                 saludoTexto.textContent = '¡Buenos días!';
@@ -280,7 +285,29 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+
             
+        }
+
+        .hora-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .fecha {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.74);
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        /* Ajuste para móviles */
+        @media (max-width: 480px) {
+            .fecha {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -295,7 +322,10 @@
                 <span class="material-icons-round saludo-icono" id="saludoIcono">light_mode</span>
                 <div class="saludo-texto" id="saludoTexto">¡Buenos días!</div>
             </div>
-            <div class="reloj" id="reloj">00:00</div>
+            <div class="hora-container">
+                <div class="reloj" id="reloj">00:00</div>
+                <div class="fecha" id="fecha">1 de enero, 2024</div>
+            </div>
         </div>
 
         <div class="actions-container">
