@@ -239,7 +239,7 @@
                 
                 await gapi.client.init({
                     clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
-                    scope: 'https://www.googleapis.com/auth/drive.file',
+                    scope: 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.folders',
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
                 });
 
@@ -258,29 +258,18 @@
 
         async function uploadToDrive(file) {
             try {
-                // Verificar que tenemos acceso al token
-                const authInstance = gapi.auth2.getAuthInstance();
-                if (!authInstance || !authInstance.currentUser.get()) {
-                    throw new Error('No se ha iniciado sesión en Google');
-                }
-
-                const accessToken = authInstance.currentUser.get().getAuthResponse().access_token;
-                if (!accessToken) {
-                    throw new Error('No se pudo obtener el token de acceso');
-                }
-
-                console.log('Token de acceso obtenido correctamente');
-
+                const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
                 const metadata = {
                     name: file.name,
-                    mimeType: file.type
+                    mimeType: file.type,
+                    // Especificar la carpeta de destino
+                    parents: ['1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K']
                 };
 
                 const form = new FormData();
                 form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
                 form.append('file', file);
 
-                console.log('Iniciando subida del archivo...');
                 const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
                     method: 'POST',
                     headers: {
@@ -289,81 +278,35 @@
                     body: form
                 });
 
-                const responseData = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(`Error en la respuesta: ${response.status} - ${JSON.stringify(responseData)}`);
-                }
+                const result = await response.json();
 
-                console.log('Archivo subido exitosamente:', responseData);
-                alert('PDF guardado exitosamente en Google Drive');
-            } catch (error) {
-                console.error('Error detallado en uploadToDrive:', error);
-                alert('Error al guardar en Google Drive: ' + error.message);
-                throw error;
-            }
-        }
-
-        async function uploadToGitHub(file) {
-            try {
-                // Token de acceso personal de GitHub (debes crear uno en GitHub)
-                const GITHUB_TOKEN = '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';
-                const GITHUB_USERNAME = 'servidorhrz';
-                const REPO_NAME = 'AppDocumentos';
-                
-                // Convertir el archivo a base64
-                const base64Data = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        const base64 = reader.result.split(',')[1];
-                        resolve(base64);
-                    };
-                    reader.readAsDataURL(file);
-                });
-
-                // Crear el nombre del archivo con fecha y hora
-                const fecha = new Date().toISOString().replace(/[:.]/g, '-');
-                const fileName = `pdfs/documento-${fecha}.pdf`;
-
-                // Configurar la petición
-                const response = await fetch(
-                    `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${fileName}`,
-                    {
-                        method: 'PUT',
+                if (response.ok) {
+                    // Actualizar los permisos para que cualquiera pueda ver el archivo
+                    await fetch(`https://www.googleapis.com/drive/v3/files/${result.id}/permissions`, {
+                        method: 'POST',
                         headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            message: `Subiendo documento ${fileName}`,
-                            content: base64Data
+                            role: 'reader',
+                            type: 'anyone'
                         })
-                    }
-                );
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(`Error al subir: ${error.message}`);
+                    });
+                    
+                    alert('PDF guardado exitosamente en la carpeta compartida de Google Drive');
+                } else {
+                    throw new Error('Error al subir el archivo');
                 }
-
-                const result = await response.json();
-                console.log('Archivo subido exitosamente a GitHub:', result);
-                alert('Documento subido exitosamente a GitHub');
-                
-                // Devolver el URL del archivo
-                return result.content.html_url;
-
             } catch (error) {
-                console.error('Error al subir a GitHub:', error);
-                alert('Error al subir a GitHub: ' + error.message);
-                throw error;
+                console.error('Error:', error);
+                alert('Error al guardar en Google Drive: ' + error.message);
             }
         }
 
-        // Modificar la función generarPDF
+        // Modificar la función generarPDF para manejar mejor los errores
         async function generarPDF() {
             try {
-                console.log('Generando PDF desde el contenido del editor...');
                 const contenido = tinymce.get('editor').getContent();
                 if (!contenido) {
                     throw new Error('El editor está vacío');
@@ -371,26 +314,39 @@
 
                 const elementoTemporal = document.createElement('div');
                 elementoTemporal.innerHTML = contenido;
-
-                console.log('Convirtiendo contenido a PDF...');
-                const pdf = await html2pdf()
-                    .from(elementoTemporal)
-                    .set({
-                        margin: 10,
-                        filename: 'documento.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: { scale: 2 },
-                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    })
-                    .output('blob');
-
-                const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
                 
-                console.log('PDF generado, procediendo a subir...');
-                await uploadToGitHub(file);
+                const opciones = {
+                    margin: 10,
+                    filename: 'documento.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // Generar el PDF primero
+                const pdf = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
+                
+                // Verificar si el PDF se generó correctamente
+                if (!pdf || pdf.size === 0) {
+                    throw new Error('Error al generar el PDF');
+                }
+
+                // Solo intentar subir a Drive si el PDF se generó correctamente
+                if (gapi.auth2) {
+                    const authInstance = gapi.auth2.getAuthInstance();
+                    if (!authInstance.isSignedIn.get()) {
+                        await authInstance.signIn();
+                    }
+                    
+                    const file = new File([pdf], 'documento.pdf', { type: 'application/pdf' });
+                    await uploadToDrive(file);
+                } else {
+                    // Si no hay acceso a Drive, descargar localmente
+                    html2pdf().set(opciones).from(elementoTemporal).save();
+                }
             } catch (error) {
-                console.error('Error en generarPDF:', error);
-                alert('Error al generar o subir el PDF: ' + error.message);
+                console.error('Error detallado:', error);
+                alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
             }
         }
 
