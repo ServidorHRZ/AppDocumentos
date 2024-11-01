@@ -437,9 +437,7 @@
             tokenClient = google.accounts.oauth2.initTokenClient({
                 client_id: CLIENT_ID,
                 scope: SCOPES,
-                callback: '',
-                ux_mode: 'redirect',
-                redirect_uri: window.location.href
+                callback: ''
             });
             gisInited = true;
             maybeEnableButtons();
@@ -453,12 +451,17 @@
 
         signinButton.onclick = () => handleAuthClick()
         function handleAuthClick() {
+            tokenClient.callback = async (resp) => {
+                if (resp.error !== undefined) {
+                    throw (resp);
+                }
+                signinButton.style.display = 'none'
+                signoutButton.style.display = 'block'
+                checkFolder()
+            };
+
             if (gapi.client.getToken() === null) {
-                window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?` +
-                    `client_id=${CLIENT_ID}` +
-                    `&redirect_uri=${encodeURIComponent(window.location.href)}` +
-                    `&response_type=token` +
-                    `&scope=${encodeURIComponent(SCOPES)}`;
+                tokenClient.requestAccessToken({ prompt: 'consent' });
             } else {
                 tokenClient.requestAccessToken({ prompt: '' });
             }
