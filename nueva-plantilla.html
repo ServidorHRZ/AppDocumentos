@@ -201,21 +201,7 @@
             `
         });
 
-        // Función para exportar el contenido a PDF
-        document.getElementById("exportPDF").addEventListener("click", function () {
-            const editorContent = tinymce.get("editor").getContent();
-            const pdfContent = document.createElement("div");
-            pdfContent.innerHTML = editorContent;
-
-            html2pdf().from(pdfContent).set({
-                margin: 1,
-                filename: 'documento_editado.pdf',
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            }).save();
-        });
-
-        // Cargar la API de Google
+        // Mover la definición de handleClientLoad antes de su uso
         function handleClientLoad() {
             gapi.load('client:auth2', initClient);
         }
@@ -235,63 +221,24 @@
             }
         }
 
-        // Función para autenticar y subir el archivo
-        async function uploadFile() {
-            try {
-                const authInstance = gapi.auth2.getAuthInstance();
-                if (!authInstance) {
-                    throw new Error("No se pudo obtener la instancia de autenticación");
-                }
-                const response = await authInstance.signIn();
-                const fileContent = tinymce.get('editor').getContent(); // Contenido del editor
-                const file = new Blob([fileContent], { type: 'text/html' }); // Crear un Blob del contenido
+        // Asegúrate de que el elemento existe antes de agregar el event listener
+        document.addEventListener("DOMContentLoaded", function() {
+            const exportButton = document.getElementById("exportPDF");
+            if (exportButton) {
+                exportButton.addEventListener("click", function () {
+                    const editorContent = tinymce.get("editor").getContent();
+                    const pdfContent = document.createElement("div");
+                    pdfContent.innerHTML = editorContent;
 
-                const metadata = {
-                    name: 'documento.html', // Nombre del archivo
-                    mimeType: 'text/html' // Tipo MIME
-                };
-
-                const form = new FormData();
-                form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-                form.append('file', file);
-
-                const accessToken = gapi.auth.getToken().access_token; // Obtener el token de acceso
-                const responseUpload = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-                    method: 'POST',
-                    headers: new Headers({ 'Authorization': 'Bearer ' + accessToken }),
-                    body: form
+                    html2pdf().from(pdfContent).set({
+                        margin: 1,
+                        filename: 'documento_editado.pdf',
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                    }).save();
                 });
-
-                const result = await responseUpload.json();
-                console.log('Archivo subido:', result);
-                alert('Archivo subido exitosamente: ' + result.name);
-            } catch (error) {
-                console.error('Error al subir el archivo:', error);
-                alert('Error al subir el archivo: ' + (error.message || 'Error desconocido'));
             }
-        }
-
-        // Función para exportar el contenido a PDF y subir a Google Drive
-        async function generarYGuardarPDF() {
-            try {
-                const contenido = tinymce.get('editor').getContent();
-                if (!contenido) {
-                    throw new Error('El editor está vacío');
-                }
-
-                // Subir el archivo a Google Drive
-                await uploadFile();
-
-                // Aquí puedes agregar la lógica para exportar a PDF si es necesario
-                // const pdfContent = document.createElement("div");
-                // pdfContent.innerHTML = contenido;
-                // html2pdf().from(pdfContent).save();
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
-            }
-        }
+        });
 
         // Inicializar el cliente de Google al cargar la página
         window.onload = handleClientLoad;
