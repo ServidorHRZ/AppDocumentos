@@ -406,12 +406,19 @@
     </div>
     <script>
         window.onload = () => {
-            // Verificar si ya está autenticado
-            if (!gapi.client?.getToken()) {
-                // Si no está autenticado, redirigir directamente
+            // Primero verificar si hay un hash de autenticación
+            if (window.location.hash) {
+                handleAuthResponse();
+                return;
+            }
+
+            // Solo redirigir si no hay token Y no estamos regresando de una autenticación
+            if (!gapi.client?.getToken() && !localStorage.getItem('authInProgress')) {
+                localStorage.setItem('authInProgress', 'true');
                 redirectToGoogleAuth();
             } else {
-                // Si ya está autenticado, inicializar normalmente
+                // Limpiar el flag de autenticación en progreso
+                localStorage.removeItem('authInProgress');
                 gapiLoaded();
                 gisLoaded();
             }
@@ -779,6 +786,7 @@
             const accessToken = params.get('access_token');
             
             if (accessToken) {
+                localStorage.removeItem('authInProgress');
                 gapi.client.setToken({
                     access_token: accessToken
                 });
@@ -787,6 +795,10 @@
                 checkFolder();
                 // Limpiar el hash de la URL
                 history.pushState("", document.title, window.location.pathname);
+                
+                // Inicializar GAPI después de autenticación exitosa
+                gapiLoaded();
+                gisLoaded();
             }
         }
 
