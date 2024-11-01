@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editor de Documentos</title>
 
-    <!-- Incluir TinyMCE -->
+    <!-- TinyMCE -->
     <script src="https://cdn.tiny.cloud/1/ywbzzvyu26op1frn4o3f113gdet6duthjlcauk206k77n7af/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
 
-    <!-- Incluir html2pdf.js para exportar a PDF -->
+    <!-- html2pdf.js para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <!-- Agregar en el head estos enlaces para los iconos de Font Awesome -->
+    <!-- Font Awesome para los iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Agregar después de los scripts existentes en el head -->
-    <script src="https://apis.google.com/js/api.js" onload="handleClientLoad()"></script>
-    <script src="https://accounts.google.com/gsi/client"></script>
 
     <style>
         html, body {
@@ -120,24 +116,12 @@
                 transform: translateY(0);
             }
         }
-
-        .footer {
-            margin-top: 20pt;
-            padding-bottom: 15pt;
-            font-size: 9pt;
-            position: relative;
-            clear: both;
-        }
-
-        body {
-            padding-bottom: 25mm;
-        }
     </style>
 
 </head>
 <body>
 
-    <!-- Agregar el botón de regreso -->
+    <!-- Menú flotante con opciones -->
     <div class="floating-menu">
         <div class="menu-icon" onclick="toggleMenu()">
             <i class="fa-solid fa-bars"></i>
@@ -154,10 +138,11 @@
         </div>
     </div>
 
-    <!-- Área de texto donde se aplicará TinyMCE -->
+    <!-- Área de texto para el editor TinyMCE -->
     <textarea id="editor"></textarea>
 
     <script>
+        // Inicialización de TinyMCE
         tinymce.init({
             selector: '#editor',
             plugins: [
@@ -171,7 +156,7 @@
             tinycomments_author: 'Autor',
             setup: function (editor) {
                 editor.on('init', function () {
-                    // Cargar el contenido del archivo HTML "plantilla.html"
+                    // Cargar el contenido de "plantilla.html" al iniciar
                     fetch('plantilla.html')
                         .then(response => response.text())
                         .then(html => {
@@ -201,48 +186,7 @@
             `
         });
 
-        // Mover la definición de handleClientLoad antes de su uso
-        function handleClientLoad() {
-            gapi.load('client:auth2', initClient);
-        }
-
-        // Inicializar el cliente de Google
-        async function initClient() {
-            try {
-                await gapi.client.init({
-                    apiKey: 'AIzaSyA9-fVvk2TOaZuyoQB7Xmc0bk-s1mAW8Mc', // Reemplaza con tu API Key
-                    clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
-                    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-                    scope: "https://www.googleapis.com/auth/drive.file"
-                });
-                console.log("Cliente de Google inicializado correctamente");
-            } catch (error) {
-                console.error("Error al inicializar el cliente de Google:", error);
-            }
-        }
-
-        // Asegúrate de que el elemento existe antes de agregar el event listener
-        document.addEventListener("DOMContentLoaded", function() {
-            const exportButton = document.getElementById("exportPDF");
-            if (exportButton) {
-                exportButton.addEventListener("click", function () {
-                    const editorContent = tinymce.get("editor").getContent();
-                    const pdfContent = document.createElement("div");
-                    pdfContent.innerHTML = editorContent;
-
-                    html2pdf().from(pdfContent).set({
-                        margin: 1,
-                        filename: 'documento_editado.pdf',
-                        html2canvas: { scale: 2 },
-                        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-                    }).save();
-                });
-            }
-        });
-
-        // Inicializar el cliente de Google al cargar la página
-        window.onload = handleClientLoad;
-
+        // Función para alternar el menú de opciones
         function toggleMenu() {
             const menuOptions = document.getElementById('menuOptions');
             menuOptions.classList.toggle('show');
@@ -257,6 +201,24 @@
                 menuOptions.classList.remove('show');
             }
         });
+
+        // Generar y descargar PDF, luego abrir la carpeta de Google Drive
+        function generarYGuardarPDF() {
+            const editorContent = tinymce.get("editor").getContent();
+            const pdfContent = document.createElement("div");
+            pdfContent.innerHTML = editorContent;
+
+            // Generar PDF y descargar
+            html2pdf().from(pdfContent).set({
+                margin: 1,
+                filename: 'documento_editado.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }).save().then(() => {
+                // Después de descargar el PDF, abrir la carpeta de Google Drive
+                window.open("https://drive.google.com/drive/folders/1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K", "_blank");
+            });
+        }
     </script>
 </body>
 </html>
