@@ -133,7 +133,7 @@
             </button>
             <button class="menu-option" onclick="generarYGuardarPDF()">
                 <i class="fa-solid fa-file-pdf"></i>
-                Guardar en Servidor
+                Guardar en Dispositivo
             </button>
         </div>
     </div>
@@ -142,7 +142,6 @@
     <textarea id="editor"></textarea>
 
     <script>
-        // Inicialización de TinyMCE
         tinymce.init({
             selector: '#editor',
             plugins: [
@@ -153,46 +152,14 @@
             ],
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
-            tinycomments_author: 'Autor',
-            setup: function (editor) {
-                editor.on('init', function () {
-                    // Cargar el contenido de "plantilla.html" al iniciar
-                    fetch('plantilla.html')
-                        .then(response => response.text())
-                        .then(html => {
-                            editor.setContent(html);
-                        })
-                        .catch(error => console.error("Error al cargar el archivo HTML:", error));
-                });
-            },
-            content_style: `
-                body {
-                    font-family: Arial, sans-serif !important;
-                    font-size: 11pt !important;
-                    line-height: 1.3 !important;
-                    max-width: 210mm !important;
-                    margin: 0 auto !important;
-                    padding: 15mm 20mm !important;
-                }
-                h1 {
-                    font-size: 14pt !important;
-                    text-align: center !important;
-                    margin-bottom: 12pt !important;
-                }
-                h2 { font-size: 12pt !important; }
-                p { margin-bottom: 8pt !important; }
-                table { margin: 10pt 0 !important; }
-                td, th { padding: 6pt !important; }
-            `
+            tinycomments_author: 'Autor'
         });
 
-        // Función para alternar el menú de opciones
         function toggleMenu() {
             const menuOptions = document.getElementById('menuOptions');
             menuOptions.classList.toggle('show');
         }
 
-        // Cerrar el menú si se hace clic fuera de él
         document.addEventListener('click', function(event) {
             const menu = document.querySelector('.floating-menu');
             const menuOptions = document.getElementById('menuOptions');
@@ -202,21 +169,24 @@
             }
         });
 
-        // Generar y descargar PDF, luego abrir la carpeta de Google Drive
+        // Generar PDF y guardarlo en el dispositivo
         function generarYGuardarPDF() {
             const editorContent = tinymce.get("editor").getContent();
             const pdfContent = document.createElement("div");
             pdfContent.innerHTML = editorContent;
 
-            // Generar PDF y descargar
             html2pdf().from(pdfContent).set({
                 margin: 1,
                 filename: 'documento_editado.pdf',
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            }).save().then(() => {
-                // Después de descargar el PDF, abrir la carpeta de Google Drive
-                window.open("https://drive.google.com/drive/folders/1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K", "_blank");
+            }).output('datauristring').then((pdfDataUri) => {
+                // Llama a la función de Android para guardar el archivo
+                if (window.Android) {
+                    window.Android.guardarPDF(pdfDataUri);
+                } else {
+                    console.error("Android interface not available.");
+                }
             });
         }
     </script>
