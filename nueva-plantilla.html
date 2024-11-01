@@ -222,18 +222,27 @@
 
         // Inicializar el cliente de Google
         async function initClient() {
-            await gapi.client.init({
-                apiKey: 'AIzaSyA9-fVvk2TOaZuyoQB7Xmc0bk-s1mAW8Mc', // Reemplaza con tu API Key
-                clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
-                discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-                scope: "https://www.googleapis.com/auth/drive.file"
-            });
+            try {
+                await gapi.client.init({
+                    apiKey: 'AIzaSyA9-fVvk2TOaZuyoQB7Xmc0bk-s1mAW8Mc', // Reemplaza con tu API Key
+                    clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
+                    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+                    scope: "https://www.googleapis.com/auth/drive.file"
+                });
+                console.log("Cliente de Google inicializado correctamente");
+            } catch (error) {
+                console.error("Error al inicializar el cliente de Google:", error);
+            }
         }
 
         // Función para autenticar y subir el archivo
         async function uploadFile() {
             try {
-                const response = await gapi.auth2.getAuthInstance().signIn();
+                const authInstance = gapi.auth2.getAuthInstance();
+                if (!authInstance) {
+                    throw new Error("No se pudo obtener la instancia de autenticación");
+                }
+                const response = await authInstance.signIn();
                 const fileContent = tinymce.get('editor').getContent(); // Contenido del editor
                 const file = new Blob([fileContent], { type: 'text/html' }); // Crear un Blob del contenido
 
