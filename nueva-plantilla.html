@@ -215,6 +215,78 @@
             }).save();
         });
 
+        // Cargar la API de Google
+        function handleClientLoad() {
+            gapi.load('client:auth2', initClient);
+        }
+
+        // Inicializar el cliente de Google
+        async function initClient() {
+            await gapi.client.init({
+                apiKey: 'AIzaSyA9-fVvk2TOaZuyoQB7Xmc0bk-s1mAW8Mc', // Reemplaza con tu API Key
+                clientId: '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com',
+                discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+                scope: "https://www.googleapis.com/auth/drive.file"
+            });
+        }
+
+        // Función para autenticar y subir el archivo
+        async function uploadFile() {
+            try {
+                const response = await gapi.auth2.getAuthInstance().signIn();
+                const fileContent = tinymce.get('editor').getContent(); // Contenido del editor
+                const file = new Blob([fileContent], { type: 'text/html' }); // Crear un Blob del contenido
+
+                const metadata = {
+                    name: 'documento.html', // Nombre del archivo
+                    mimeType: 'text/html' // Tipo MIME
+                };
+
+                const form = new FormData();
+                form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+                form.append('file', file);
+
+                const accessToken = gapi.auth.getToken().access_token; // Obtener el token de acceso
+                const responseUpload = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                    method: 'POST',
+                    headers: new Headers({ 'Authorization': 'Bearer ' + accessToken }),
+                    body: form
+                });
+
+                const result = await responseUpload.json();
+                console.log('Archivo subido:', result);
+                alert('Archivo subido exitosamente: ' + result.name);
+            } catch (error) {
+                console.error('Error al subir el archivo:', error);
+                alert('Error al subir el archivo: ' + (error.message || 'Error desconocido'));
+            }
+        }
+
+        // Función para exportar el contenido a PDF y subir a Google Drive
+        async function generarYGuardarPDF() {
+            try {
+                const contenido = tinymce.get('editor').getContent();
+                if (!contenido) {
+                    throw new Error('El editor está vacío');
+                }
+
+                // Subir el archivo a Google Drive
+                await uploadFile();
+
+                // Aquí puedes agregar la lógica para exportar a PDF si es necesario
+                // const pdfContent = document.createElement("div");
+                // pdfContent.innerHTML = contenido;
+                // html2pdf().from(pdfContent).save();
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
+            }
+        }
+
+        // Inicializar el cliente de Google al cargar la página
+        window.onload = handleClientLoad;
+
         function toggleMenu() {
             const menuOptions = document.getElementById('menuOptions');
             menuOptions.classList.toggle('show');
@@ -229,53 +301,6 @@
                 menuOptions.classList.remove('show');
             }
         });
-
-        // Reemplazar las funciones relacionadas con Google Drive por esta nueva función
-        async function generarYGuardarPDF() {
-            try {
-                const contenido = tinymce.get('editor').getContent();
-                if (!contenido) {
-                    throw new Error('El editor está vacío');
-                }
-
-                const elementoTemporal = document.createElement('div');
-                elementoTemporal.innerHTML = contenido;
-
-                const opciones = {
-                    margin: 10,
-                    filename: 'documento.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                // Generar el PDF
-                const pdfBlob = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
-
-                // Crear un enlace temporal para descargar el PDF
-                const url = URL.createObjectURL(pdfBlob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'documento.pdf';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
-                // Abrir Google Drive en una nueva ventana
-                const driveUrl = 'https://drive.google.com/drive/my-drive';
-                window.open(driveUrl, '_blank');
-
-                // Redirigir al menú principal después de un breve retraso
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000); // Espera 2 segundos antes de redirigir
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
-            }
-        }
     </script>
 </body>
 </html>
