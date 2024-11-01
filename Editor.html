@@ -406,35 +406,8 @@
     </div>
     <script>
         window.onload = () => {
-            // Primero verificar si hay un hash de autenticación
-            if (window.location.hash) {
-                handleAuthResponse();
-                return;
-            }
-
-            // Solo redirigir si no hay token Y no estamos regresando de una autenticación
-            if (!gapi.client?.getToken() && !localStorage.getItem('authInProgress')) {
-                localStorage.setItem('authInProgress', 'true');
-                redirectToGoogleAuth();
-            } else {
-                // Limpiar el flag de autenticación en progreso
-                localStorage.removeItem('authInProgress');
-                gapiLoaded();
-                gisLoaded();
-            }
-        }
-
-        function redirectToGoogleAuth() {
-            const redirectUri = window.location.origin + window.location.pathname;
-            const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-                `client_id=${CLIENT_ID}` +
-                `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-                `&response_type=token` +
-                `&scope=${encodeURIComponent(SCOPES)}` +
-                `&prompt=consent`;
-            
-            console.log('Redirect URI:', redirectUri); // Para debugging
-            window.location.href = authUrl;
+            gapiLoaded();
+            gisLoaded()
         }
 
         var CLIENT_ID = '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com';
@@ -472,14 +445,23 @@
 
         function maybeEnableButtons() {
             if (gapiInited && gisInited) {
-                signinButton.style.display = 'block';
+                signinButton.style.display = 'block'
             }
         }
 
         signinButton.onclick = () => handleAuthClick()
         function handleAuthClick() {
+            tokenClient.callback = async (resp) => {
+                if (resp.error !== undefined) {
+                    throw (resp);
+                }
+                signinButton.style.display = 'none'
+                signoutButton.style.display = 'block'
+                checkFolder()
+            };
+
             if (gapi.client.getToken() === null) {
-                redirectToGoogleAuth();
+                tokenClient.requestAccessToken({ prompt: 'consent' });
             } else {
                 tokenClient.requestAccessToken({ prompt: '' });
             }
@@ -777,34 +759,6 @@
         function newDocument() {
             tinymce.get('editor').setContent('');
             menuItems.classList.remove('active');
-        }
-
-        // Agregar función para manejar el token después de la redirección
-        function handleAuthResponse() {
-            const hash = window.location.hash.substring(1);
-            const params = new URLSearchParams(hash);
-            const accessToken = params.get('access_token');
-            
-            if (accessToken) {
-                localStorage.removeItem('authInProgress');
-                gapi.client.setToken({
-                    access_token: accessToken
-                });
-                signinButton.style.display = 'none';
-                signoutButton.style.display = 'block';
-                checkFolder();
-                // Limpiar el hash de la URL
-                history.pushState("", document.title, window.location.pathname);
-                
-                // Inicializar GAPI después de autenticación exitosa
-                gapiLoaded();
-                gisLoaded();
-            }
-        }
-
-        // Llamar a handleAuthResponse cuando la página se carga
-        if (window.location.hash) {
-            handleAuthResponse();
         }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
