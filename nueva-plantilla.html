@@ -240,7 +240,7 @@
 
                 const elementoTemporal = document.createElement('div');
                 elementoTemporal.innerHTML = contenido;
-                
+
                 const opciones = {
                     margin: 10,
                     filename: 'documento.pdf',
@@ -251,22 +251,26 @@
 
                 // Generar el PDF
                 const pdfBlob = await html2pdf().set(opciones).from(elementoTemporal).output('blob');
-                
-                // Crear un formulario para subir directamente a Google Drive
-                const formData = new FormData();
-                formData.append('file', pdfBlob, 'documento.pdf');
-                
-                // URL de la carpeta de Google Drive con parámetros para subida automática
-                const driveUrl = 'https://drive.google.com/drive/folders/1pa1Dz8OmVBbA3L5YyQH71gbuipObxj6K?usp=upload';
-                
-                // Abrir la carpeta de Drive en una nueva ventana
-                const driveWindow = window.open(driveUrl, '_blank');
-                
-                // Esperar un breve momento y redirigir a index.html
+
+                // Crear un enlace temporal para descargar el PDF
+                const url = URL.createObjectURL(pdfBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'documento.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                // Abrir Google Drive en una nueva ventana
+                const driveUrl = 'https://drive.google.com/drive/my-drive';
+                window.open(driveUrl, '_blank');
+
+                // Redirigir al menú principal después de un breve retraso
                 setTimeout(() => {
                     window.location.href = 'index.html';
-                }, 1000);
-                
+                }, 2000); // Espera 2 segundos antes de redirigir
+
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error al generar el PDF: ' + (error.message || 'Error desconocido'));
