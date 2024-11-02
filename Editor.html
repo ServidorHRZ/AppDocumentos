@@ -20,6 +20,9 @@
     <!-- Agregar meta tag para Content Security Policy en el head -->
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://accounts.google.com">
 
+    <!-- Agregar la biblioteca de QR Code en el head -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
         @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -95,6 +98,7 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
+            margin-right: 10px;
         }
 
         .menu-button i {
@@ -349,7 +353,82 @@
             border: none !important;
         }
 
-        
+        /* Estilos mejorados para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1002;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* Fondo más oscuro */
+            animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: none;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.3s ease-in-out; /* Animación de entrada */
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal-content button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
+        }
+
+        /* Estilos para el botón de reiniciar */
+        .reset-template {
+            background-color: #f0f0f0;
+            border: none;
+            color: #333;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .reset-template:hover {
+            background-color: #e0e0e0;
+        }
     </style>
 </head>
 
@@ -357,9 +436,13 @@
     <div class="header">
         <div class="title">
             <i class="material-icons">edit_document</i>
-            Editor de Google
+            Editor
         </div>
         <div class="header-actions">
+            <button class="reset-template" onclick="resetTemplate()">
+                <i class="material-icons">refresh</i>
+                Reiniciar Plantilla
+            </button>
             <button class="upload" onclick="upload()">
                 <i class="material-icons">backup</i>
                 Guardar
@@ -368,19 +451,9 @@
                 <i class="material-icons">login</i>
                 <span>Iniciar Sesión</span>
             </button>
-            <button class="menu-button">
-                <i class="material-icons">menu</i>
+            <button class="menu-button" onclick="window.location.href='index.html'">
+                <i class="material-icons">home</i>
             </button>
-            <div class="menu-items">
-                <div class="menu-item" onclick="window.location.href='index.html'">
-                    <i class="material-icons">arrow_back</i>
-                    Regresar
-                </div>
-                <div class="menu-item" onclick="newDocument()">
-                    <i class="material-icons">note_add</i>
-                    Nuevo documento
-                </div>
-            </div>
         </div>
     </div>
     <div class="actions">
@@ -396,14 +469,21 @@
             </div>
             <div class="menu-item" onclick="newDocument()">
                 <i class="material-icons">note_add</i>
-                Editar nuevo archivo
-            </div>
-            <div class="menu-item signout">
-                <i class="material-icons">logout</i>
-                Cerrar Sesión
+                Nuevo documento
             </div>
         </div>
     </div>
+
+    <!-- Modal de confirmación mejorado -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <p>Documento guardado con éxito.</p>
+            <button onclick="closeModal()">Cerrar</button>
+            <button onclick="generateQRCode()">Generar Código QR</button>
+            <button onclick="signPDF()">Firmar PDF</button>
+        </div>
+    </div>
+
     <script>
         window.onload = () => {
             gapiLoaded();
@@ -423,6 +503,7 @@
         function gapiLoaded() {
             gapi.load('client', initializeGapiClient);
         }
+        
 
         async function initializeGapiClient() {
             await gapi.client.init({
@@ -572,6 +653,12 @@
                     }).then(function (value) {
                         console.log('Archivo subido:', value);
                         showList();
+                        showModal(); // Mostrar el modal de confirmación
+
+                        // Guardar el enlace del archivo para el QR
+                        const fileId = value.id;
+                        const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+                        localStorage.setItem('file_link', fileLink); // Guardar el enlace en localStorage
                     }).catch(error => {
                         console.error('Error al subir:', error);
                         alert('Error al subir el archivo: ' + error.message);
@@ -760,9 +847,115 @@
             tinymce.get('editor').setContent('');
             menuItems.classList.remove('active');
         }
+
+        function showModal() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        function generateQRCode() {
+            const fileLink = localStorage.getItem('file_link'); // Obtener el enlace del archivo
+            if (!fileLink) {
+                alert('No se pudo obtener el enlace del archivo.');
+                return;
+            }
+
+            const qr = new QRious({
+                value: fileLink, // Usar el enlace del archivo para el QR
+                size: 200
+            });
+
+            // Crear un nuevo modal o ventana para mostrar el código QR
+            const qrModal = document.createElement('div');
+            qrModal.style.position = 'fixed';
+            qrModal.style.top = '50%';
+            qrModal.style.left = '50%';
+            qrModal.style.transform = 'translate(-50%, -50%)';
+            qrModal.style.backgroundColor = '#fff';
+            qrModal.style.padding = '20px';
+            qrModal.style.borderRadius = '12px';
+            qrModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            qrModal.style.zIndex = '1003';
+            qrModal.style.textAlign = 'center'; // Centrar el contenido
+
+            const qrImage = document.createElement('img');
+            qrImage.src = qr.toDataURL();
+            qrImage.style.marginBottom = '20px'; // Espacio entre el QR y los botones
+            qrModal.appendChild(qrImage);
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.display = 'flex';
+            buttonContainer.style.justifyContent = 'center';
+            buttonContainer.style.gap = '10px'; // Espacio entre los botones
+
+            const downloadButton = document.createElement('button');
+            downloadButton.textContent = 'Descargar QR';
+            downloadButton.style.backgroundColor = 'var(--primary-color)';
+            downloadButton.style.color = 'white';
+            downloadButton.style.border = 'none';
+            downloadButton.style.padding = '10px 20px';
+            downloadButton.style.borderRadius = '8px';
+            downloadButton.style.cursor = 'pointer';
+            downloadButton.style.transition = 'background-color 0.3s ease';
+            downloadButton.onclick = () => {
+                const link = document.createElement('a');
+                link.href = qr.toDataURL();
+                link.download = 'codigo_qr.png';
+                link.click();
+            };
+            downloadButton.onmouseover = () => downloadButton.style.backgroundColor = 'var(--secondary-color)';
+            downloadButton.onmouseout = () => downloadButton.style.backgroundColor = 'var(--primary-color)';
+            buttonContainer.appendChild(downloadButton);
+
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Cerrar';
+            closeButton.style.backgroundColor = 'var(--primary-color)';
+            closeButton.style.color = 'white';
+            closeButton.style.border = 'none';
+            closeButton.style.padding = '10px 20px';
+            closeButton.style.borderRadius = '8px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.transition = 'background-color 0.3s ease';
+            closeButton.onclick = () => document.body.removeChild(qrModal);
+            closeButton.onmouseover = () => closeButton.style.backgroundColor = 'var(--secondary-color)';
+            closeButton.onmouseout = () => closeButton.style.backgroundColor = 'var(--primary-color)';
+            buttonContainer.appendChild(closeButton);
+
+            qrModal.appendChild(buttonContainer);
+            document.body.appendChild(qrModal);
+        }
+
+        function resetTemplate() {
+            // Cargar el contenido del archivo HTML "plantilla.html" nuevamente
+            fetch('plantilla.html')
+                .then(response => response.text())
+                .then(html => {
+                    tinymce.get('editor').setContent(html);
+                })
+                .catch(error => console.error("Error al cargar el archivo HTML:", error));
+            
+            // Ocultar el modal de confirmación si está visible
+            closeModal();
+            // Cerrar el menú si está abierto
+            menuItems.classList.remove('active');
+        }
+
+        function signPDF() {
+            const fileLink = localStorage.getItem('file_link'); // Obtener el enlace del archivo
+            if (!fileLink) {
+                alert('No se pudo obtener el enlace del archivo.');
+                return;
+            }
+            // Abrir el PDF en una nueva ventana o pestaña para firmarlo
+            window.open(fileLink, '_blank');
+        }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
     <script async defer src="https://accounts.google.com/gsi/client"></script>
 </body>
 
 </html>
+<!--  -->
