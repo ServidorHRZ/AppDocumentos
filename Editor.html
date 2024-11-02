@@ -443,17 +443,23 @@
                 <i class="material-icons">refresh</i>
                 Reiniciar Plantilla
             </button>
-            <button class="upload" onclick="upload()">
-                <i class="material-icons">backup</i>
-                Guardar
-            </button>
             <button class="signin">
                 <i class="material-icons">login</i>
                 <span>Iniciar Sesión</span>
             </button>
-            <button class="menu-button" onclick="window.location.href='index.html'">
-                <i class="material-icons">home</i>
+            <button class="menu-button">
+                <i class="material-icons">menu</i>
             </button>
+            <div class="menu-items">
+                <div class="menu-item" onclick="window.location.href='index.html'">
+                    <i class="material-icons">arrow_back</i>
+                    Regresar
+                </div>
+                <div class="menu-item" onclick="upload()">
+                    <i class="material-icons">backup</i>
+                    Guardar en Drive
+                </div>
+            </div>
         </div>
     </div>
     <div class="actions">
@@ -467,9 +473,9 @@
                 <i class="material-icons">arrow_back</i>
                 Regresar
             </div>
-            <div class="menu-item" onclick="newDocument()">
-                <i class="material-icons">note_add</i>
-                Nuevo documento
+            <div class="menu-item signout">
+                <i class="material-icons">logout</i>
+                Cerrar Sesión
             </div>
         </div>
     </div>
