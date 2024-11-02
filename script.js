@@ -5,8 +5,8 @@ window.onload = () => {
     gisLoaded()
 }
 
-var CLIENT_ID = '639609669934-eaescllh1k9fpp4nggtdoh1lc0p8kihh.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyAXs-Hb9cjDptjCqjS2ST5gd0_c7KbSvAM';
+var CLIENT_ID = '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyA9-fVvk2TOaZuyoQB7Xmc0bk-s1mAW8Mc';
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 var SCOPES = 'https://www.googleapis.com/auth/drive';
 var signinButton = document.getElementsByClassName('signin')[0];
@@ -76,7 +76,7 @@ function handleSignoutClick() {
 // check for a Backup Folder in google drive
 function checkFolder() {
     gapi.client.drive.files.list({
-        'q': 'name = "Backup Folder"',
+        'q': 'name = "Documentos PDF"',
     }).then(function (response) {
         var files = response.result.files;
         if (files && files.length > 0) {
@@ -137,7 +137,7 @@ function createFolder() {
             'Authorization': 'Bearer ' + access_token,
         },
         'body': {
-            'title': 'Backup Folder',
+            'title': 'Documentos PDF',
             'mimeType': 'application/vnd.google-apps.folder'
         }
     });

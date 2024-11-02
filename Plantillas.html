@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup To Google Drive</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/ywbzzvyu26op1frn4o3f113gdet6duthjlcauk206k77n7af/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+
+    <!-- Agregar en el head estos enlaces para los iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Agregar después de los scripts existentes en el head -->
+    <script src="https://apis.google.com/js/api.js" onload="handleClientLoad()"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+
+    <!-- Agregar meta tag para Content Security Policy en el head -->
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://accounts.google.com">
+
+    <!-- Agregar la biblioteca de QR Code en el head -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--background-color);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: none;
+            padding: 0 20px;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .signin,
+        .menu-button,
+        .upload {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .signin:hover,
+        .menu-button:hover,
+        .upload:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .menu-button {
+            background-color: var(--primary-color) !important;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .menu-button i {
+            color: white !important;
+        }
+
+        .header-actions .menu-items {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            min-width: 200px;
+            z-index: 1001;
+        }
+
+        .header-actions .menu-items.active {
+            display: block;
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-color);
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-item i {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 10px;
+                width: 95%;
+            }
+
+            .signin,
+            .menu-button,
+            .upload {
+                padding: 8px 15px;
+            }
+
+            .signin span {
+                display: none;
+            }
+
+            .menu-items {
+                right: 10px;
+            }
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .title i {
+            font-size: 24px;
+        }
+
+        .signin,
+        .signout,
+        .upload {
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .signin:hover,
+        .signout:hover,
+        .upload:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .actions {
+            position: relative;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            height: calc(100vh - 200px);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 28px;
+            margin: 40px 0;
+        }
+
+        .list {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .list ul li {
+            background-color: white;
+            color: var(--text-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            gap: 12px;
+        }
+
+        .list ul li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .list ul li i {
+            font-size: 20px;
+        }
+
+        .expand-container ul li {
+            background-color: white;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        }
+
+        .expand-container ul li:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+            }
+
+            .actions {
+                padding: 0 15px;
+            }
+
+            .signin,
+            .signout {
+                padding: 8px 20px;
+            }
+
+            .list {
+                padding: 0 15px;
+            }
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .menu-button i {
+            color: var(--text-color);
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            background-color: var(--background-color);
+            border-left: 1px solid var(--border-color);
+            width: 250px;
+            height: 100vh;
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-container.active {
+            display: block;
+        }
+
+        .menu-items {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+        }
+
+        .menu-items.active {
+            display: block;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        #editor {
+            height: 100% !important;
+            min-height: unset;
+            margin-bottom: 50px;
+        }
+
+        /* Asegurarse que el contenedor de TinyMCE ocupe todo el espacio */
+        .tox.tox-tinymce {
+            height: 100% !important;
+            min-height: 100% !important;
+            border: none !important;
+        }
+
+        /* Estilos mejorados para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1002;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* Fondo más oscuro */
+            animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: none;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.3s ease-in-out; /* Animación de entrada */
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal-content button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); }
+            to { transform: translateY(0); }
+        }
+
+        /* Estilos para el botón de reiniciar */
+        .reset-template {
+            background-color: #f0f0f0;
+            border: none;
+            color: #333;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .reset-template:hover {
+            background-color: #e0e0e0;
+        }
+
+        .files-section {
+            margin-top: 70px;
+            padding: 20px;
+            background-color: #1a1a1a; /* Fondo negro */
+            border-bottom: 1px solid #333; /* Borde más oscuro */
+        }
+
+        .files-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: white; /* Texto blanco */
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .list ul li {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #2d2d2d; /* Fondo gris oscuro para las tarjetas */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #404040; /* Borde sutil */
+        }
+
+        .list ul li:hover {
+            transform: translateY(-2px);
+            background-color: #333333; /* Color más claro al hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .list ul li i {
+            margin-right: 15px;
+            color: #ffffff; /* Iconos blancos */
+            font-size: 24px;
+        }
+
+        .list ul li span {
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #ffffff; /* Texto blanco */
+            font-size: 14px;
+        }
+
+        /* Estilo del menú contextual para que coincida con el tema oscuro */
+        .context-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            min-width: 150px;
+            padding: 5px 0;
+        }
+
+        .menu-option {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: #000000;
+        }
+
+        .menu-option:hover {
+            background-color: #f5f5f5;
+        }
+
+        .menu-option i {
+            color: #000000;
+            font-size: 20px;
+        }
+
+        /* Ajustes responsive */
+        @media (max-width: 1200px) {
+            .list ul {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .list ul {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .files-section h2 {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .list ul {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .list ul li {
+                padding: 12px;
+            }
+
+            .list ul li i {
+                font-size: 20px;
+            }
+            
+            .files-section h2 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .expand-container ul li {
+            background-color: white;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        }
+
+        .expand-container ul li:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Ajustar el editor para que esté debajo de la lista */
+        .actions {
+            top: auto;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* Asegurar que el contenedor principal tenga suficiente espacio */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .context-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .menu-option {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .menu-option:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .list ul li {
+            cursor: pointer;
+        }
+
+        /* Modificar o agregar estos estilos */
+        .editor-container {
+            width: 100%;
+            height: calc(100vh - 100px);
+            margin-top: 20px;
+        }
+
+        /* Asegurarse que el editor TinyMCE ocupe todo el espacio disponible */
+        .tox.tox-tinymce {
+            height: 100% !important;
+            min-height: 100% !important;
+            border: none !important;
+        }
+
+        /* Ajustar el área de edición dentro de TinyMCE */
+        .tox .tox-edit-area__iframe {
+            height: 100% !important;
+            min-height: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="title">
+            <i class="material-icons">edit_document</i>
+            Editor
+        </div>
+        <div class="header-actions">
+            <button class="reset-template" onclick="resetTemplate()">
+                <i class="material-icons">refresh</i>
+                Reiniciar Plantilla
+            </button>
+            <button class="signin">
+                <i class="material-icons">login</i>
+                <span>Iniciar Sesión</span>
+            </button>
+            <button class="menu-button">
+                <i class="material-icons">menu</i>
+            </button>
+            <div class="menu-items">
+                <div class="menu-item" onclick="window.location.href='index.html'">
+                    <i class="material-icons">arrow_back</i>
+                    Regresar
+                </div>
+                <div class="menu-item" onclick="upload()">
+                    <i class="material-icons">backup</i>
+                    Guardar en Drive
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar esta sección para listar archivos -->
+    <div class="files-section">
+        <h2>Archivos en Drive</h2>
+        <div class="list">
+            <ul></ul>
+        </div>
+    </div>
+
+    <div class="actions">
+        <div id="editor"></div>
+    </div>
+
+    <div class="menu-overlay"></div>
+    <div class="menu-container">
+        <div class="menu-items">
+            <div class="menu-item" onclick="window.location.href='index.html'">
+                <i class="material-icons">arrow_back</i>
+                Regresar
+            </div>
+            <div class="menu-item signout">
+                <i class="material-icons">logout</i>
+                Cerrar Sesión
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación mejorado -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <p>Documento guardado con éxito.</p>
+            <button onclick="closeModal()">Cerrar</button>
+            <button onclick="generateQRCode()">Generar Código QR</button>
+            <button onclick="signPDF()">Firmar PDF</button>
+        </div>
+    </div>
+
+    <!-- Agregar este menú contextual después del div.files-section -->
+    <div class="context-menu" id="contextMenu">
+        <div class="menu-option" onclick="editDocument()">
+            <i class="material-icons">edit</i>
+            Editar
+        </div>
+        <div class="menu-option" onclick="deleteDocument()">
+            <i class="material-icons">delete</i>
+            Eliminar
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            gapiLoaded();
+            gisLoaded()
+        }
+
+        var CLIENT_ID = '240942850091-6ponouhsdfs5196pg0j0t2i906p8d08e.apps.googleusercontent.com';
+        var API_KEY = 'AIzaSyA9-fVvk2TOaZuyoQB7Xmc0bk-s1mAW8Mc';
+        var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+        var SCOPES = 'https://www.googleapis.com/auth/drive';
+        var signinButton = document.getElementsByClassName('signin')[0];
+        var signoutButton = document.getElementsByClassName('signout')[0];
+        let tokenClient;
+        let gapiInited = false;
+        let gisInited = false;
+
+        function gapiLoaded() {
+            gapi.load('client', initializeGapiClient);
+        }
+        
+
+        async function initializeGapiClient() {
+            await gapi.client.init({
+                apiKey: API_KEY,
+                discoveryDocs: DISCOVERY_DOCS,
+            });
+            gapiInited = true;
+            maybeEnableButtons();
+        }
+
+        function gisLoaded() {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                callback: ''
+            });
+            gisInited = true;
+            maybeEnableButtons();
+        }
+
+        function maybeEnableButtons() {
+            if (gapiInited && gisInited) {
+                signinButton.style.display = 'block'
+            }
+        }
+
+        signinButton.onclick = () => handleAuthClick()
+        function handleAuthClick() {
+            tokenClient.callback = async (resp) => {
+                if (resp.error !== undefined) {
+                    throw (resp);
+                }
+                signinButton.style.display = 'none'
+                signoutButton.style.display = 'block'
+                checkFolder()
+            };
+
+            if (gapi.client.getToken() === null) {
+                tokenClient.requestAccessToken({ prompt: 'consent' });
+            } else {
+                tokenClient.requestAccessToken({ prompt: '' });
+            }
+        }
+
+        signoutButton.onclick = () => handleSignoutClick()
+        function handleSignoutClick() {
+            const token = gapi.client.getToken();
+            if (token !== null) {
+                google.accounts.oauth2.revoke(token.access_token);
+                gapi.client.setToken('');
+                signinButton.style.display = 'block'
+                signoutButton.style.display = 'none'
+                toggleMenu();
+            }
+        }
+
+        // check for a Backup Folder in google drive
+        function checkFolder() {
+            gapi.client.drive.files.list({
+                'q': 'name = "Documentos PDF"',
+            }).then(function (response) {
+                var files = response.result.files;
+                if (files && files.length > 0) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        localStorage.setItem('parent_folder', file.id);
+                        console.log('Folder Available');
+                        // get files if folder available
+                        showList();
+                    }
+                } else {
+                    // if folder not available then create
+                    createFolder();
+                }
+            })
+        }
+
+        // now create a function to upload file
+        function upload() {
+            const content = tinymce.get('editor').getContent();
+            if (content != "") {
+                // Crear elemento HTML temporal
+                const element = document.createElement('div');
+                element.style.cssText = `
+            padding: 3.5cm 4cm;
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            line-height: 2;
+            color: black;
+            background-color: white;
+            width: 21.59cm;
+            min-height: 33.02cm;
+            margin: 0 auto;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+            text-align: justify;
+            display: block;
+        `;
+
+                element.innerHTML = content;
+                document.body.appendChild(element);
+
+                const opt = {
+                    margin: 0,
+                    filename: 'documento.pdf',
+                    image: { type: 'jpeg', quality: 1 },
+                    html2canvas: {
+                        scale: 4,
+                        useCORS: true,
+                        logging: true,
+                        letterRendering: true
+                    },
+                    jsPDF: {
+                        unit: 'cm',
+                        format: 'legal',
+                        orientation: 'portrait'
+                    }
+                };
+
+                // Generar PDF y subir a Drive
+                html2pdf().from(element).set(opt).outputPdf('blob').then(blob => {
+                    document.body.removeChild(element);
+
+                    const parentFolder = localStorage.getItem('parent_folder');
+                    var twoWords = content.split(' ').slice(0, 2).join('-');
+
+                    var metadata = {
+                        name: twoWords + '-' + Math.floor(Math.random() * 10000) + '.pdf',
+                        mimeType: 'application/pdf',
+                        parents: [parentFolder]
+                    };
+
+                    var formData = new FormData();
+                    formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+                    formData.append("file", blob);
+
+                    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+                        method: 'POST',
+                        headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
+                        body: formData
+                    }).then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                        return response.json();
+                    }).then(function (value) {
+                        console.log('Archivo subido:', value);
+                        showList();
+                        showModal(); // Mostrar el modal de confirmación
+
+                        // Guardar el enlace del archivo para el QR
+                        const fileId = value.id;
+                        const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+                        localStorage.setItem('file_link', fileLink); // Guardar el enlace en localStorage
+                    }).catch(error => {
+                        console.error('Error al subir:', error);
+                        alert('Error al subir el archivo: ' + error.message);
+                    });
+                }).catch(error => {
+                    console.error('Error al generar PDF:', error);
+                    alert('Error al generar el PDF: ' + error.message);
+                });
+            } else {
+                alert('Por favor, ingrese algún texto antes de crear el PDF');
+            }
+            menuItems.classList.remove('active');
+        }
+        function createFolder() {
+            var access_token = gapi.auth.getToken().access_token;
+            var request = gapi.client.request({
+                'path': 'drive/v2/files',
+                'method': 'POST',
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + access_token,
+                },
+                'body': {
+                    'title': 'Documentos PDF',
+                    'mimeType': 'application/vnd.google-apps.folder'
+                }
+            });
+            request.execute(function (response) {
+                localStorage.setItem('parent_folder', response.id);
+            })
+        }
+
+        var expandContainer = document.querySelector('.expand-container');
+        var expandContainerUl = document.querySelector('.expand-container ul');
+        var listcontainer = document.querySelector('.list ul');
+        // create a function to show hide options
+        function expand(v) {
+            var click_position = v.getBoundingClientRect();
+            if (expandContainer.style.display == 'block') {
+
+                expandContainer.style.display = 'none';
+                expandContainerUl.setAttribute('data-id', '');
+                expandContainerUl.setAttribute('data-name', '');
+            } else {
+                expandContainer.style.display = 'block';
+                expandContainer.style.left = (click_position.left + window.scrollX) - 120 + 'px';
+                expandContainer.style.top = (click_position.top + window.scrollY) + 25 + 'px';
+                // get data name & id and store it to the options
+                expandContainerUl.setAttribute('data-id', v.parentElement.getAttribute('data-id'));
+                expandContainerUl.setAttribute('data-name', v.parentElement.getAttribute('data-name'));
+            }
+        }
+
+        // function for files list
+        function showList() {
+            gapi.client.drive.files.list({
+                'q': `parents in "${localStorage.getItem('parent_folder')}"`
+            }).then(function (response) {
+                var files = response.result.files;
+                if (files && files.length > 0) {
+                    listcontainer.innerHTML = '';
+                    for (var i = 0; i < files.length; i++) {
+                        listcontainer.innerHTML += `
+                            <li data-id="${files[i].id}" data-name="${files[i].name}" onclick="handleFileClick(event, this)">
+                                <i class="material-icons">description</i>
+                                <span>${files[i].name}</span>
+                            </li>
+                        `;
+                    }
+                } else {
+                    listcontainer.innerHTML = '<div style="text-align: center;">No hay archivos</div>';
+                }
+            });
+        }
+
+        function readEditDownload(v, condition) {
+            var id = v.parentElement.getAttribute('data-id');
+            var name = v.parentElement.getAttribute('data-name');
+            v.innerHTML = '...';
+            gapi.client.drive.files.get({
+                fileId: id,
+                alt: 'media'
+            }).then(function (res) {
+                expandContainer.style.display = 'none';
+                expandContainerUl.setAttribute('data-id', '');
+                expandContainerUl.setAttribute('data-name', '');
+                if (condition == 'read' || condition == 'edit') {
+                    tinymce.get('editor').setContent(res.body);
+                } else {
+                    v.innerHTML = 'Download';
+                    var blob = new Blob([res.body], { type: 'plain/text' });
+                    var a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(blob);
+                    a.download = name;
+                    a.click();
+                }
+            })
+        }
+
+        // new create update function
+        function update() {
+            var updateId = document.querySelector('textarea').getAttribute('data-update-id');
+            var url = 'https://www.googleapis.com/upload/drive/v3/files/' + updateId + '?uploadType=media';
+            fetch(url, {
+                method: 'PATCH',
+                headers: new Headers({
+                    Authorization: 'Bearer ' + gapi.auth.getToken().access_token,
+                    'Content-type': 'plain/text'
+                }),
+                body: document.querySelector('textarea').value
+            }).then(value => {
+                console.log('File updated successfully');
+                document.querySelector('textarea').setAttribute('data-update-id', '');
+                var updateBtn = document.getElementsByClassName('upload')[0];
+                updateBtn.innerHTML = 'Backup';
+                updateBtn.setAttribute('onClick', 'uploaded()');
+            }).catch(err => console.error(err))
+        }
+
+        function deleteFile(v) {
+            var id = v.parentElement.getAttribute('data-id');
+            v.innerHTML = '...';
+            var request = gapi.client.drive.files.delete({
+                'fileId': id
+            });
+            request.execute(function (res) {
+                console.log('File Deleted');
+                v.innerHTML = 'Delete';
+                expandContainer.style.display = 'none';
+                expandContainerUl.setAttribute('data-id', '');
+                expandContainerUl.setAttribute('data-name', '');
+                // after delete update the list
+                showList();
+            })
+        }
+
+        tinymce.init({
+            selector: '#editor',
+            height: '100%',  // Asegura que el editor use el 100% de la altura del contenedor
+            menubar: true,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family: "Noto Sans KR", sans-serif; font-size: 14px }',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    // Cargar el contenido del archivo HTML "plantilla.html"
+                    fetch('plantilla.html')
+                        .then(response => response.text())
+                        .then(html => {
+                            editor.setContent(html);
+                        })
+                        .catch(error => console.error("Error al cargar el archivo HTML:", error));
+                });
+            }
+        });
+
+        const menuButton = document.querySelector('.menu-button');
+        const menuContainer = document.querySelector('.menu-container');
+        const menuOverlay = document.querySelector('.menu-overlay');
+        const menuItems = document.querySelector('.menu-items');
+
+        menuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuItems.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!menuItems.contains(e.target) && !menuButton.contains(e.target)) {
+                menuItems.classList.remove('active');
+            }
+        });
+
+        function newDocument() {
+            tinymce.get('editor').setContent('');
+            menuItems.classList.remove('active');
+        }
+
+        function showModal() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        function generateQRCode() {
+            const fileLink = localStorage.getItem('file_link'); // Obtener el enlace del archivo
+            if (!fileLink) {
+                alert('No se pudo obtener el enlace del archivo.');
+                return;
+            }
+
+            const qr = new QRious({
+                value: fileLink, // Usar el enlace del archivo para el QR
+                size: 200
+            });
+
+            // Crear un nuevo modal o ventana para mostrar el código QR
+            const qrModal = document.createElement('div');
+            qrModal.style.position = 'fixed';
+            qrModal.style.top = '50%';
+            qrModal.style.left = '50%';
+            qrModal.style.transform = 'translate(-50%, -50%)';
+            qrModal.style.backgroundColor = '#fff';
+            qrModal.style.padding = '20px';
+            qrModal.style.borderRadius = '12px';
+            qrModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            qrModal.style.zIndex = '1003';
+            qrModal.style.textAlign = 'center'; // Centrar el contenido
+
+            const qrImage = document.createElement('img');
+            qrImage.src = qr.toDataURL();
+            qrImage.style.marginBottom = '20px'; // Espacio entre el QR y los botones
+            qrModal.appendChild(qrImage);
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.display = 'flex';
+            buttonContainer.style.justifyContent = 'center';
+            buttonContainer.style.gap = '10px'; // Espacio entre los botones
+
+            const downloadButton = document.createElement('button');
+            downloadButton.textContent = 'Descargar QR';
+            downloadButton.style.backgroundColor = 'var(--primary-color)';
+            downloadButton.style.color = 'white';
+            downloadButton.style.border = 'none';
+            downloadButton.style.padding = '10px 20px';
+            downloadButton.style.borderRadius = '8px';
+            downloadButton.style.cursor = 'pointer';
+            downloadButton.style.transition = 'background-color 0.3s ease';
+            downloadButton.onclick = () => {
+                const link = document.createElement('a');
+                link.href = qr.toDataURL();
+                link.download = 'codigo_qr.png';
+                link.click();
+            };
+            downloadButton.onmouseover = () => downloadButton.style.backgroundColor = 'var(--secondary-color)';
+            downloadButton.onmouseout = () => downloadButton.style.backgroundColor = 'var(--primary-color)';
+            buttonContainer.appendChild(downloadButton);
+
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Cerrar';
+            closeButton.style.backgroundColor = 'var(--primary-color)';
+            closeButton.style.color = 'white';
+            closeButton.style.border = 'none';
+            closeButton.style.padding = '10px 20px';
+            closeButton.style.borderRadius = '8px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.transition = 'background-color 0.3s ease';
+            closeButton.onclick = () => document.body.removeChild(qrModal);
+            closeButton.onmouseover = () => closeButton.style.backgroundColor = 'var(--secondary-color)';
+            closeButton.onmouseout = () => closeButton.style.backgroundColor = 'var(--primary-color)';
+            buttonContainer.appendChild(closeButton);
+
+            qrModal.appendChild(buttonContainer);
+            document.body.appendChild(qrModal);
+        }
+
+        function resetTemplate() {
+            // Cargar el contenido del archivo HTML "plantilla.html" nuevamente
+            fetch('plantilla.html')
+                .then(response => response.text())
+                .then(html => {
+                    tinymce.get('editor').setContent(html);
+                })
+                .catch(error => console.error("Error al cargar el archivo HTML:", error));
+            
+            // Ocultar el modal de confirmación si está visible
+            closeModal();
+            // Cerrar el menú si está abierto
+            menuItems.classList.remove('active');
+        }
+
+        function signPDF() {
+            const fileLink = localStorage.getItem('file_link'); // Obtener el enlace del archivo
+            if (!fileLink) {
+                alert('No se pudo obtener el enlace del archivo.');
+                return;
+            }
+            // Abrir el PDF en una nueva ventana o pestaña para firmarlo
+            window.open(fileLink, '_blank');
+        }
+
+        let selectedFile = null;
+        const contextMenu = document.getElementById('contextMenu');
+
+        function handleFileClick(event, element) {
+            event.preventDefault();
+            selectedFile = element;
+            
+            // Posicionar y mostrar el menú contextual
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = event.pageX + 'px';
+            contextMenu.style.top = event.pageY + 'px';
+        }
+
+        // Cerrar el menú contextual al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            if (!contextMenu.contains(event.target) && event.target !== selectedFile) {
+                contextMenu.style.display = 'none';
+            }
+        });
+
+        function editDocument() {
+            if (!selectedFile) return;
+            
+            const fileId = selectedFile.dataset.id;
+            
+            gapi.client.drive.files.get({
+                fileId: fileId,
+                alt: 'media'
+            }).then(function(response) {
+                tinymce.get('editor').setContent(response.body);
+                contextMenu.style.display = 'none';
+            }).catch(function(error) {
+                console.error('Error al cargar el archivo:', error);
+                alert('Error al cargar el archivo');
+            });
+        }
+
+        function deleteDocument() {
+            if (!selectedFile) return;
+            
+            if (confirm('¿Está seguro de que desea eliminar este archivo?')) {
+                const fileId = selectedFile.dataset.id;
+                
+                gapi.client.drive.files.delete({
+                    fileId: fileId
+                }).then(function() {
+                    showList(); // Actualizar la lista
+                    contextMenu.style.display = 'none';
+                }).catch(function(error) {
+                    console.error('Error al eliminar el archivo:', error);
+                    alert('Error al eliminar el archivo');
+                });
+            }
+        }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js"></script>
+    <script async defer src="https://accounts.google.com/gsi/client"></script>
+</body>
+
+</html>
+<!--  -->
