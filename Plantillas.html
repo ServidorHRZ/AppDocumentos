@@ -1190,6 +1190,175 @@
                 }
             }
         }
+
+        /* Mejoras responsive para el header y botones */
+        .header {
+            padding: 0 clamp(10px, 3vw, 20px);
+            height: clamp(50px, 8vh, 70px);
+        }
+
+        .header-actions {
+            gap: clamp(8px, 1.5vw, 12px);
+        }
+
+        .signin,
+        .menu-button,
+        .upload,
+        .reset-template {
+            padding: clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 20px);
+            font-size: clamp(13px, 0.9vw, 15px);
+            border-radius: 8px;
+            min-height: 40px;
+            min-width: clamp(40px, 10vw, auto);
+        }
+
+        /* Mejoras para el editor y su contenedor */
+        .actions {
+            margin-top: calc(var(--header-height) + var(--templates-height));
+            height: calc(100vh - (var(--header-height) + var(--templates-height)));
+            padding: clamp(10px, 2vw, 20px);
+            max-width: 1800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #editor {
+            height: 100% !important;
+            width: 100% !important;
+            max-height: calc(100vh - var(--header-height) - var(--templates-height) - 40px);
+            overflow-y: auto;
+        }
+
+        /* Media queries mejorados */
+        @media (max-width: 1200px) {
+            :root {
+                --header-height: 65px;
+                --templates-height: 160px;
+            }
+
+            .header-actions button span {
+                display: none;
+            }
+
+            .header-actions button i {
+                margin: 0;
+                font-size: clamp(18px, 2vw, 24px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --header-height: 60px;
+                --templates-height: 140px;
+            }
+
+            .title {
+                font-size: clamp(14px, 4vw, 16px);
+            }
+
+            .title i {
+                font-size: clamp(20px, 5vw, 24px);
+            }
+
+            /* Ajustes para el editor en tablets */
+            .tox .tox-toolbar__group {
+                padding: 0 4px !important;
+            }
+
+            .tox .tox-toolbar__primary {
+                flex-wrap: wrap !important;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --header-height: 50px;
+                --templates-height: 120px;
+            }
+
+            /* Ajustes para el editor en móviles */
+            .tox .tox-toolbar__group {
+                padding: 0 2px !important;
+            }
+
+            .tox .tox-tbtn {
+                width: 28px !important;
+                height: 28px !important;
+            }
+
+            .tox .tox-tbtn svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        /* Mejoras para el editor TinyMCE */
+        .tox.tox-tinymce {
+            border: 1px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            overflow: hidden;
+        }
+
+        /* Optimizaciones para dispositivos táctiles */
+        @media (hover: none) and (pointer: coarse) {
+            .tox .tox-tbtn {
+                min-width: 36px !important;
+                min-height: 36px !important;
+            }
+
+            .tox .tox-toolbar__group {
+                gap: 4px !important;
+            }
+
+            .tox .tox-toolbar {
+                padding: 4px !important;
+            }
+        }
+
+        /* Ajustes para pantallas de alta resolución */
+        @media (min-width: 1440px) {
+            :root {
+                --header-height: 80px;
+                --templates-height: 200px;
+            }
+
+            .actions {
+                max-width: 1800px;
+                padding: 30px;
+            }
+
+            .tox.tox-tinymce {
+                max-width: 1600px;
+                margin: 0 auto !important;
+            }
+        }
+
+        /* Ajustes para modo landscape en móviles */
+        @media (max-height: 480px) and (orientation: landscape) {
+            :root {
+                --header-height: 45px;
+                --templates-height: 100px;
+            }
+
+            .actions {
+                height: calc(100vh - var(--header-height) - var(--templates-height) - 20px);
+            }
+
+            .tox .tox-toolbar__primary {
+                flex-wrap: nowrap !important;
+                overflow-x: auto;
+            }
+        }
+
+        /* Mejoras de rendimiento */
+        .header,
+        .actions,
+        .tox.tox-tinymce {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
     </style>
 </head>
 
