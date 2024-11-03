@@ -1,1206 +1,935 @@
+<!DOCTYPE html>
 <html>
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="Content-Style-Type" content="text/css" />
-    <meta name="generator" content="Aspose.Words for .NET 24.9.0" />
-    <title></title>
-    <style type="text/css">
-        body {
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        p {
-            margin: 0pt 0pt 8pt
-        }
-
-        li,
-        table {
-            margin-top: 0pt;
-            margin-bottom: 8pt
-        }
-
-        h1 {
-            margin-top: 18pt;
-            margin-bottom: 4pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: 'Aptos Display';
-            font-size: 20pt;
-            font-weight: normal;
-            color: #0f4761
-        }
-
-        h2 {
-            margin-top: 8pt;
-            margin-bottom: 4pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: 'Aptos Display';
-            font-size: 16pt;
-            font-weight: normal;
-            color: #0f4761
-        }
-
-        h3 {
-            margin-top: 8pt;
-            margin-bottom: 4pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 14pt;
-            font-weight: normal;
-            color: #0f4761
-        }
-
-        h4 {
-            margin-top: 4pt;
-            margin-bottom: 2pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt;
-            font-weight: normal;
-            font-style: italic;
-            color: #0f4761
-        }
-
-        h5 {
-            margin-top: 4pt;
-            margin-bottom: 2pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt;
-            font-weight: normal;
-            color: #0f4761
-        }
-
-        h6 {
-            margin-top: 2pt;
-            margin-bottom: 0pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt;
-            font-weight: normal;
-            font-style: italic;
-            color: #595959
-        }
-
-        .Heading7 {
-            margin-top: 2pt;
-            margin-bottom: 0pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt;
-            font-weight: normal;
-            font-style: normal;
-            color: #595959;
-            -aw-style-name: heading7
-        }
-
-        .Heading8 {
-            margin-bottom: 0pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt;
-            font-weight: normal;
-            font-style: italic;
-            color: #272727;
-            -aw-style-name: heading8
-        }
-
-        .Heading9 {
-            margin-bottom: 0pt;
-            page-break-inside: avoid;
-            page-break-after: avoid;
-            line-height: 116%;
-            font-family: Aptos;
-            font-size: 12pt;
-            font-weight: normal;
-            font-style: normal;
-            color: #272727;
-            -aw-style-name: heading9
-        }
-
-        .Footer {
-            margin-bottom: 0pt;
-            line-height: normal;
-            font-size: 12pt;
-            -aw-style-name: footer
-        }
-
-        .Header {
-            margin-bottom: 0pt;
-            line-height: normal;
-            font-size: 12pt;
-            -aw-style-name: header
-        }
-
-        .IntenseQuote {
-            margin: 18pt 43.2pt;
-            text-align: center;
-            line-height: 116%;
-            border-top: 0.75pt solid #0f4761;
-            border-bottom: 0.75pt solid #0f4761;
-            padding-top: 10pt;
-            padding-bottom: 10pt;
-            font-size: 12pt;
-            font-style: italic;
-            color: #0f4761;
-            -aw-border-bottom: 0.5pt single;
-            -aw-border-top: 0.5pt single;
-            -aw-style-name: intense-quote
-        }
-
-        .ListParagraph {
-            margin-left: 36pt;
-            margin-bottom: 8pt;
-            line-height: 116%;
-            font-size: 12pt;
-            -aw-style-name: list-paragraph
-        }
-
-        .Quote {
-            margin-top: 8pt;
-            margin-bottom: 8pt;
-            text-align: center;
-            line-height: 116%;
-            font-size: 12pt;
-            font-style: italic;
-            color: #404040;
-            -aw-style-name: quote
-        }
-
-        .Subtitle {
-            margin-bottom: 8pt;
-            line-height: 116%;
-            font-size: 14pt;
-            letter-spacing: 0.75pt;
-            color: #595959;
-            -aw-style-name: subtitle
-        }
-
-        .Title {
-            margin-bottom: 4pt;
-            line-height: normal;
-            font-family: 'Aptos Display';
-            font-size: 28pt;
-            letter-spacing: -0.5pt;
-            -aw-style-name: title
-        }
-
-        span.CitaCar {
-            font-style: italic;
-            color: #404040
-        }
-
-        span.CitadestacadaCar {
-            font-style: italic;
-            color: #0f4761
-        }
-
-        span.IntenseEmphasis {
-            font-style: italic;
-            color: #0f4761;
-            -aw-style-name: intense-emphasis
-        }
-
-        span.IntenseReference {
-            font-weight: bold;
-            font-variant: small-caps;
-            letter-spacing: 0.25pt;
-            color: #0f4761;
-            -aw-style-name: intense-reference
-        }
-
-        span.PlaceholderText {
-            color: #666666;
-            -aw-style-name: placeholder-text
-        }
-
-        span.SubttuloCar {
-            font-size: 14pt;
-            letter-spacing: 0.75pt;
-            color: #595959
-        }
-
-        span.Ttulo1Car {
-            font-family: 'Aptos Display';
-            font-size: 20pt;
-            color: #0f4761
-        }
-
-        span.Ttulo2Car {
-            font-family: 'Aptos Display';
-            font-size: 16pt;
-            color: #0f4761
-        }
-
-        span.Ttulo3Car {
-            font-size: 14pt;
-            color: #0f4761
-        }
-
-        span.Ttulo4Car {
-            font-style: italic;
-            color: #0f4761
-        }
-
-        span.Ttulo5Car {
-            color: #0f4761
-        }
-
-        span.Ttulo6Car {
-            font-style: italic;
-            color: #595959
-        }
-
-        span.Ttulo7Car {
-            color: #595959
-        }
-
-        span.Ttulo8Car {
-            font-style: italic;
-            color: #272727
-        }
-
-        span.Ttulo9Car {
-            color: #272727
-        }
-
-        span.TtuloCar {
-            font-family: 'Aptos Display';
-            font-size: 28pt;
-            letter-spacing: -0.5pt
-        }
-
-        .TableGrid {}
-
-        /* Añadir estas clases para mejorar el centrado */
-        .table-cell-centered {
-            text-align: center;
-            vertical-align: middle;
-        }
-        
-        .table-cell-left {
-            text-align: left;
-            vertical-align: middle;
-        }
-        
-        .table-header {
-            text-align: center;
-            font-weight: bold;
-            vertical-align: middle;
-        }
-    </style>
-</head>
-
-<body>
-    <div>
-        <div style="-aw-headerfooter-type:header-primary; clear:both">
-            <p class="Header" style="text-align:center; font-size:16pt">
-                <!-- Logo izquierdo -->
-                <span style="float:left; margin-top:10pt; margin-left:20pt;">
-                    <img src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.002.jpeg" width="84" height="84" alt=""/>
-                </span>
-                
-                <!-- Texto central -->
-                <span style="display:inline-block; margin:0 auto;">
-                    <span style="font-size:10pt; color:#3a7c22">"Peruanos cuidando el Medio Ambiente Acuático"</span>
-                    <br/>
-                    <span style="color:#0f4761">PI-WDR N° <span style="color:#ff0000">000000</span></span>
-                </span>                
-            </p>
-        </div>
-        <p style="text-align:center; line-height:116%; font-size:10pt; margin-top:20pt;">
-            <span>STANDART FORMAT FOR THE WASTE DELIVERY RECEIPT</span>
-            <br/>
-            <span>FORMATO ESTANDAR PARA RECEPCION Y ENTREGA DE RESIDUOS</span>
-        </p>
-        <ol type="1" style="margin:0pt; padding-left:0pt">
-            <li class="ListParagraph" style="margin-left:11.83pt; line-height:116%; padding-left:6.17pt; font-size:9pt">
-                <span>RECEPTION FACILITY AND PORT PARTICULARS</span><br /><span>Datos del Receptor y de la Instalación
-                    Portuaria</span></li>
-        </ol>
-        <table cellspacing="0" cellpadding="0"
-            style="width:493.5pt; margin-bottom:0pt; border:0.75pt solid #000000; -aw-border:0.5pt single; -aw-border-insideh:0.5pt single #000000; -aw-border-insidev:0.5pt single #000000; border-collapse:collapse">
-            <tr style="height:25.45pt">
-                <td
-                    style="width:213.6pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:8pt"><span>1.1 Location
-                            / Terminal name:</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Ubicación /
-                            Nombre del Terminal:</span></p>
-                </td>
-                <td colspan="5"
-                    style="width:265.15pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt"><span class="PlaceholderText">Callao /
-                            Talara.</span></p>
-                </td>
-            </tr>
-            <tr style="height:25.45pt">
-                <td
-                    style="width:213.6pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:8pt"><span>1.2
-                            Reception facility provider:</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Proveedor de la
-                            Instalación receptora:</span></p>
-                </td>
-                <td colspan="5"
-                    style="width:265.15pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:10pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr style="height:25.45pt">
-                <td
-                    style="width:213.6pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:8pt"><span>1.3
-                            Treatment facility provider – if different from above:</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Proveedor de la
-                            instalación de tratamiento:</span></p>
-                </td>
-                <td colspan="5"
-                    style="width:265.15pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:10pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr style="height:13pt">
-                <td
-                    style="width:213.6pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:top; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:8pt"><span>1.4 Waste
-                            dischargue date and time from:</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Fecha y hora de
-                            la descarga de los residuos:</span></p>
-                </td>
-                <td
-                    style="width:73.75pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt"><span
-                            style="-aw-sdt-content:placeholder; -aw-sdt-tag:''"><span
-                                class="PlaceholderText">Fecha.</span></span></p>
-                </td>
-                <td
-                    style="width:28.45pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:8pt">
-                        <span>From:</span><br /><span>Inicio:</span></p>
-                </td>
-                <td
-                    style="width:35.55pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt"><span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:35.5pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:8pt">
-                        <span>To:</span><br /><span>Termino:</span></p>
-                </td>
-                <td
-                    style="width:63.9pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:middle; -aw-border-left:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; line-height:116%; font-size:10pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-        </table>
-        <ol start="2" type="1" style="margin:0pt; padding-left:0pt">
-            <li class="ListParagraph" style="margin-left:11.83pt; line-height:116%; padding-left:6.17pt; font-size:9pt">
-                <span>SHIP PARTICULARS</span><span style="width:2.17pt; display:inline-block">&#xa0;</span><span
-                    style="width:35.4pt; display:inline-block">&#xa0;</span><br /><span>DATOS DEL BUQUE</span></li>
-        </ol>
-        <table cellspacing="0" cellpadding="0" class="TableGrid"
-            style="width:492.85pt; margin-bottom:0pt; border:0.75pt solid #000000; -aw-border:0.5pt single; -aw-border-insideh:0.5pt single #000000; -aw-border-insidev:0.5pt single #000000; border-collapse:collapse">
-            <tr>
-                <td
-                    style="width:91.45pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:11.6pt; margin-bottom:0pt; text-indent:-11.6pt; line-height:normal; font-size:8pt">
-                        <span>2.1 Name of ship:</span><br /><span>Nombre del buque:</span></p>
-                </td>
-                <td
-                    style="width:102.6pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:10pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:123.9pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:15.7pt; margin-bottom:0pt; text-indent:-14.2pt; line-height:normal; font-size:8pt">
-                        <span>2.5 Owner or operator:</span><br /><span>Armador / Operador:</span></p>
-                </td>
-                <td
-                    style="width:130.95pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:10pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:91.45pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:11.6pt; margin-bottom:0pt; text-indent:-11.6pt; line-height:normal; font-size:8pt">
-                        <span>2.2 IMO number:</span><br /><span>Número IMO:</span></p>
-                </td>
-                <td
-                    style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:10pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:123.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:15.7pt; margin-bottom:0pt; text-indent:-15.7pt; line-height:normal; font-size:8pt">
-                        <span>2.6 Distintive number or letters:</span><br /><span>Indicativo de llamada:</span></p>
-                </td>
-                <td
-                    style="width:130.95pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:10pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:91.45pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-bottom:0.5pt single; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:11.6pt; margin-bottom:0pt; text-indent:-11.6pt; line-height:normal; font-size:8pt">
-                        <span>2.3 Gross tonnage:</span><br /><span>Tonelaje bruto:</span></p>
-                </td>
-                <td
-                    style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:10pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:123.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:15.7pt; margin-bottom:0pt; text-indent:-15.7pt; line-height:normal; font-size:8pt">
-                        <span>2.7 Flag State:</span><br /><span>Bandera:</span></p>
-                </td>
-                <td
-                    style="width:130.95pt; border-top-style:solid; border-top-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border-bottom:0.5pt single; -aw-border-left:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:10pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr style="height:27.25pt">
-                <td colspan="4" style="width:485.1pt; padding-right:3.12pt; padding-left:3.12pt; vertical-align:top">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="height:0pt; display:block; position:absolute; z-index:7"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:14.01pt; margin-left:369.24pt; -aw-left-pos:369.24pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:14.01pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:6"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:2.8pt; margin-left:369.15pt; -aw-left-pos:369.15pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:2.8pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:5"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:13.38pt; margin-left:287.92pt; -aw-left-pos:287.92pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:13.38pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:4"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:2.37pt; margin-left:287.98pt; -aw-left-pos:287.98pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:2.37pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:3"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:13.61pt; margin-left:183.17pt; -aw-left-pos:183.17pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:13.61pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:2"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:2.05pt; margin-left:182.9pt; -aw-left-pos:182.9pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:2.05pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:0"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:13.9pt; margin-left:81.43pt; -aw-left-pos:81.43pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:13.9pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="height:0pt; display:block; position:absolute; z-index:1"><img
-                                src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.003.png" width="16"
-                                height="12" alt=""
-                                style="margin-top:2.28pt; margin-left:81.26pt; -aw-left-pos:81.26pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:2.28pt; -aw-wrap-type:none; position:absolute" /></span><span
-                            style="font-size:8pt">2.4 Type of ship</span><span>:</span><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0; </span><span
-                            style="-aw-import:spaces">&#xa0;&#xa0; </span><span style="-aw-import:spaces">&#xa0;
-                        </span><span style="font-size:7pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Oil tanker / Petrolero</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt; -aw-import:spaces">&#xa0;</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Chemical tanker / Quimiquero</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0; </span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Bulk Carrier / Granelero</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0; </span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Container / Portacontenedor</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span
-                            style="font-size:8pt">Tipo de buque: </span><span
-                            style="font-size:8pt; -aw-import:spaces">&#xa0; </span><span
-                            style="font-size:8pt; -aw-import:spaces">&#xa0;</span><span
-                            style="font-size:8pt; -aw-import:spaces">&#xa0; </span><span
-                            style="font-size:8pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span
-                            style="font-size:8pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span
-                            style="font-size:6pt">Other cargo ship / otro tipo carga</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0; </span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Passenger ship / Buque pasaje</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Ro/ro / Carga rodante</span><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Other (Specify) / Otros</span><span> </span></p>
-                </td>
-            </tr>
-        </table>
-        <ol start="3" type="1" style="margin:0pt; padding-left:0pt">
-            <li class="ListParagraph"
-                style="margin-left:11.83pt; line-height:116%; padding-left:13.27pt; font-size:9pt"><span>TYPE AND AMOUNT
-                    OF WASTE RECEIVED</span><br /><span>TIPO Y CANTIDAD DE RESIDUOS RECIBIDOS</span></li>
-        </ol>
-        <table cellspacing="0" cellpadding="0" class="TableGrid"
-            style="width:493.15pt; margin-bottom:0pt; -aw-border-insideh:0.5pt single #000000; -aw-border-insidev:0.5pt single #000000; border-collapse:collapse">
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span>MARPOL Annex
-                            I – OIL / Petroleo</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span>Quantity (</span><img
-                            src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.004.png" width="17"
-                            height="23" alt=""
-                            style="vertical-align:middle; -aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" /><span>)</span>
-                    </p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span>MARPOL Annex
-                            V </span><br /><span>PART I</span><span style="-aw-import:spaces">&#xa0;&#xa0; </span><span
-                            style="-aw-import:spaces">&#xa0;&#xa0; </span><span style="font-size:6pt">For all garbage
-                            different to cargo residues</span><br /><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Para toda basura distinta de los residuos de carga
-                        </span><br /><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">For all ships</span><br /><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Para todo tipo de buques</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span>Quantity (</span><img
-                            src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.004.png" width="17"
-                            height="23" alt=""
-                            style="vertical-align:middle; -aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" /><span>)</span>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Oily bilge
-                            water</span><br /><span>Achique de aguas oleosas</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p style="margin-bottom:0pt; font-size:8pt"><span>A. Plastics</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Plásticos</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Oily
-                            residues (sludge)</span><br /><span>Residuos oleosos</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>B. Food
-                            wastes</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span>Desechos de alimentos</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Oily tank
-                            washings</span><br /><span>Residuos de lavado de tanques</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>C. Domestic
-                            wastes</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span>Desechos domésticos</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Dirty
-                            ballast wáter</span><br /><span>Agua de lastre sucio</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>D. Cooking
-                            oil</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Aceite
-                            de cocina</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Scale and
-                            sludge from tank cleaning</span><br /><span>Lodos, sarro de limpieza de tanques</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>E.
-                            Incinerator ashes</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span>Cenizas del incinerador</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Other
-                            (please specify)</span><br /><span>Otros (especificar)</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>F.
-                            Operational wastes</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span>Desechos operacionales</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span>MARPOL Annex
-                            II – NLS</span><br /><span>Sustancias Nocivas</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span>Quantity
-                            (</span><img src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.004.png"
-                            width="17" height="23" alt=""
-                            style="vertical-align:middle; -aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" /><span>)/Name</span>
-                    </p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>G. Animal
-                            carcass(es)</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span>Cadáveres de animales</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Category X
-                            substance</span><br /><span>Sustancias de categoría X</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>H. Fishing
-                            gear</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Artes
-                            de pesca</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Category Y
-                            substance</span><br /><span>Sustancias de categoría Y</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>I.
-                            E-waste</span><br /><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0; </span><span>Residuos
-                            de aparatos eléctricos y electrónicos</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>Category Z
-                            substance</span><br /><span>Sustancias de categoría Z</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span>PART
-                            II</span><span style="-aw-import:spaces">&#xa0;&#xa0; </span><span
-                            style="-aw-import:spaces">&#xa0; </span><span style="font-size:6pt">For all cargo
-                            residues</span><br /><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Para todos los residuos de carga </span><br /><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">For solid bulk cargo ships</span><br /><span
-                            style="font-size:6pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                        </span><span style="font-size:6pt">Para buques que transporten carga solida a granel</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span>Quantity (</span><img
-                            src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.004.png" width="17"
-                            height="23" alt=""
-                            style="vertical-align:middle; -aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" /><span>)</span>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:8pt"><span>OS – other
-                            substance</span><br /><span>Otras sustancias</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:7pt"><span>J. Cargo
-                            residues (non-Harmful to the Marine </span><span style="-aw-import:spaces">&#xa0;&#xa0;
-                        </span><span style="color:#ffffff">xxi</span><span>Environment).</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Residuos de carga no
-                            perjudiciales para el medio </span><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0; </span><span
-                            style="color:#ffffff">cc</span><span>marino</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span>MARPOL Annex
-                            IV – Sewage </span><br /><span>Aguas Residuales</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:center; line-height:normal; font-size:9pt">
-                        <span>Quantity (</span><img
-                            src="images/Aspose.Words.38142c7f-8d25-4277-b2c4-f131d933ebf7.004.png" width="17"
-                            height="23" alt=""
-                            style="vertical-align:middle; -aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" /><span>)</span>
-                    </p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:7pt"><span>K. Cargo
-                            residues (Harmful to the Marine Environment).</span><br /><span
-                            style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span>Residuos de carga
-                            perjudiciales para el medio marino</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-right-style:solid; border-right-width:0.75pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single; -aw-border-right:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:7pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:9pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-            <tr>
-                <td
-                    style="width:94.55pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; padding-right:5.03pt; padding-left:5.4pt; vertical-align:top; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:right; line-height:normal">
-                        <span>TOTAL</span></p>
-                </td>
-                <td
-                    style="width:99.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle; -aw-border:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; line-height:normal; font-size:10pt"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:1pt; border-left-style:solid; border-left-width:0.75pt; padding-right:5.4pt; padding-left:5.03pt; vertical-align:top; -aw-border-left:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-                <td
-                    style="width:122.95pt; border-top-style:solid; border-top-width:0.75pt; border-right-style:solid; border-right-width:0.75pt; padding-right:5.03pt; padding-left:5.4pt; vertical-align:top; -aw-border-right:0.5pt single; -aw-border-top:0.5pt single">
-                    <p class="ListParagraph"
-                        style="margin-left:0pt; margin-bottom:0pt; text-align:right; line-height:normal">
-                        <span>TOTAL</span></p>
-                </td>
-                <td
-                    style="width:119.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top; -aw-border:0.5pt single">
-                    <p class="ListParagraph" style="margin-left:0pt; margin-bottom:0pt; line-height:normal"><span
-                            style="-aw-import:ignore">&#xa0;</span></p>
-                </td>
-            </tr>
-        </table>
-        <p style="text-align:justify">
-            <div style="width:244px; height:78px; border:1px solid black; margin-top:78.85pt; margin-left:122.2pt; position:absolute;"></div>
-            <br /><span style="line-height:116%; font-size:10pt">Remarks // Observaciones </span><span
-                style="width:32.47pt; line-height:116%; font-size:10pt; display:inline-block">&#xa0;</span><br /><span
-                style="line-height:116%; font-size:10pt">On behaf of the port facility I confirm that the above wastes
-                were delivered.</span><span
-                style="width:9.46pt; line-height:116%; font-size:10pt; display:inline-block">&#xa0;</span><br /><span
-                style="line-height:116%; font-size:10pt">En representación de la Instalación portuaria, confirmo que
-                fueron entregados los residuos arriba indicados.</span><br /><span
-                style="-aw-import:ignore">&#xa0;</span></p>
-        <p><span style="-aw-import:ignore">&#xa0;</span></p>
-        <p><span style="-aw-import:ignore">&#xa0;</span></p>
-        <div style="-aw-headerfooter-type:footer-primary; clear:both">
-            <p class="Footer" style="text-align:center; font-size:9pt"><span
-                    style="height:0pt; text-align:left; display:block; position:absolute; z-index:-65536"><span
-                        style="margin-top:12.08pt; margin-left:86.99pt; -aw-left-pos:85.7pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:9.5pt; -aw-wrap-type:none; position:absolute"><svg
-                            height="18.32" id="Icons_Telephone_M" overflow="hidden" viewBox="0 0 96 96" width="18.32"
-                            xmlns="http://www.w3.org/2000/svg" style="overflow:hidden"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <path
-                                d="M19.322 45.189C19.182 45.189 19.04 45.183 18.897 45.171 17.3776 45.0461 15.9993 44.2317 15.157 42.961L9.857 35.167C9.08348 34.0426 8.81318 32.6469 9.111 31.315 9.41544 29.9475 10.2684 28.7652 11.47 28.045 34.1145 14.6529 62.2545 14.6529 84.899 28.045L84.899 28.045C86.1003 28.7656 86.9531 29.9477 87.258 31.315 87.556 32.6478 87.2849 34.0444 86.51 35.169L81.21 42.969C79.7138 45.2432 76.6573 45.8738 74.3831 44.3776 74.0913 44.1856 73.8208 43.9632 73.576 43.714L68.676 38.814C67.6931 37.9165 67.1481 36.6366 67.182 35.306L67.182 30.928C54.8336 26.9124 41.5304 26.9124 29.182 30.928L29.182 35.305C29.1752 36.6251 28.6418 37.8879 27.7 38.813L22.8 43.713C21.8938 44.6635 20.6353 45.1976 19.322 45.189ZM48.19 20C35.6322 19.9872 23.3031 23.3595 12.5 29.762 11.7692 30.1954 11.2513 30.9129 11.07 31.743 10.8917 32.5382 11.053 33.3717 11.515 34.043L16.815 41.848C17.3206 42.6142 18.1501 43.1056 19.065 43.181 19.9233 43.2673 20.773 42.9503 21.365 42.323L26.285 37.401C26.8542 36.8521 27.1808 36.0987 27.192 35.308L27.192 29.482 27.876 29.254C41.0558 24.806 55.3312 24.806 68.511 29.254L69.194 29.482 69.194 35.305C69.1676 36.0805 69.4818 36.8288 70.054 37.353L75 42.3C76.1271 43.4611 77.9821 43.4887 79.1432 42.3616 79.3011 42.2083 79.4413 42.0377 79.561 41.853L84.861 34.042C85.3239 33.3711 85.4859 32.5375 85.308 31.742 85.1269 30.9107 84.6077 30.1925 83.875 29.76 73.0734 23.3586 60.746 19.987 48.19 20Z" />
-                            <path
-                                d="M79.192 77.021 17.192 77.021 17.192 58.421C17.166 56.0242 18.0997 53.7165 19.785 52.012L31.189 40.6 31.189 36C31.189 33.7909 32.9799 32 35.189 32L36 32C38.2091 32 40 33.7909 40 36L40 39.011 56.188 39.011 56.188 36C56.188 33.7909 57.9789 32 60.188 32L61.188 32C63.3971 32 65.188 33.7909 65.188 36L65.188 40.6 76.6 51.905C78.2769 53.6164 79.2111 55.92 79.2 58.316ZM19.192 75.021 77.192 75.021 77.192 58.321C77.2058 56.4572 76.4848 54.6629 75.185 53.327L63.191 41.428 63.191 36C63.191 34.8954 62.2956 34 61.191 34L60.191 34C59.0864 34 58.191 34.8954 58.191 36L58.191 41.011 38 41.011 38 36C38 34.8954 37.1046 34 36 34L35.189 34C34.0844 34 33.189 34.8954 33.189 36L33.189 41.425 21.196 53.425C19.8771 54.7508 19.1528 56.5552 19.189 58.425Z" />
-                            <path
-                                d="M56.191 50.013 56.191 50.013 56.191 50.013 56.191 50.013 56.191 50.013M58.191 48.013 54.191 48.013 54.191 52.013 58.191 52.013 58.191 48.013Z" />
-                            <path
-                                d="M56.191 58.016 56.191 58.016M58.191 56.016 54.191 56.016 54.191 60.016 58.191 60.016 58.191 56.016Z" />
-                            <path
-                                d="M56.191 66.018 56.191 66.018M58.191 64.018 54.191 64.018 54.191 68.018 58.191 68.018 58.191 64.018Z" />
-                            <path
-                                d="M48.191 50.013 48.191 50.013 48.191 50.013 48.191 50.013 48.191 50.013M50.191 48.013 46.191 48.013 46.191 52.013 50.191 52.013 50.191 48.013Z" />
-                            <path
-                                d="M48.191 58.016 48.191 58.016M50.191 56.016 46.191 56.016 46.191 60.016 50.191 60.016 50.191 56.016Z" />
-                            <path
-                                d="M48.191 66.018 48.191 66.018M50.191 64.018 46.191 64.018 46.191 68.018 50.191 68.018 50.191 64.018Z" />
-                            <path
-                                d="M40.19 50.013 40.19 50.013 40.19 50.013 40.19 50.013 40.19 50.013M42.19 48.013 38.19 48.013 38.19 52.013 42.19 52.013 42.19 48.013Z" />
-                            <path
-                                d="M40.19 58.016 40.19 58.016M42.19 56.016 38.19 56.016 38.19 60.016 42.19 60.016 42.19 56.016Z" />
-                            <path
-                                d="M40.19 66.018 40.19 66.018M42.19 64.018 38.19 64.018 38.19 68.018 42.19 68.018 42.19 64.018Z" />
-                        </svg></span></span><span
-                    style="height:0pt; text-align:left; display:block; position:absolute; z-index:-65534"><span
-                        style="margin-top:11.48pt; margin-left:185.59pt; -aw-left-pos:182.85pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:11pt; -aw-wrap-type:none; position:absolute"><svg
-                            height="15.23" id="Icons_SmartPhone_M" overflow="hidden" viewBox="0 0 96 96" width="15.23"
-                            xmlns="http://www.w3.org/2000/svg" style="overflow:hidden"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <g id="Icons">
-                                <path
-                                    d="M30 14 28 14 28 82.022 68 82.022 68 14 30 14ZM66 80.022 30 80.022 30 16 66 16Z" />
-                                <path
-                                    d="M71 4 25 4C23.8968 4.00329 23.0033 4.8968 23 6L23 90.025C23.0038 91.128 23.897 92.0212 25 92.025L71 92.025C72.1027 92.0206 72.9956 91.1277 73 90.025L73 6C72.9962 4.89703 72.103 4.00384 71 4ZM71 90.025 25 90.025 25 6 71 6Z" />
-                                <path
-                                    d="M44 11 53 11C53.5523 11 54 10.5523 54 10 54 9.44771 53.5523 9 53 9L44 9C43.4477 9 43 9.44771 43 10 43 10.5523 43.4477 11 44 11Z" />
-                            </g>
-                        </svg></span></span><span
-                    style="height:0pt; text-align:left; display:block; position:absolute; z-index:-65532"><span
-                        style="margin-top:10.73pt; margin-left:285.34pt; -aw-left-pos:282.6pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:10.25pt; -aw-wrap-type:none; position:absolute"><svg
-                            height="15.23" id="Icons_SmartPhone_M" overflow="hidden" viewBox="0 0 96 96" width="15.23"
-                            xmlns="http://www.w3.org/2000/svg" style="overflow:hidden"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <g id="Icons">
-                                <path
-                                    d="M30 14 28 14 28 82.022 68 82.022 68 14 30 14ZM66 80.022 30 80.022 30 16 66 16Z" />
-                                <path
-                                    d="M71 4 25 4C23.8968 4.00329 23.0033 4.8968 23 6L23 90.025C23.0038 91.128 23.897 92.0212 25 92.025L71 92.025C72.1027 92.0206 72.9956 91.1277 73 90.025L73 6C72.9962 4.89703 72.103 4.00384 71 4ZM71 90.025 25 90.025 25 6 71 6Z" />
-                                <path
-                                    d="M44 11 53 11C53.5523 11 54 10.5523 54 10 54 9.44771 53.5523 9 53 9L44 9C43.4477 9 43 9.44771 43 10 43 10.5523 43.4477 11 44 11Z" />
-                            </g>
-                        </svg></span></span><span
-                    style="height:0pt; text-align:left; display:block; position:absolute; z-index:-65535"><span
-                        style="margin-top:22.58pt; margin-left:233.98pt; -aw-left-pos:232.45pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:21.05pt; -aw-wrap-type:none; position:absolute"><svg
-                            height="17.81" id="Icons_World_M" overflow="hidden" viewBox="0 0 96 96" width="17.81"
-                            xmlns="http://www.w3.org/2000/svg" style="overflow:hidden"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <g id="Icons">
-                                <path
-                                    d="M48 11 48 11C27.6 11 11 27.6 11 48 11 68.4 27.6 85 48 85 68.4 85 85 68.4 85 48 85 27.6 68.4 11 48 11ZM83 47 67 47C66.7 33.5 60.8 20.9 51.2 13.2 68.8 14.8 82.4 29.3 83 47ZM47 47 31 47C31.3 33.6 37.3 21.2 47 14L47 47ZM47 49 47 82C37.3 74.7 31.3 62.3 31 49L47 49ZM49 49 65 49C64.7 62.4 58.7 74.8 49 82L49 49ZM49 47 49 14C58.7 21.3 64.7 33.7 65 47L49 47ZM44.8 13.2C35.2 20.9 29.3 33.5 29 47L13 47C13.6 29.3 27.2 14.8 44.8 13.2ZM13 49 29 49C29.3 62.5 35.2 75.1 44.8 82.8 27.2 81.2 13.6 66.7 13 49ZM51.2 82.8C60.8 75.1 66.7 62.5 67 49L83 49C82.5 66.5 69.2 80.9 51.9 82.8 51.6 82.8 51.2 82.8 51.2 82.8Z" />
-                            </g>
-                        </svg></span></span><span
-                    style="height:0pt; text-align:left; display:block; position:absolute; z-index:-65533"><span
-                        style="margin-top:24.17pt; margin-left:93.69pt; -aw-left-pos:92.3pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:21.25pt; -aw-wrap-type:none; position:absolute"><svg
-                            height="17.81" id="Icons_Envelope_M" overflow="hidden" viewBox="0 0 96 96" width="17.81"
-                            xmlns="http://www.w3.org/2000/svg" style="overflow:hidden"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <defs />
-                            <g id="Icons">
-                                <path
-                                    d="M10 21 10 75 86 75 86 21ZM50.122 55.464C48.948 56.631 47.052 56.631 45.878 55.464L13.431 23.017C13.4271 23.0131 13.4272 23.0067 13.4311 23.0029 13.433 23.0011 13.4354 23 13.438 23L82.562 23C82.5675 23.0001 82.5719 23.0046 82.5719 23.0101 82.5718 23.0127 82.5708 23.0152 82.569 23.017ZM35.586 48 12.017 71.569C12.0131 71.5729 12.0067 71.5728 12.0029 71.5689 12.0011 71.567 12 71.5646 12 71.562L12 24.438C12.0001 24.4325 12.0046 24.4281 12.0101 24.4281 12.0127 24.4282 12.0152 24.4292 12.017 24.431ZM37 49.414 44.464 56.878C46.4164 58.8309 49.5822 58.8313 51.5351 56.8789 51.5354 56.8786 51.5357 56.8783 51.536 56.878L59 49.414 82.569 72.983C82.5729 72.9869 82.5728 72.9933 82.5689 72.9971 82.567 72.9989 82.5646 73 82.562 73L13.438 73C13.4325 72.9999 13.4281 72.9954 13.4281 72.9899 13.4282 72.9873 13.4292 72.9848 13.431 72.983ZM60.414 48 83.983 24.431C83.9869 24.4271 83.9933 24.4272 83.9971 24.4311 83.9989 24.433 84 24.4354 84 24.438L84 71.562C83.9999 71.5675 83.9954 71.5719 83.9899 71.5719 83.9873 71.5718 83.9848 71.5708 83.983 71.569Z" />
-                            </g>
-                        </svg></span></span><span>Main Office: // Plant: Calle La Oroya S/n Urb. Parque Porcino – Callao
-                    6 // Agency: </span><br /><span>+511 622 7488 </span><span style="-aw-import:spaces">&#xa0;&#xa0;
-                </span><span>//</span><span
-                    style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                </span><span>+51 981 491 171 </span><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0; </span><span>//
-                </span><span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                </span><span>+51 983 447 152</span><br /><span>inbox@peruinkagroup.com</span><span
-                    style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-                </span><span>WWW.peruinkagroup.com</span></p>
-        </div>
-    </div>
+	<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+		</title>
+		<link rel="stylesheet" type="text/css" href="1730590394_plantilla/styles.css" media="all" />
+	</head>
+	<body>
+		<div class="wcdiv wcpage" style="width:595.3pt; height:841.9pt;">
+			<div class="wcdiv" style="left:476.1pt; top:36.6pt;">
+				<div class="wcdiv" style="left:0pt; top:0pt; width:91px; height:37px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-1.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,68.15pt,24.75pt,0.25pt);">
+					<div class="wcdiv" style="left:7.45pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv">
+				<img class="wcimg" style="left:63.6pt; top:14pt; width:86.7pt; height:86.7pt;" src="1730590394_plantilla/1730590394_plantilla-2.png" />
+			</div>
+			<div class="wcdiv">
+				<img class="wcimg" style="left:85.08pt; top:209.87pt; width:453.5pt; height:453.5pt;" src="1730590394_plantilla/1730590394_plantilla-3.png" />
+			</div>
+			<div class="wcdiv" style="left:85.05pt; top:28.35pt; clip:rect(0pt,510.25pt,49.3pt,-85.05pt);">
+				<span class="wcspan wctext001" style="font-size:10pt; color:#3a7c22; left:164.52pt; top:0.33pt; line-height:11.17pt;">"Peruanos cuidando el Medio Ambiente Acuático"</span>
+				<span class="wcspan wctext001" style="font-size:16pt; color:#0f4761; left:200pt; top:12.02pt; line-height:17.88pt;">PI-WDR</span>
+				<span class="wcspan wctext001" style="font-size:16pt; color:#ff0000; left:280pt; top:12.02pt; line-height:17.88pt;">N°003800</span>
+			</div>
+			<div class="wcdiv" style="left:85.05pt; top:796.6pt; clip:rect(0pt,510.25pt,37.8pt,-85.05pt);">
+				<span class="wcspan wctext001" style="font-size:8pt; left:13.12pt; top:0.26pt; line-height:8.94pt;">Main Office: // Calle La Oroya Mz 23 Lte A-1 Parque Porcino – Callao 6 // Agency: Calle Banla de Marineros Mz T Lte 6 - </span>
+				<span class="wcspan wctext001" style="font-size:8pt; left:100.27pt; top:9.46pt; line-height:8.94pt;">Chancay // Agency: Barrio de Estibadores M15 Pariñas – Talara - Piura</span>
+				<span class="wcspan wctext001" style="font-size:8pt; left:97.46pt; top:18.66pt; line-height:8.94pt;">+511 622 7488    //              +51 981 491 171     //           +51 983 447 152</span>
+				<span class="wcspan wctext001" style="font-size:8pt; left:110pt; top:27.86pt; line-height:8.94pt;">inbox@peruinkagroup.com                    WWW.peruinkagroup.com</span>
+			</div>
+			<div class="wcdiv" style="left:187.31pt; top:815.24pt;" title="Telephone contorno">
+				<div class="wcdiv" style="clip:rect(0pt,11.65pt,12.65pt,0pt);">
+					<div class="wcdiv" style="left:1.09pt; top:2.18pt; width:15px; height:15px;">
+						<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-4.svg"></object>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:318.32pt; top:825.42pt;" title="World contorno">
+				<div class="wcdiv" style="clip:rect(0pt,10.09pt,11.09pt,0pt);">
+					<div class="wcdiv" style="left:1.16pt; top:1.16pt; width:15px; height:15px;">
+						<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-5.svg"></object>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:273.5pt; top:815.43pt;" title="Smart Phone contorno">
+				<div class="wcdiv" style="clip:rect(0pt,10.37pt,11.37pt,0pt);">
+					<div class="wcdiv" style="left:2.49pt; top:0.43pt; width:15px; height:15px;">
+						<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-6.svg"></object>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:192.87pt; top:826.25pt;" title="Envelope contorno">
+				<div class="wcdiv" style="clip:rect(0pt,10.59pt,11.59pt,0pt);">
+					<div class="wcdiv" style="left:1.1pt; top:2.32pt; width:15px; height:15px;">
+						<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-7.svg"></object>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:361.03pt; top:815.1pt;" title="Smart Phone contorno">
+				<div class="wcdiv" style="clip:rect(0pt,10.37pt,11.37pt,0pt);">
+					<div class="wcdiv" style="left:2.49pt; top:0.43pt; width:15px; height:15px;">
+						<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-8.svg"></object>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:441pt; top:703.39pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:161px; height:106px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-9.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,120.3pt,75.9pt,0.25pt);">
+					<div class="wcdiv" style="left:7.45pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:234.5pt; top:658.3pt;">
+				<div class="wcdiv" style="left:0pt; top:0pt; width:36px; height:27px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-10.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,26.5pt,17.65pt,0.25pt);">
+					<div class="wcdiv" style="left:7.45pt; top:3.85pt;">
+						<div class="wcdiv" style="top:3.11pt;">
+							<div class="wcdiv" style="clip:rect(-0.23pt,17.41pt,793.52pt,-6.13pt);">
+								<div class="wcdiv" style="top:0.14pt;">
+									<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">(𝑚</span>
+								</div>
+							</div>
+							<div class="wcdiv" style="clip:rect(-0.71pt,19.92pt,572.83pt,6.52pt);">
+								<div class="wcdiv" style="left:11.28pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+									<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+								</div>
+							</div>
+							<div class="wcdiv" style="clip:rect(-0.23pt,25.2pt,793.52pt,9.21pt);">
+								<div class="wcdiv" style="left:15.34pt; top:0.14pt;">
+									<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:532.25pt; top:658.3pt;">
+				<div class="wcdiv" style="left:0pt; top:0pt; width:36px; height:27px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-10.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,26.5pt,17.65pt,0.25pt);">
+					<div class="wcdiv" style="left:7.45pt; top:3.85pt;">
+						<div class="wcdiv" style="top:3.11pt;">
+							<div class="wcdiv" style="clip:rect(-0.23pt,17.41pt,793.52pt,-6.13pt);">
+								<div class="wcdiv" style="top:0.14pt;">
+									<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">(𝑚</span>
+								</div>
+							</div>
+							<div class="wcdiv" style="clip:rect(-0.71pt,19.92pt,572.83pt,6.52pt);">
+								<div class="wcdiv" style="left:11.28pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+									<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+								</div>
+							</div>
+							<div class="wcdiv" style="clip:rect(-0.23pt,25.2pt,793.52pt,9.21pt);">
+								<div class="wcdiv" style="left:15.34pt; top:0.14pt;">
+									<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:242pt; top:712.09pt;">
+				<div class="wcdiv" style="clip:rect(0pt,58.33pt,60.7pt,0pt);">
+					<img class="wcimg" style="left:0pt; top:0pt; width:58.33pt; height:59.7pt;" src="1730590394_plantilla/1730590394_plantilla-11.png" />
+				</div>
+			</div>
+			<div class="wcdiv">
+				<img class="wcimg" style="left:125.7pt; top:655.29pt; width:169.4pt; height:180.65pt;" src="1730590394_plantilla/1730590394_plantilla-12.png" />
+			</div>
+			<div class="wcdiv" style="left:85.05pt; top:76.65pt;">
+				<div class="wcdiv" style="left:-35.45pt;">
+					<span class="wcspan wctext001" style="font-size:10pt; left:103.4pt; top:0.33pt; line-height:11.17pt;">STANDART FORMAT FOR THE WASTE DELIVERY RECEIPT</span>
+					<span class="wcspan wctext001" style="font-size:10pt; left:78.67pt; top:13.65pt; line-height:11.17pt;">FORMATO ESTANDAR PARA RECEPCION Y ENTREGA DE RESIDUOS</span>
+				</div>
+				<div class="wcdiv" style="left:-35.45pt; top:34.64pt;">
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">1.</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:18pt; top:0.29pt; line-height:10.05pt;">RECEPTION FACILITY AND PORT PARTICULARS</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:18pt; top:12.28pt; line-height:10.05pt;">Datos del Receptor y de la Instalación Portuaria</span>
+				</div>
+				<div class="wcdiv" style="left:-35.45pt; top:58.61pt;">
+					<div class="wcdiv" style="clip:rect(0.5pt,220.35pt,22.82pt,0.25pt);">
+						<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">1.1 Location / Terminal name:</span>
+							<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:10.92pt; line-height:8.94pt;">       Ubicación / Nombre del Terminal:</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:21.82pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,220.35pt,22.82pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">1.2 Reception facility provider:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:10.92pt; line-height:8.94pt;">       Proveedor de la Instalación receptora:</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:43.64pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,220.35pt,22.82pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">1.3 Treatment facility provider – if different from above:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:10.92pt; line-height:8.94pt;">       Proveedor de la instalación de tratamiento:</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:65.46pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,220.35pt,22.82pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">1.4 Waste dischargue date and time from:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:10.92pt; line-height:8.94pt;">       Fecha y hora de la descarga de los residuos:</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:220.6pt; clip:rect(0.5pt,80.5pt,22.82pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; color:#666666; left:22.45pt; top:4.33pt; line-height:11.17pt;">Fecha</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:301.35pt; clip:rect(0.5pt,35.2pt,22.82pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">From:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:10.92pt; line-height:8.94pt;">Inicio:</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:389.85pt; clip:rect(0.5pt,49.35pt,22.82pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.27pt; line-height:8.94pt;">To:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:-3.6pt; top:10.92pt; line-height:8.94pt;">Termino:</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:0.5pt; width:0pt; height:86.78pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:220.35pt; top:0.5pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:220.35pt; top:22.32pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:220.35pt; top:44.14pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:220.35pt; top:65.96pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:510.1pt; top:0.5pt; width:0pt; height:86.78pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:301.1pt; top:65.96pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:336.55pt; top:65.96pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:389.6pt; top:65.96pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:439.2pt; top:65.96pt; width:0pt; height:21.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:0pt; width:510.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:21.82pt; width:509.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:43.64pt; width:509.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:65.46pt; width:509.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:87.28pt; width:510.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+				</div>
+				<div class="wcdiv" style="left:-35.45pt; top:146.39pt;">
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">2.</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:18pt; top:0.29pt; line-height:10.05pt;">SHIP PARTICULARS</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:18pt; top:12.28pt; line-height:10.05pt;">DATOS DEL BUQUE</span>
+				</div>
+				<div class="wcdiv" style="left:-35.45pt; top:170.36pt;">
+					<div class="wcdiv" style="clip:rect(0.5pt,102pt,19.9pt,0.25pt);">
+						<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">2.1 Name of ship:</span>
+							<span class="wcspan wctext001" style="font-size:8pt; left:11.6pt; top:9.46pt; line-height:8.94pt;">Nombre del buque:</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:215.65pt; clip:rect(0.5pt,134.45pt,19.9pt,0.25pt);">
+						<div class="wcdiv" style="left:6.9pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">2.5 Owner or operator:</span>
+							<span class="wcspan wctext001" style="font-size:8pt; left:14.2pt; top:9.46pt; line-height:8.94pt;">Armador / Operador:</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:18.9pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,102pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">2.2 IMO number:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:11.6pt; top:9.46pt; line-height:8.94pt;">Número IMO:</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:215.65pt; clip:rect(0.5pt,134.45pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">2.6 Distintive number or letters:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:15.7pt; top:9.46pt; line-height:8.94pt;">Indicativo de llamada:</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:37.8pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,102pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">2.3 Gross tonnage:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:11.6pt; top:9.46pt; line-height:8.94pt;">Tonelaje bruto:</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:215.65pt; clip:rect(0.5pt,134.45pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">2.7 Flag State:</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:15.7pt; top:9.46pt; line-height:8.94pt;">Bandera:</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:56.69pt;">
+						<div class="wcdiv" style="clip:rect(0pt,510.1pt,27.95pt,0.25pt);">
+							<div class="wcdiv" style="left:3.5pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:1.2pt; line-height:8.94pt;">2.4 Type of ship</span>
+								<span class="wcspan wctext001" style="font-size:9pt; left:56.92pt; top:0.29pt; line-height:10.05pt;">:                </span>
+								<span class="wcspan wctext001" style="font-size:7pt; left:99.43pt; top:2.11pt; line-height:7.82pt;">      </span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:111.1pt; top:3.01pt; line-height:6.7pt;">Oil tanker / Petrolero                                        Chemical tanker / Quimiquero                      Bulk Carrier / Granelero                 Container / </span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:0pt; top:10.55pt; line-height:6.7pt;">Portacontenedor</span>
+								<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:16.6pt; line-height:10.05pt;">       </span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:17.5pt; top:17.51pt; line-height:8.94pt;">Tipo de buque:                  </span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:110.89pt; top:19.32pt; line-height:6.7pt;">Other cargo ship / otro tipo carga               Passenger ship / Buque pasaje                     Ro/ro / Carga rodante                      Other (Specify) / Otros</span>
+								<span class="wcspan wctext001" style="font-size:9pt; left:496.39pt; top:16.6pt; line-height:10.05pt;"> </span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:0.5pt; width:0pt; height:83.14pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:102pt; top:0.5pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:102pt; top:19.4pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:102pt; top:38.3pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:215.4pt; top:0.5pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:215.4pt; top:19.4pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:215.4pt; top:38.3pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:350.1pt; top:0.5pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:350.1pt; top:19.4pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:350.1pt; top:38.3pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:510.1pt; top:0.5pt; width:0pt; height:83.14pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:0pt; width:510.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:18.9pt; width:509.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:37.8pt; width:509.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:56.69pt; width:509.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:83.64pt; width:510.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+				</div>
+				<div class="wcdiv" style="left:-42.55pt; top:254.5pt;">
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">3.</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:25.1pt; top:0.29pt; line-height:10.05pt;">TYPE AND AMOUNT OF WASTE RECEIVED</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:25.1pt; top:12.28pt; line-height:10.05pt;">TIPO Y CANTIDAD DE RESIDUOS RECIBIDOS</span>
+				</div>
+				<div class="wcdiv" style="left:-35.45pt; top:278.48pt;">
+					<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,36pt,0.25pt);">
+						<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:7.19pt; line-height:10.05pt;">MARPOL Annex I – OIL / </span>
+							<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:17.54pt; line-height:10.05pt;">Petroleo</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,36pt,0.25pt);">
+						<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:9pt; left:3.24pt; top:12.97pt; line-height:10.05pt;">Quantity (</span>
+							<div class="wcdiv" style="left:42.26pt; top:11.47pt;">
+								<div class="wcdiv" style="clip:rect(-0.23pt,13.67pt,793.52pt,-6.13pt);">
+									<div class="wcdiv" style="top:0.14pt;">
+										<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">𝑚</span>
+									</div>
+								</div>
+								<div class="wcdiv" style="clip:rect(-0.71pt,16.18pt,572.83pt,2.78pt);">
+									<div class="wcdiv" style="left:7.55pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+										<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+									</div>
+								</div>
+							</div>
+							<span class="wcspan wctext001" style="font-size:9pt; left:53.86pt; top:12.97pt; line-height:10.05pt;">)</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,36pt,0.25pt);">
+						<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">MARPOL Annex V </span>
+							<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:10.64pt; line-height:10.05pt;">PART I      </span>
+							<span class="wcspan wctext001" style="font-size:6pt; left:44.01pt; top:13.36pt; line-height:6.7pt;">For all garbage different to cargo residues</span>
+							<span class="wcspan wctext001" style="font-size:6pt; left:0pt; top:20.89pt; line-height:6.7pt;">                             Para toda basura distinta de los residuos de carga </span>
+							<span class="wcspan wctext001" style="font-size:6pt; left:0pt; top:27.79pt; line-height:6.7pt;">                             For all ships / Para todo tipo de buques</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:432.35pt; clip:rect(0.5pt,77.7pt,36pt,0.25pt);">
+						<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+							<span class="wcspan wctext001" style="font-size:9pt; left:6.79pt; top:12.97pt; line-height:10.05pt;">Quantity (</span>
+							<div class="wcdiv" style="left:45.81pt; top:11.47pt;">
+								<div class="wcdiv" style="clip:rect(-0.23pt,13.67pt,793.52pt,-6.13pt);">
+									<div class="wcdiv" style="top:0.14pt;">
+										<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">𝑚</span>
+									</div>
+								</div>
+								<div class="wcdiv" style="clip:rect(-0.71pt,16.18pt,572.83pt,2.78pt);">
+									<div class="wcdiv" style="left:7.55pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+										<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+									</div>
+								</div>
+							</div>
+							<span class="wcspan wctext001" style="font-size:9pt; left:57.41pt; top:12.97pt; line-height:10.05pt;">)</span>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:35pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Oily bilge water</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Achique de aguas oleosas</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">A. Plastics</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Plásticos</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:53.89pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Oily residues (sludge)</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Residuos oleosos</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">B. Food wastes</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Desechos de alimentos</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:72.79pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Oily tank washings</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Residuos de lavado de tanques</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">C. Domestic wastes</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Desechos domésticos</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:91.69pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Dirty ballast wáter</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Agua de lastre sucio</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">D. Cooking oil</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Aceite de cocina</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:110.59pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Scale and sludge from tank cleaning</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Lodos, sarro de limpieza de tanques</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">E. Incinerator ashes</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Cenizas del incinerador</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:129.49pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Other (please specify)</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Otros (especificar)</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">F. Operational wastes</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Desechos operacionales</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:148.38pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">MARPOL Annex II – NLS</span>
+								<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:10.64pt; line-height:10.05pt;">Sustancias Nocivas</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:9pt; left:2.88pt; top:6.07pt; line-height:10.05pt;">Quantity (</span>
+								<div class="wcdiv" style="left:41.89pt; top:4.57pt;">
+									<div class="wcdiv" style="clip:rect(-0.23pt,13.67pt,793.52pt,-6.13pt);">
+										<div class="wcdiv" style="top:0.14pt;">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">𝑚</span>
+										</div>
+									</div>
+									<div class="wcdiv" style="clip:rect(-0.71pt,16.18pt,572.83pt,2.78pt);">
+										<div class="wcdiv" style="left:7.55pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+										</div>
+									</div>
+								</div>
+								<div class="wcdiv" style="left:53.49pt; top:6.26pt;">
+									<div class="wcdiv" style="clip:rect(-1.93pt,9.86pt,791.82pt,-6.13pt);">
+										<div class="wcdiv" style="top:-1.55pt;">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">)</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">G. Animal carcass(es)</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Cadáveres de animales</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:169.58pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Category X substance</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Sustancias de categoría X</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">H. Fishing gear</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">     Artes de pesca</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:188.48pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Category Y substance</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Sustancias de categoría Y</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">I. E-waste</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">    Residuos de aparatos eléctricos y electrónicos</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:207.38pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,32.55pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">Category Z substance</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Sustancias de categoría Z</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,32.55pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:10.1pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,32.55pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">PART II     </span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:44.01pt; top:3.01pt; line-height:6.7pt;">For all cargo residues / Para todos los residuos de </span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:0pt; top:10.55pt; line-height:6.7pt;">carga </span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:0pt; top:17.44pt; line-height:6.7pt;">                             For solid bulk cargo ships</span>
+								<span class="wcspan wctext001" style="font-size:6pt; left:0pt; top:24.34pt; line-height:6.7pt;">                             Para buques que transporten carga solida a granel</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:432.35pt; clip:rect(0.5pt,77.7pt,32.55pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:9pt; left:6.79pt; top:11.25pt; line-height:10.05pt;">Quantity (</span>
+								<div class="wcdiv" style="left:45.81pt; top:9.75pt;">
+									<div class="wcdiv" style="clip:rect(-0.23pt,13.67pt,793.52pt,-6.13pt);">
+										<div class="wcdiv" style="top:0.14pt;">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">𝑚</span>
+										</div>
+									</div>
+									<div class="wcdiv" style="clip:rect(-0.71pt,16.18pt,572.83pt,2.78pt);">
+										<div class="wcdiv" style="left:7.55pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+										</div>
+									</div>
+								</div>
+								<span class="wcspan wctext001" style="font-size:9pt; left:57.41pt; top:11.25pt; line-height:10.05pt;">)</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:238.92pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:0.26pt; line-height:8.94pt;">OS – other substance</span>
+								<span class="wcspan wctext001" style="font-size:8pt; left:0pt; top:9.46pt; line-height:8.94pt;">Otras sustancias</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:7pt; left:0pt; top:0.23pt; line-height:7.82pt;">J. Cargo residues (non-Harmful to the Marine Environment).</span>
+								<span class="wcspan wctext001" style="font-size:7pt; left:0pt; top:8.28pt; line-height:7.82pt;">     Residuos de carga no perjudiciales para el medio marino</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:432.35pt; clip:rect(0.5pt,77.7pt,19.9pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:31.94pt; top:3.78pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:257.82pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">MARPOL Annex IV – Sewage </span>
+								<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:10.64pt; line-height:10.05pt;">Aguas Residuales</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:9pt; left:3.24pt; top:6.07pt; line-height:10.05pt;">Quantity (</span>
+								<div class="wcdiv" style="left:42.26pt; top:4.57pt;">
+									<div class="wcdiv" style="clip:rect(-0.23pt,13.67pt,793.52pt,-6.13pt);">
+										<div class="wcdiv" style="top:0.14pt;">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">𝑚</span>
+										</div>
+									</div>
+									<div class="wcdiv" style="clip:rect(-0.71pt,16.18pt,572.83pt,2.78pt);">
+										<div class="wcdiv" style="left:7.55pt; top:-0.44pt; -webkit-transform:matrix(0.78,0,0,0.72,0,0); -moz-transform:matrix(0.78,0,0,0.72,0,0); -ms-transform:matrix(0.78,0,0,0.72,0,0); -o-transform:matrix(0.78,0,0,0.72,0,0); transform:matrix(0.78,0,0,0.72,0,0);">
+											<span class="wcspan wctext002" style="font-size:9pt; left:0pt; top:1.55pt; line-height:9pt;">3</span>
+										</div>
+									</div>
+								</div>
+								<span class="wcspan wctext001" style="font-size:9pt; left:53.86pt; top:6.07pt; line-height:10.05pt;">)</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="font-size:7pt; left:0pt; top:0.23pt; line-height:7.82pt;">K. Cargo residues (Harmful to the Marine Environment).</span>
+								<span class="wcspan wctext001" style="font-size:7pt; left:0pt; top:8.28pt; line-height:7.82pt;">     Residuos de carga perjudiciales para el medio marino</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:432.35pt; clip:rect(0.5pt,77.7pt,22.2pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:31.94pt; top:4.93pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:279.02pt;">
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,15.3pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:1.48pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:432.35pt; clip:rect(0.5pt,77.7pt,15.3pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:31.94pt; top:1.48pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="top:293.32pt;">
+						<div class="wcdiv" style="clip:rect(0.5pt,141.55pt,15.3pt,0pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="left:89.04pt; top:0.39pt; line-height:13.41pt;">TOTAL:</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:141.8pt; clip:rect(0.5pt,70.6pt,15.3pt,0.25pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext003" style="font-size:10pt; left:28.39pt; top:1.48pt; line-height:11.17pt;">-</span>
+							</div>
+						</div>
+						<div class="wcdiv" style="left:230.45pt; clip:rect(0.5pt,201.65pt,15.3pt,0pt);">
+							<div class="wcdiv" style="left:5.4pt; top:0.5pt;">
+								<span class="wcspan wctext001" style="left:149.14pt; top:0.39pt; line-height:13.41pt;">TOTAL:</span>
+							</div>
+						</div>
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:0.5pt; width:0pt; height:292.82pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:0.5pt; width:0pt; height:34.5pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:35.5pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:54.39pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:73.29pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:92.19pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:111.09pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:129.99pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:148.88pt; width:0pt; height:20.7pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:170.08pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:188.98pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:207.88pt; width:0pt; height:31.05pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:239.42pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:258.32pt; width:0pt; height:20.7pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:279.52pt; width:0pt; height:13.8pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:293.82pt; width:0pt; height:13.8pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:212.4pt; top:0.5pt; width:0pt; height:307.12pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.2pt; top:0pt; width:0pt; height:293.32pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:0.5pt; width:0pt; height:34.5pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:35.5pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:54.39pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:73.29pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:92.19pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:111.09pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:129.99pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:148.88pt; width:0pt; height:20.7pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:170.08pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:188.98pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:207.88pt; width:0pt; height:31.05pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:239.42pt; width:0pt; height:18.4pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:258.32pt; width:0pt; height:20.7pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:279.52pt; width:0pt; height:13.8pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:293.82pt; width:0pt; height:13.8pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:510.05pt; top:0.5pt; width:0pt; height:307.12pt; border-left:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:0pt; width:213.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.2pt; top:0pt; width:280.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:35pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:35pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:53.89pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:53.89pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:72.79pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:72.79pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:91.69pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:91.69pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:110.59pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:110.59pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:129.49pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:129.49pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:148.38pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:148.38pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:169.58pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:169.58pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:188.48pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:188.48pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:207.38pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:207.38pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:238.92pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:238.92pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:257.82pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:257.82pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:0.25pt; top:279.02pt; width:212.15pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.7pt; top:279.02pt; width:279.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:-0.25pt; top:293.32pt; width:212.65pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:230.2pt; top:293.32pt; width:279.85pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:141.55pt; top:307.62pt; width:71.35pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+					<div class="wcdiv" style="left:432.1pt; top:307.62pt; width:78.45pt; height:0pt; border-top:solid 0.75pt #000000;">
+					</div>
+				</div>
+				<div class="wcdiv" style="left:-35.45pt; top:586.6pt;">
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">Remarks // Observaciones </span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:12.28pt; line-height:10.05pt;">On behaf of the port facility I confirm that the above wastes were delivered.</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:24.27pt; line-height:10.05pt;">En representación de la Instalación portuaria, confirmo que fueron entregados los residuos arriba indicados.</span>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:85.05pt; top:707.2pt;">
+				<div class="wcdiv" style="left:-35.45pt;">
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">Port facility</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:12.28pt; line-height:10.05pt;">Full Name and Company Stamp</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:24.27pt; line-height:10.05pt;">Nombre y Sello de la Compañía:</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:36.26pt; line-height:10.05pt;">Signature</span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:48.24pt; line-height:10.05pt;">Firma: …………………………………. </span>
+					<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:72.22pt; line-height:10.05pt;">Port facility</span>
+				</div>
+				<div class="wcdiv" style="left:262.3pt;">
+					<div class="wcdiv" style="left:-35.45pt;">
+						<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:0.29pt; line-height:10.05pt;">Full Name and Company Stamp</span>
+						<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:12.28pt; line-height:10.05pt;">Nombre y Sello de la Compañía:</span>
+						<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:24.27pt; line-height:10.05pt;">Signature</span>
+						<span class="wcspan wctext001" style="font-size:9pt; left:0pt; top:36.26pt; line-height:10.05pt;">Nombre: …………………………</span>
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:134.53pt; top:318.1pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-13.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.6pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.5pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:134.36pt; top:306.48pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-14.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.61pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.49pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:236pt; top:306.25pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-13.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.6pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.5pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:236.27pt; top:317.81pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-14.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.61pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.49pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:341.08pt; top:306.57pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-14.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.61pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.49pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:341.02pt; top:317.58pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-14.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.61pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.49pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:422.25pt; top:307pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-13.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.6pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.5pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+			<div class="wcdiv" style="left:422.34pt; top:318.21pt;">
+				<div class="wcdiv" style="left:-0.25pt; top:-0.25pt; width:15px; height:15px;">
+					<object type="image/svg+xml" data="1730590394_plantilla/1730590394_plantilla-14.svg"></object>
+				</div>
+				<div class="wcdiv" style="clip:rect(3.85pt,10.61pt,5.15pt,0.25pt);">
+					<div class="wcdiv" style="left:11.49pt; top:3.85pt;">
+					</div>
+				</div>
+			</div>
+		</div>
+	<p style="bottom: 10px; right: 10px; position: absolute;"><a href="https://wordtohtml.net" target="_blank" style="font-size:11px; color: #d0d0d0">Convertido a HTML con WordToHTML.net</a></p>
 </body>
-
 </html>

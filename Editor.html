@@ -807,7 +807,7 @@
 
         tinymce.init({
             selector: '#editor',
-            height: 500,
+            height: '100%',
             menubar: true,
             plugins: [
                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
@@ -818,18 +818,59 @@
                 'bold italic backcolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-            content_style: 'body { font-family: "Noto Sans KR", sans-serif; font-size: 14px }',
+            content_style: `
+                body { 
+                    font-family: "Noto Sans KR", sans-serif; 
+                    font-size: 14px;
+                    margin: 0;
+                    padding: 0;
+                }
+                .wcpage {
+                    width: 595.3pt;
+                    height: 841.9pt;
+                    position: relative;
+                    background-color: white;
+                    margin: 0 auto;
+                }
+                .wcdiv {
+                    position: absolute;
+                }
+                .wcspan {
+                    position: absolute;
+                    white-space: nowrap;
+                }
+                .wctext001 {
+                    font-family: Arial, sans-serif;
+                }
+                .wctext002 {
+                    font-family: "Times New Roman", serif;
+                }
+                .wctext003 {
+                    font-family: Calibri, sans-serif;
+                }
+                img {
+                    max-width: none !important;
+                    display: block;
+                }
+                object[type="image/svg+xml"] {
+                    pointer-events: none;
+                }
+            `,
             setup: function (editor) {
                 editor.on('init', function () {
-                    // Cargar el contenido del archivo HTML "plantilla.html"
-                    fetch('plantilla.html')
-                        .then(response => response.text())
-                        .then(html => {
-                            editor.setContent(html);
-                        })
-                        .catch(error => console.error("Error al cargar el archivo HTML:", error));
+                    resetTemplate();
                 });
-            }
+            },
+            // Configuraciones para preservar el HTML original
+            extended_valid_elements: '*[*]',
+            valid_children: '+body[style]',
+            verify_html: false,
+            cleanup: false,
+            convert_fonts_to_spans: false,
+            remove_trailing_brs: false,
+            force_br_newlines: false,
+            force_p_newlines: false,
+            forced_root_block: false
         });
 
         const menuButton = document.querySelector('.menu-button');
@@ -935,17 +976,28 @@
         }
 
         function resetTemplate() {
-            // Cargar el contenido del archivo HTML "plantilla.html" nuevamente
             fetch('plantilla.html')
                 .then(response => response.text())
                 .then(html => {
-                    tinymce.get('editor').setContent(html);
+                    // Configurar el contenido directamente sin manipulación
+                    tinymce.get('editor').setContent(html, {
+                        format: 'raw',
+                        no_events: true, // Evita que se disparen eventos
+                        setup: (editor) => {
+                            // Desactivar la limpieza automática
+                            editor.settings.verify_html = false;
+                            editor.settings.cleanup = false;
+                            editor.settings.convert_fonts_to_spans = false;
+                            editor.settings.remove_trailing_brs = false;
+                            editor.settings.force_br_newlines = false;
+                            editor.settings.force_p_newlines = false;
+                            editor.settings.forced_root_block = false;
+                        }
+                    });
                 })
                 .catch(error => console.error("Error al cargar el archivo HTML:", error));
             
-            // Ocultar el modal de confirmación si está visible
             closeModal();
-            // Cerrar el menú si está abierto
             menuItems.classList.remove('active');
         }
 
