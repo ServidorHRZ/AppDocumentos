@@ -620,29 +620,6 @@
             max-width: none !important;
             height: auto !important;
         }
-
-        .last-file-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .last-file-button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-1px);
-        }
-
-        .last-file-button i {
-            font-size: 20px;
-        }
     </style>
 </head>
 
@@ -653,10 +630,6 @@
             Editor
         </div>
         <div class="header-actions">
-            <button class="last-file-button" onclick="showLastFile()">
-                <i class="material-icons">description</i>
-                Último PI-WDR
-            </button>
             <button class="reset-template" onclick="resetTemplate()">
                 <i class="material-icons">refresh</i>
                 Reiniciar Plantilla
@@ -672,6 +645,10 @@
                 <div class="menu-item" onclick="window.location.href='index.html'">
                     <i class="material-icons">arrow_back</i>
                     Regresar
+                </div>
+                <div class="menu-item" onclick="showLastFile()">
+                    <i class="material-icons">description</i>
+                    Último PI-WDR
                 </div>
                 <div class="menu-item" onclick="upload()">
                     <i class="material-icons">backup</i>
