@@ -412,22 +412,46 @@
 
         /* Estilos para el botón de reiniciar */
         .reset-template {
-            background-color: #f0f0f0;
-            border: none;
-            color: #333;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .reset-template:hover {
-            background-color: #e0e0e0;
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-template i {
+            font-size: 20px;
+        }
+
+        .reset-template:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .reset-template {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .reset-template i {
+                font-size: 18px;
+            }
         }
 
         /* Estilos específicos para el PDF */
@@ -1038,75 +1062,193 @@
         }
 
         function generateQRCode() {
-            const fileLink = localStorage.getItem('file_link'); // Obtener el enlace del archivo
+            const fileLink = localStorage.getItem('file_link');
             if (!fileLink) {
                 alert('No se pudo obtener el enlace del archivo.');
                 return;
             }
 
             const qr = new QRious({
-                value: fileLink, // Usar el enlace del archivo para el QR
-                size: 200
+                value: fileLink,
+                size: 300,
+                level: 'H', // Alta corrección de errores
+                background: '#ffffff',
+                foreground: '#000000',
+                padding: 0
             });
 
-            // Crear un nuevo modal o ventana para mostrar el código QR
-            const qrModal = document.createElement('div');
-            qrModal.style.position = 'fixed';
-            qrModal.style.top = '50%';
-            qrModal.style.left = '50%';
-            qrModal.style.transform = 'translate(-50%, -50%)';
-            qrModal.style.backgroundColor = '#fff';
-            qrModal.style.padding = '20px';
-            qrModal.style.borderRadius = '12px';
-            qrModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-            qrModal.style.zIndex = '1003';
-            qrModal.style.textAlign = 'center'; // Centrar el contenido
+            // Crear el contenedor principal con overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+                animation: fadeIn 0.3s ease;
+            `;
 
+            // Modal mejorado
+            const qrModal = document.createElement('div');
+            qrModal.style.cssText = `
+                background: #fff;
+                padding: 30px;
+                border-radius: 16px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                max-width: 90%;
+                width: 400px;
+                position: relative;
+                animation: slideUp 0.3s ease;
+            `;
+
+            // Título del modal
+            const title = document.createElement('h3');
+            title.textContent = 'Código QR del Documento';
+            title.style.cssText = `
+                margin: 0 0 20px 0;
+                color: #333;
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+            `;
+
+            // Contenedor de la imagen QR
+            const qrContainer = document.createElement('div');
+            qrContainer.style.cssText = `
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            `;
+
+            // Imagen QR
             const qrImage = document.createElement('img');
             qrImage.src = qr.toDataURL();
-            qrImage.style.marginBottom = '20px'; // Espacio entre el QR y los botones
-            qrModal.appendChild(qrImage);
+            qrImage.style.cssText = `
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+            `;
+            qrContainer.appendChild(qrImage);
 
+            // Contenedor de botones
             const buttonContainer = document.createElement('div');
-            buttonContainer.style.display = 'flex';
-            buttonContainer.style.justifyContent = 'center';
-            buttonContainer.style.gap = '10px'; // Espacio entre los botones
+            buttonContainer.style.cssText = `
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                flex-wrap: wrap;
+            `;
 
-            const downloadButton = document.createElement('button');
-            downloadButton.textContent = 'Descargar QR';
-            downloadButton.style.backgroundColor = 'var(--primary-color)';
-            downloadButton.style.color = 'white';
-            downloadButton.style.border = 'none';
-            downloadButton.style.padding = '10px 20px';
-            downloadButton.style.borderRadius = '8px';
-            downloadButton.style.cursor = 'pointer';
-            downloadButton.style.transition = 'background-color 0.3s ease';
+            // Botón de descarga
+            const downloadButton = createButton('Descargar QR', 'download');
             downloadButton.onclick = () => {
                 const link = document.createElement('a');
                 link.href = qr.toDataURL();
                 link.download = 'codigo_qr.png';
                 link.click();
             };
-            downloadButton.onmouseover = () => downloadButton.style.backgroundColor = 'var(--secondary-color)';
-            downloadButton.onmouseout = () => downloadButton.style.backgroundColor = 'var(--primary-color)';
-            buttonContainer.appendChild(downloadButton);
 
-            const closeButton = document.createElement('button');
-            closeButton.textContent = 'Cerrar';
-            closeButton.style.backgroundColor = 'var(--primary-color)';
-            closeButton.style.color = 'white';
-            closeButton.style.border = 'none';
-            closeButton.style.padding = '10px 20px';
-            closeButton.style.borderRadius = '8px';
-            closeButton.style.cursor = 'pointer';
-            closeButton.style.transition = 'background-color 0.3s ease';
-            closeButton.onclick = () => document.body.removeChild(qrModal);
-            closeButton.onmouseover = () => closeButton.style.backgroundColor = 'var(--secondary-color)';
-            closeButton.onmouseout = () => closeButton.style.backgroundColor = 'var(--primary-color)';
+            // Botón de compartir
+            const shareButton = createButton('Compartir', 'share');
+            shareButton.onclick = async () => {
+                try {
+                    await navigator.share({
+                        title: 'Código QR del Documento',
+                        text: 'Escanea este código QR para ver el documento',
+                        url: fileLink
+                    });
+                } catch (err) {
+                    console.log('Error al compartir:', err);
+                }
+            };
+
+            // Botón de cerrar
+            const closeButton = createButton('Cerrar', 'close');
+            closeButton.onclick = () => document.body.removeChild(overlay);
+
+            // Agregar botones al contenedor
+            buttonContainer.appendChild(downloadButton);
+            if (navigator.share) buttonContainer.appendChild(shareButton);
             buttonContainer.appendChild(closeButton);
 
+            // Ensamblar el modal
+            qrModal.appendChild(title);
+            qrModal.appendChild(qrContainer);
             qrModal.appendChild(buttonContainer);
-            document.body.appendChild(qrModal);
+            overlay.appendChild(qrModal);
+
+            // Agregar estilos de animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { transform: translateY(20px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Cerrar al hacer clic fuera del modal
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) document.body.removeChild(overlay);
+            });
+
+            document.body.appendChild(overlay);
+        }
+
+        // Función auxiliar para crear botones
+        function createButton(text, icon) {
+            const button = document.createElement('button');
+            button.style.cssText = `
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 8px;
+                background: var(--primary-color);
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            `;
+            
+            // Icono del botón
+            const iconElement = document.createElement('i');
+            iconElement.className = 'material-icons';
+            iconElement.textContent = icon;
+            iconElement.style.fontSize = '18px';
+            
+            button.appendChild(iconElement);
+            button.appendChild(document.createTextNode(text));
+
+            // Efectos hover
+            button.onmouseover = () => {
+                button.style.backgroundColor = 'var(--secondary-color)';
+                button.style.transform = 'translateY(-1px)';
+                button.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            };
+            button.onmouseout = () => {
+                button.style.backgroundColor = 'var(--primary-color)';
+                button.style.transform = 'translateY(0)';
+                button.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+            };
+
+            return button;
         }
 
         function resetTemplate() {
