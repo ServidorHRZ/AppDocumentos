@@ -835,30 +835,18 @@
                         container.innerHTML = tempDiv.innerHTML;
                         
                         const opt = {
-                            margin: [10, 10, 10, 10], // [top, right, bottom, left] en milímetros
+                            margin: [10, 10, 10, 10], // Márgenes en milímetros
                             filename: 'documento.pdf',
-                            image: { 
-                                type: 'png',
-                                quality: 1.0
-                            },
+                            image: { type: 'jpeg', quality: 0.98 },
                             html2canvas: {
-                                scale: 2,
+                                scale: 2, // Aumenta la escala para mejorar la calidad
                                 useCORS: true,
-                                allowTaint: true,
-                                logging: true,
-                                x: 10, // Offset X en píxeles
-                                y: 10, // Offset Y en píxeles
-                                onrendered: function(canvas) {
-                                    const ctx = canvas.getContext('2d');
-                                    ctx.imageSmoothingEnabled = true;
-                                }
+                                allowTaint: true
                             },
                             jsPDF: {
                                 unit: 'mm',
                                 format: 'a4',
-                                orientation: 'portrait',
-                                compress: true,
-                                padding: 10
+                                orientation: 'portrait'
                             }
                         };
 
