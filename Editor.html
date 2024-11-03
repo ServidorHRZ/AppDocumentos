@@ -620,6 +620,29 @@
             max-width: none !important;
             height: auto !important;
         }
+
+        .last-file-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .last-file-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .last-file-button i {
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -630,6 +653,10 @@
             Editor
         </div>
         <div class="header-actions">
+            <button class="last-file-button" onclick="showLastFile()">
+                <i class="material-icons">description</i>
+                Último PI-WDR
+            </button>
             <button class="reset-template" onclick="resetTemplate()">
                 <i class="material-icons">refresh</i>
                 Reiniciar Plantilla
@@ -689,6 +716,23 @@
                     Firmar PDF
                 </button>
                 <button class="modal-button secondary" onclick="closeModal()">
+                    <i class="material-icons">close</i>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar antes del cierre de body -->
+    <div id="lastFileModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="material-icons">description</i>
+            </div>
+            <h3>Último Archivo Guardado</h3>
+            <p id="lastFileName">Cargando...</p>
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="closeLastFileModal()">
                     <i class="material-icons">close</i>
                     Cerrar
                 </button>
@@ -1408,6 +1452,41 @@
             // Busca específicamente el patrón "PI-WDR N°" seguido de cualquier número
             const updatedContent = content.replace(/PI-WDR N° \d+/, `PI-WDR N° ${formattedNumber}`);
             editor.setContent(updatedContent);
+        }
+
+        async function showLastFile() {
+            try {
+                const response = await gapi.client.drive.files.list({
+                    'q': `name contains 'PI-WDR N°' and mimeType='application/pdf'`,
+                    'orderBy': 'modifiedTime desc',
+                    'pageSize': 1,
+                    'fields': 'files(name, modifiedTime)'
+                });
+
+                const files = response.result.files;
+                const lastFileModal = document.getElementById('lastFileModal');
+                const lastFileName = document.getElementById('lastFileName');
+
+                if (files && files.length > 0) {
+                    const file = files[0];
+                    const modifiedDate = new Date(file.modifiedTime).toLocaleString();
+                    lastFileName.innerHTML = `
+                        <strong>Nombre:</strong> ${file.name}<br>
+                        <strong>Última modificación:</strong> ${modifiedDate}
+                    `;
+                } else {
+                    lastFileName.textContent = 'No se encontraron archivos PI-WDR';
+                }
+
+                lastFileModal.style.display = 'block';
+            } catch (error) {
+                console.error('Error al obtener el último archivo:', error);
+                alert('Error al obtener el último archivo: ' + error.message);
+            }
+        }
+
+        function closeLastFileModal() {
+            document.getElementById('lastFileModal').style.display = 'none';
         }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
