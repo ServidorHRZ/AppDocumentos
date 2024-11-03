@@ -429,6 +429,113 @@
         .reset-template:hover {
             background-color: #e0e0e0;
         }
+
+        /* Estilos específicos para el PDF */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .wcpage {
+                width: 21cm;
+                min-height: 29.7cm;
+                padding: 2cm;
+                margin: 0 auto;
+                background: white;
+                position: relative;
+                page-break-after: always;
+            }
+            
+            table {
+                width: 100% !important;
+                margin-bottom: 1em;
+                border-collapse: collapse;
+                page-break-inside: avoid;
+            }
+            
+            td, th {
+                padding: 8px;
+                position: relative;
+            }
+            
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                position: relative !important;
+            }
+            
+            p {
+                margin: 0 0 1em 0;
+                line-height: 1.3;
+            }
+        }
+
+        /* Ajustes adicionales para el contenedor del editor */
+        .tox.tox-tinymce {
+            margin: 0 auto !important;
+            max-width: 21cm !important;
+        }
+
+        /* Asegurar que las imágenes mantengan su posición */
+        [style*="position:absolute"] {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+
+        /* Estilos específicos para la generación del PDF */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            table {
+                width: 100% !important;
+                border-collapse: collapse;
+                page-break-inside: avoid;
+            }
+
+            td, th {
+                padding: 8px;
+                position: relative;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto !important;
+                position: relative !important;
+            }
+
+            [style*="position:absolute"] {
+                position: relative !important;
+                transform: none !important;
+            }
+        }
+
+        /* Estilos para el editor */
+        .tox.tox-tinymce {
+            margin: 0 auto !important;
+            max-width: 210mm !important;
+        }
+
+        /* Ajustes para elementos con posición absoluta */
+        [data-mce-style*="position:absolute"] {
+            position: absolute !important;
+            transform: none !important;
+        }
+
+        /* Asegurar que las imágenes mantengan sus dimensiones */
+        img {
+            max-width: none !important;
+            height: auto !important;
+        }
     </style>
 </head>
 
@@ -591,88 +698,115 @@
         function upload() {
             const content = tinymce.get('editor').getContent();
             if (content != "") {
-                // Crear elemento HTML temporal
-                const element = document.createElement('div');
-                element.style.cssText = `
-            padding: 3.5cm 4cm;
-            font-family: Arial, sans-serif;
-            font-size: 12pt;
-            line-height: 2;
-            color: black;
-            background-color: white;
-            width: 21.59cm;
-            min-height: 33.02cm;
-            margin: 0 auto;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            box-sizing: border-box;
-            text-align: justify;
-            display: block;
-        `;
+                // Primero, vamos a pre-cargar todas las imágenes
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = content;
+                const images = tempDiv.getElementsByTagName('img');
+                
+                // Convertir las imágenes a Data URLs de manera síncrona
+                const loadImage = (imgElement) => {
+                    return new Promise((resolve, reject) => {
+                        // Si la imagen ya es un Data URL, no necesitamos convertirla
+                        if (imgElement.src.startsWith('data:')) {
+                            resolve(imgElement);
+                            return;
+                        }
 
-                element.innerHTML = content;
-                document.body.appendChild(element);
-
-                const opt = {
-                    margin: 0,
-                    filename: 'documento.pdf',
-                    image: { type: 'jpeg', quality: 1 },
-                    html2canvas: {
-                        scale: 4,
-                        useCORS: true,
-                        logging: true,
-                        letterRendering: true
-                    },
-                    jsPDF: {
-                        unit: 'cm',
-                        format: 'legal',
-                        orientation: 'portrait'
-                    }
+                        // Si la imagen es una URL, la convertimos a Data URL
+                        const img = new Image();
+                        img.crossOrigin = 'Anonymous';  // Importante para imágenes externas
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = this.width;
+                            canvas.height = this.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(this, 0, 0);
+                            imgElement.src = canvas.toDataURL('image/png');
+                            resolve(imgElement);
+                        };
+                        img.onerror = reject;
+                        img.src = imgElement.src;
+                    });
                 };
 
-                // Generar PDF y subir a Drive
-                html2pdf().from(element).set(opt).outputPdf('blob').then(blob => {
-                    document.body.removeChild(element);
+                // Cargar todas las imágenes antes de generar el PDF
+                Promise.all(Array.from(images).map(img => loadImage(img)))
+                    .then(() => {
+                        const container = document.createElement('div');
+                        container.innerHTML = tempDiv.innerHTML;
+                        
+                        const opt = {
+                            margin: [10, 10, 10, 10], // [top, right, bottom, left] en milímetros
+                            filename: 'documento.pdf',
+                            image: { 
+                                type: 'png',
+                                quality: 1.0
+                            },
+                            html2canvas: {
+                                scale: 2,
+                                useCORS: true,
+                                allowTaint: true,
+                                logging: true,
+                                x: 10, // Offset X en píxeles
+                                y: 10, // Offset Y en píxeles
+                                onrendered: function(canvas) {
+                                    const ctx = canvas.getContext('2d');
+                                    ctx.imageSmoothingEnabled = true;
+                                }
+                            },
+                            jsPDF: {
+                                unit: 'mm',
+                                format: 'a4',
+                                orientation: 'portrait',
+                                compress: true,
+                                padding: 10
+                            }
+                        };
 
-                    const parentFolder = localStorage.getItem('parent_folder');
-                    var twoWords = content.split(' ').slice(0, 2).join('-');
+                        html2pdf().from(container).set(opt).outputPdf('blob').then(blob => {
+                            // Continuar con el código existente para subir el PDF
+                            const parentFolder = localStorage.getItem('parent_folder');
+                            var twoWords = content.split(' ').slice(0, 2).join('-');
+                            var metadata = {
+                                name: twoWords + '-' + Math.floor(Math.random() * 10000) + '.pdf',
+                                mimeType: 'application/pdf',
+                                parents: [parentFolder]
+                            };
 
-                    var metadata = {
-                        name: twoWords + '-' + Math.floor(Math.random() * 10000) + '.pdf',
-                        mimeType: 'application/pdf',
-                        parents: [parentFolder]
-                    };
+                            var formData = new FormData();
+                            formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+                            formData.append("file", blob);
 
-                    var formData = new FormData();
-                    formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-                    formData.append("file", blob);
-
-                    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
-                        method: 'POST',
-                        headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
-                        body: formData
-                    }).then(function (response) {
-                        if (!response.ok) {
-                            throw new Error('Error en la respuesta del servidor');
-                        }
-                        return response.json();
-                    }).then(function (value) {
-                        console.log('Archivo subido:', value);
-                        showList();
-                        showModal(); // Mostrar el modal de confirmación
-
-                        // Guardar el enlace del archivo para el QR
-                        const fileId = value.id;
-                        const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
-                        localStorage.setItem('file_link', fileLink); // Guardar el enlace en localStorage
-                    }).catch(error => {
-                        console.error('Error al subir:', error);
-                        alert('Error al subir el archivo: ' + error.message);
+                            fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+                                method: 'POST',
+                                headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
+                                body: formData
+                            }).then(function (response) {
+                                if (!response.ok) {
+                                    throw new Error('Error en la respuesta del servidor');
+                                }
+                                return response.json();
+                            }).then(function (value) {
+                                console.log('Archivo subido:', value);
+                                showList();
+                                showModal();
+                                const fileId = value.id;
+                                const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+                                localStorage.setItem('file_link', fileLink);
+                            }).catch(error => {
+                                console.error('Error al subir:', error);
+                                alert('Error al subir el archivo: ' + error.message);
+                            });
+                        }).catch(error => {
+                            console.error('Error al generar PDF:', error);
+                            alert('Error al generar el PDF: ' + error.message);
+                            document.body.removeChild(container);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar las imágenes:', error);
+                        alert('Error al cargar las imágenes. Por favor, intente nuevamente.');
                     });
-                }).catch(error => {
-                    console.error('Error al generar PDF:', error);
-                    alert('Error al generar el PDF: ' + error.message);
-                });
             } else {
                 alert('Por favor, ingrese algún texto antes de crear el PDF');
             }
