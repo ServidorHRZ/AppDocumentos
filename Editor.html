@@ -793,111 +793,162 @@
             })
         }
 
-        // now create a function to upload file
-        function upload() {
-            const content = tinymce.get('editor').getContent();
-            if (content != "") {
-                // Primero, vamos a pre-cargar todas las imágenes
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = content;
-                const images = tempDiv.getElementsByTagName('img');
-                
-                // Convertir las imágenes a Data URLs de manera síncrona
-                const loadImage = (imgElement) => {
-                    return new Promise((resolve, reject) => {
-                        // Si la imagen ya es un Data URL, no necesitamos convertirla
-                        if (imgElement.src.startsWith('data:')) {
-                            resolve(imgElement);
-                            return;
-                        }
+        function padNumber(number) {
+            // Asegura que el número tenga exactamente 6 dígitos
+            return number.toString().padStart(6, '0');
+        }
 
-                        // Si la imagen es una URL, la convertimos a Data URL
-                        const img = new Image();
-                        img.crossOrigin = 'Anonymous';  // Importante para imágenes externas
-                        img.onload = function() {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = this.width;
-                            canvas.height = this.height;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(this, 0, 0);
-                            imgElement.src = canvas.toDataURL('image/png');
-                            resolve(imgElement);
-                        };
-                        img.onerror = reject;
-                        img.src = imgElement.src;
-                    });
-                };
+        async function getLastSequentialNumber() {
+            try {
+                const response = await gapi.client.drive.files.list({
+                    'q': `name contains 'PI-WDR N°' and mimeType='application/pdf'`,
+                    'orderBy': 'modifiedTime desc',
+                    'pageSize': 100,
+                    'fields': 'files(name)'
+                });
 
-                // Cargar todas las imágenes antes de generar el PDF
-                Promise.all(Array.from(images).map(img => loadImage(img)))
-                    .then(() => {
-                        const container = document.createElement('div');
-                        container.innerHTML = tempDiv.innerHTML;
-                        
-                        const opt = {
-                            margin: [10, 10, 10, 10], // Márgenes en milímetros
-                            filename: 'documento.pdf',
-                            image: { type: 'jpeg', quality: 0.98 },
-                            html2canvas: {
-                                scale: 2, // Aumenta la escala para mejorar la calidad
-                                useCORS: true,
-                                allowTaint: true
-                            },
-                            jsPDF: {
-                                unit: 'mm',
-                                format: 'a4',
-                                orientation: 'portrait'
+                const files = response.result.files;
+                let maxNumber = 1399;
+
+                if (files && files.length > 0) {
+                    files.forEach(file => {
+                        const match = file.name.match(/PI-WDR N° (\d{6})/);
+                        if (match) {
+                            const fileNumber = parseInt(match[1], 10);
+                            if (fileNumber > maxNumber) {
+                                maxNumber = fileNumber;
                             }
-                        };
+                        }
+                    });
+                    console.log('Número más alto encontrado:', maxNumber);
+                }
+                return maxNumber;
+            } catch (error) {
+                console.error('Error al obtener el último número:', error);
+                return 1399;
+            }
+        }
 
-                        html2pdf().from(container).set(opt).outputPdf('blob').then(blob => {
-                            // Continuar con el código existente para subir el PDF
-                            const parentFolder = localStorage.getItem('parent_folder');
-                            var twoWords = content.split(' ').slice(0, 2).join('-');
-                            var metadata = {
-                                name: twoWords + '-' + Math.floor(Math.random() * 10000) + '.pdf',
-                                mimeType: 'application/pdf',
-                                parents: [parentFolder]
+        async function upload() {
+            try {
+                const lastNumber = await getLastSequentialNumber();
+                const newNumber = lastNumber + 1;
+                const formattedNumber = newNumber.toString().padStart(6, '0');
+                console.log('Nuevo número a usar:', formattedNumber);
+
+                const checkResponse = await gapi.client.drive.files.list({
+                    'q': `name = 'PI-WDR N° ${formattedNumber}.pdf'`,
+                    'fields': 'files(id, name)'
+                });
+
+                if (checkResponse.result.files && checkResponse.result.files.length > 0) {
+                    throw new Error(`Ya existe un archivo con el número ${formattedNumber}`);
+                }
+
+                updateTemplateWithNumber(formattedNumber);
+
+                const content = tinymce.get('editor').getContent();
+                if (content != "") {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = content;
+                    const images = tempDiv.getElementsByTagName('img');
+                    
+                    const loadImage = (imgElement) => {
+                        return new Promise((resolve, reject) => {
+                            if (imgElement.src.startsWith('data:')) {
+                                resolve(imgElement);
+                                return;
+                            }
+
+                            const img = new Image();
+                            img.crossOrigin = 'Anonymous';
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                canvas.width = this.width;
+                                canvas.height = this.height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(this, 0, 0);
+                                imgElement.src = canvas.toDataURL('image/png');
+                                resolve(imgElement);
+                            };
+                            img.onerror = reject;
+                            img.src = imgElement.src;
+                        });
+                    };
+
+                    Promise.all(Array.from(images).map(img => loadImage(img)))
+                        .then(() => {
+                            const container = document.createElement('div');
+                            container.innerHTML = tempDiv.innerHTML;
+                            
+                            const opt = {
+                                margin: [10, 10, 10, 10],
+                                filename: 'documento.pdf',
+                                image: { type: 'jpeg', quality: 0.98 },
+                                html2canvas: {
+                                    scale: 2,
+                                    useCORS: true,
+                                    allowTaint: true
+                                },
+                                jsPDF: {
+                                    unit: 'mm',
+                                    format: 'a4',
+                                    orientation: 'portrait'
+                                }
                             };
 
-                            var formData = new FormData();
-                            formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-                            formData.append("file", blob);
+                            html2pdf().from(container).set(opt).outputPdf('blob').then(blob => {
+                                const parentFolder = localStorage.getItem('parent_folder');
+                                var twoWords = content.split(' ').slice(0, 2).join('-');
+                                var metadata = {
+                                    name: `PI-WDR N° ${formattedNumber}.pdf`,
+                                    mimeType: 'application/pdf',
+                                    parents: [parentFolder]
+                                };
+                                console.log('Creando archivo:', metadata.name);
 
-                            fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
-                                method: 'POST',
-                                headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
-                                body: formData
-                            }).then(function (response) {
-                                if (!response.ok) {
-                                    throw new Error('Error en la respuesta del servidor');
-                                }
-                                return response.json();
-                            }).then(function (value) {
-                                console.log('Archivo subido:', value);
-                                showList();
-                                showModal();
-                                const fileId = value.id;
-                                const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
-                                localStorage.setItem('file_link', fileLink);
+                                var formData = new FormData();
+                                formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+                                formData.append("file", blob);
+
+                                fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+                                    method: 'POST',
+                                    headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
+                                    body: formData
+                                }).then(function (response) {
+                                    if (!response.ok) {
+                                        throw new Error('Error en la respuesta del servidor');
+                                    }
+                                    return response.json();
+                                }).then(function (value) {
+                                    console.log('Archivo subido:', value);
+                                    showList();
+                                    showModal();
+                                    const fileId = value.id;
+                                    const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+                                    localStorage.setItem('file_link', fileLink);
+                                }).catch(error => {
+                                    console.error('Error al subir:', error);
+                                    alert('Error al subir el archivo: ' + error.message);
+                                });
                             }).catch(error => {
-                                console.error('Error al subir:', error);
-                                alert('Error al subir el archivo: ' + error.message);
+                                console.error('Error al generar PDF:', error);
+                                alert('Error al generar el PDF: ' + error.message);
+                                document.body.removeChild(container);
                             });
-                        }).catch(error => {
-                            console.error('Error al generar PDF:', error);
-                            alert('Error al generar el PDF: ' + error.message);
-                            document.body.removeChild(container);
+                        })
+                        .catch(error => {
+                            console.error('Error al cargar las imágenes:', error);
+                            alert('Error al cargar las imágenes. Por favor, intente nuevamente.');
                         });
-                    })
-                    .catch(error => {
-                        console.error('Error al cargar las imágenes:', error);
-                        alert('Error al cargar las imágenes. Por favor, intente nuevamente.');
-                    });
-            } else {
-                alert('Por favor, ingrese algún texto antes de crear el PDF');
+                } else {
+                    alert('Por favor, ingrese algún texto antes de crear el PDF');
+                }
+                menuItems.classList.remove('active');
+            } catch (error) {
+                console.error('Error en upload:', error);
+                alert('Error al procesar el archivo: ' + error.message);
             }
-            menuItems.classList.remove('active');
         }
         function createFolder() {
             var access_token = gapi.auth.getToken().access_token;
@@ -1348,6 +1399,15 @@
             }
             // Abrir el PDF en una nueva ventana o pestaña para firmarlo
             window.open(fileLink, '_blank');
+        }
+
+        // Función para actualizar el número en la plantilla
+        function updateTemplateWithNumber(formattedNumber) {
+            const editor = tinymce.get('editor');
+            const content = editor.getContent();
+            // Busca específicamente el patrón "PI-WDR N°" seguido de cualquier número
+            const updatedContent = content.replace(/PI-WDR N° \d+/, `PI-WDR N° ${formattedNumber}`);
+            editor.setContent(updatedContent);
         }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
