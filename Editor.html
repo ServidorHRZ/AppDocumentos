@@ -1226,10 +1226,14 @@
                 return;
             }
 
+            // Obtener el nombre del archivo del enlace
+            const fileName = fileLink.split('/')[5]; // Obtiene el ID del archivo
+            
+            // Crear el código QR
             const qr = new QRious({
                 value: fileLink,
                 size: 300,
-                level: 'H', // Alta corrección de errores
+                level: 'H',
                 background: '#ffffff',
                 foreground: '#000000',
                 padding: 0
@@ -1308,11 +1312,30 @@
 
             // Botón de descarga
             const downloadButton = createButton('Descargar QR', 'download');
-            downloadButton.onclick = () => {
-                const link = document.createElement('a');
-                link.href = qr.toDataURL();
-                link.download = 'codigo_qr.png';
-                link.click();
+            downloadButton.onclick = async () => {
+                try {
+                    // Obtener el nombre del archivo actual
+                    const response = await gapi.client.drive.files.get({
+                        fileId: fileName,
+                        fields: 'name'
+                    });
+                    
+                    // Obtener el nombre del archivo PDF y convertirlo para el QR
+                    const pdfName = response.result.name;
+                    const qrName = pdfName.replace('.pdf', '_QR.png');
+                    
+                    const link = document.createElement('a');
+                    link.href = qr.toDataURL();
+                    link.download = qrName;
+                    link.click();
+                } catch (error) {
+                    console.error('Error al obtener el nombre del archivo:', error);
+                    // Fallback a un nombre genérico si hay error
+                    const link = document.createElement('a');
+                    link.href = qr.toDataURL();
+                    link.download = 'codigo_qr.png';
+                    link.click();
+                }
             };
 
             // Botón de compartir
