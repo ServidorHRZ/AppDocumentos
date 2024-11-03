@@ -1185,6 +1185,27 @@
         </div>
     </div>
 
+    <!-- Agregar después de los otros modales y antes del cierre del body -->
+    <div id="authRequiredModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="material-icons" style="color: #f44336;">lock</i>
+            </div>
+            <h3>Autenticación Requerida</h3>
+            <p>Por favor, inicie sesión con su cuenta de Google para continuar.</p>
+            <div class="modal-buttons">
+                <button class="modal-button" onclick="handleAuthClick()">
+                    <i class="material-icons">login</i>
+                    Iniciar Sesión
+                </button>
+                <button class="modal-button secondary" onclick="closeAuthModal()">
+                    <i class="material-icons">close</i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         window.onload = () => {
             gapiLoaded();
@@ -1239,6 +1260,7 @@
                 }
                 signinButton.style.display = 'none'
                 signoutButton.style.display = 'block'
+                closeAuthModal();
                 checkFolder()
             };
 
@@ -1319,6 +1341,7 @@
         }
 
         async function upload() {
+            if (!checkAuth()) return;
             try {
                 const lastNumber = await getLastSequentialNumber();
                 const newNumber = lastNumber + 1;
@@ -1901,6 +1924,7 @@
         }
 
         async function showLastFile() {
+            if (!checkAuth()) return;
             try {
                 const response = await gapi.client.drive.files.list({
                     'q': `name contains 'PI-WDR N°' and mimeType='application/pdf'`,
@@ -1936,11 +1960,8 @@
         }
 
         function refreshTemplates() {
-            if (!gapi.client) {
-                console.error('Cliente de Google API no inicializado');
-                return;
-            }
-
+            if (!checkAuth()) return;
+            
             const templatesGrid = document.getElementById('templatesGrid');
             templatesGrid.innerHTML = '<div class="loading">Cargando plantillas...</div>';
 
@@ -1995,6 +2016,18 @@
         function editTemplate(fileId) {
             // Implementar la lógica de edición según tus necesidades
             console.log('Editar template:', fileId);
+        }
+
+        function checkAuth() {
+            if (!gapi.client.getToken()) {
+                document.getElementById('authRequiredModal').style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authRequiredModal').style.display = 'none';
         }
 
         // Cargar las plantillas cuando se inicie sesión
