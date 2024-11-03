@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backup To Google Drive</title>
+    <title>Editor</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/ywbzzvyu26op1frn4o3f113gdet6duthjlcauk206k77n7af/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
@@ -627,7 +627,7 @@
     <div class="header">
         <div class="title">
             <i class="material-icons">edit_document</i>
-            Editor
+            Editor WDR
         </div>
         <div class="header-actions">
             <button class="reset-template" onclick="resetTemplate()">
@@ -717,6 +717,26 @@
         </div>
     </div>
 
+    <div id="authRequiredModal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="material-icons" style="color: #f44336;">lock</i>
+            </div>
+            <h3>Autenticación Requerida</h3>
+            <p>Por favor, inicie sesión con su cuenta de Google para continuar.</p>
+            <div class="modal-buttons">
+                <button class="modal-button" onclick="handleAuthClick()">
+                    <i class="material-icons">login</i>
+                    Iniciar Sesión
+                </button>
+                <button class="modal-button secondary" onclick="closeAuthModal()">
+                    <i class="material-icons">close</i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         window.onload = () => {
             gapiLoaded();
@@ -769,9 +789,10 @@
                 if (resp.error !== undefined) {
                     throw (resp);
                 }
-                signinButton.style.display = 'none'
-                signoutButton.style.display = 'block'
-                checkFolder()
+                signinButton.style.display = 'none';
+                signoutButton.style.display = 'block';
+                closeAuthModal();
+                checkFolder();
             };
 
             if (gapi.client.getToken() === null) {
@@ -787,9 +808,10 @@
             if (token !== null) {
                 google.accounts.oauth2.revoke(token.access_token);
                 gapi.client.setToken('');
-                signinButton.style.display = 'block'
-                signoutButton.style.display = 'none'
+                signinButton.style.display = 'block';
+                signoutButton.style.display = 'none';
                 toggleMenu();
+                alert('Sesión cerrada exitosamente');
             }
         }
 
@@ -851,6 +873,7 @@
         }
 
         async function upload() {
+            if (!checkAuth()) return;
             try {
                 const lastNumber = await getLastSequentialNumber();
                 const newNumber = lastNumber + 1;
@@ -1432,6 +1455,7 @@
         }
 
         async function showLastFile() {
+            if (!checkAuth()) return;
             try {
                 const response = await gapi.client.drive.files.list({
                     'q': `name contains 'PI-WDR N°' and mimeType='application/pdf'`,
@@ -1464,6 +1488,18 @@
 
         function closeLastFileModal() {
             document.getElementById('lastFileModal').style.display = 'none';
+        }
+
+        function checkAuth(action) {
+            if (!gapi.client.getToken()) {
+                document.getElementById('authRequiredModal').style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authRequiredModal').style.display = 'none';
         }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
