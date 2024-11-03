@@ -1006,6 +1006,43 @@
                 height: 34px !important;
             }
         }
+
+        /* Ajustes para el contenedor principal del editor */
+        .actions {
+            position: relative;
+            margin-top: calc(var(--header-height) + var(--templates-height));
+            height: calc(100vh - (var(--header-height) + var(--templates-height)));
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        #editor {
+            height: 100% !important;
+            width: 100% !important;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilos específicos para TinyMCE */
+        .tox.tox-tinymce {
+            border: 1px solid #e0e0e0 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+        }
+
+        .tox .tox-editor-container {
+            background: #fff;
+        }
+
+        /* Ajustes para la barra de herramientas */
+        .tox .tox-toolbar__primary {
+            background: #f8f9fa !important;
+            border-bottom: 1px solid #e0e0e0 !important;
+            padding: 4px !important;
+            gap: 4px !important;
+        }
     </style>
 </head>
 
