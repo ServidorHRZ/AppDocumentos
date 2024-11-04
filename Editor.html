@@ -873,6 +873,7 @@
         }
 
         async function upload() {
+            
             if (!checkAuth()) return;
             try {
                 const lastNumber = await getLastSequentialNumber();
@@ -880,6 +881,9 @@
                 const formattedNumber = newNumber.toString().padStart(6, '0');
                 console.log('Nuevo número a usar:', formattedNumber);
 
+                // Verificar/crear carpeta Borradores
+                let draftsFolderId = await checkDraftsFolder();
+                
                 const checkResponse = await gapi.client.drive.files.list({
                     'q': `name = 'PI-WDR N° ${formattedNumber}.pdf'`,
                     'fields': 'files(id, name)'
@@ -893,6 +897,9 @@
 
                 const content = tinymce.get('editor').getContent();
                 if (content != "") {
+                    // Guardar versión HTML
+                    await saveHTMLVersion(content, formattedNumber, draftsFolderId);
+
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = content;
                     const images = tempDiv.getElementsByTagName('img');
@@ -994,6 +1001,66 @@
                 alert('Error al procesar el archivo: ' + error.message);
             }
         }
+
+        // Función para verificar/crear carpeta Borradores
+        async function checkDraftsFolder() {
+            try {
+                const response = await gapi.client.drive.files.list({
+                    'q': "name = 'Borradores' and mimeType = 'application/vnd.google-apps.folder'",
+                    'fields': 'files(id)'
+                });
+
+                if (response.result.files && response.result.files.length > 0) {
+                    return response.result.files[0].id;
+                } else {
+                    const folderMetadata = {
+                        'name': 'Borradores',
+                        'mimeType': 'application/vnd.google-apps.folder',
+                        'parents': [localStorage.getItem('parent_folder')]
+                    };
+
+                    const folder = await gapi.client.drive.files.create({
+                        resource: folderMetadata,
+                        fields: 'id'
+                    });
+
+                    return folder.result.id;
+                }
+            } catch (error) {
+                console.error('Error al verificar/crear carpeta Borradores:', error);
+                throw error;
+            }
+        }
+
+        // Función para guardar versión HTML
+        async function saveHTMLVersion(content, formattedNumber, draftsFolderId) {
+            try {
+                const metadata = {
+                    'name': `PI-WDR N° ${formattedNumber}.html`,
+                    'mimeType': 'text/html',
+                    'parents': [draftsFolderId]
+                };
+
+                const file = new Blob([content], {type: 'text/html'});
+                const form = new FormData();
+                form.append('metadata', new Blob([JSON.stringify(metadata)], {type: 'application/json'}));
+                form.append('file', file);
+
+                await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Authorization': 'Bearer ' + gapi.auth.getToken().access_token
+                    }),
+                    body: form
+                });
+
+                console.log('Versión HTML guardada exitosamente');
+            } catch (error) {
+                console.error('Error al guardar versión HTML:', error);
+                throw error;
+            }
+        }
+
         function createFolder() {
             var access_token = gapi.auth.getToken().access_token;
             var request = gapi.client.request({

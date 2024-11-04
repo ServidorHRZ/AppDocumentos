@@ -687,6 +687,16 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .template-action-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-action-btn i {
+            font-size: 20px;
+        }
+
         .templates-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1027,7 +1037,7 @@
         /* Ajustes para el contenedor principal del editor */
         .actions {
             position: fixed;
-            top: calc(var(--header-height) + var(--templates-height) + 20px);
+            top: calc(var(--header-height) + var(--templates-height) + 20px;
             left: 0;
             right: 0;
             bottom: 0;
@@ -1095,13 +1105,9 @@
                     <i class="material-icons">arrow_back</i>
                     Regresar
                 </div>
-                <div class="menu-item" onclick="showLastFile()">
-                    <i class="material-icons">description</i>
-                    Último PI-WDR
-                </div>
-                <div class="menu-item" onclick="upload()">
-                    <i class="material-icons">backup</i>
-                    Guardar en Drive
+                <div class="menu-item" onclick="saveChangesAndCreatePDF()">
+                    <i class="material-icons">save</i>
+                    Guardar Cambios
                 </div>
             </div>
         </div>
@@ -1261,7 +1267,8 @@
                 signinButton.style.display = 'none'
                 signoutButton.style.display = 'block'
                 closeAuthModal();
-                checkFolder()
+                await checkFolder();
+                refreshTemplates();
             };
 
             if (gapi.client.getToken() === null) {
@@ -1286,7 +1293,7 @@
         // check for a Backup Folder in google drive
         function checkFolder() {
             gapi.client.drive.files.list({
-                'q': 'name = "Documentos PDF"',
+                'q': 'name = "Borradores"',
             }).then(function (response) {
                 var files = response.result.files;
                 if (files && files.length > 0) {
@@ -1305,7 +1312,7 @@
         }
 
         function padNumber(number) {
-            // Asegura que el número tenga exactamente 6 dígitos
+            // Asegura que el número tenga exactamente 6 dgits
             return number.toString().padStart(6, '0');
         }
 
@@ -1342,125 +1349,40 @@
 
         async function upload() {
             if (!checkAuth()) return;
-            try {
-                const lastNumber = await getLastSequentialNumber();
-                const newNumber = lastNumber + 1;
-                const formattedNumber = newNumber.toString().padStart(6, '0');
-                console.log('Nuevo número a usar:', formattedNumber);
-
-                const checkResponse = await gapi.client.drive.files.list({
-                    'q': `name = 'PI-WDR N° ${formattedNumber}.pdf'`,
-                    'fields': 'files(id, name)'
-                });
-
-                if (checkResponse.result.files && checkResponse.result.files.length > 0) {
-                    throw new Error(`Ya existe un archivo con el número ${formattedNumber}`);
-                }
-
-                updateTemplateWithNumber(formattedNumber);
-
-                const content = tinymce.get('editor').getContent();
-                if (content != "") {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = content;
-                    const images = tempDiv.getElementsByTagName('img');
-                    
-                    const loadImage = (imgElement) => {
-                        return new Promise((resolve, reject) => {
-                            if (imgElement.src.startsWith('data:')) {
-                                resolve(imgElement);
-                                return;
-                            }
-
-                            const img = new Image();
-                            img.crossOrigin = 'Anonymous';
-                            img.onload = function() {
-                                const canvas = document.createElement('canvas');
-                                canvas.width = this.width;
-                                canvas.height = this.height;
-                                const ctx = canvas.getContext('2d');
-                                ctx.drawImage(this, 0, 0);
-                                imgElement.src = canvas.toDataURL('image/png');
-                                resolve(imgElement);
-                            };
-                            img.onerror = reject;
-                            img.src = imgElement.src;
-                        });
-                    };
-
-                    Promise.all(Array.from(images).map(img => loadImage(img)))
-                        .then(() => {
-                            const container = document.createElement('div');
-                            container.innerHTML = tempDiv.innerHTML;
-                            
-                            const opt = {
-                                margin: [10, 10, 10, 10],
-                                filename: 'documento.pdf',
-                                image: { type: 'jpeg', quality: 0.98 },
-                                html2canvas: {
-                                    scale: 2,
-                                    useCORS: true,
-                                    allowTaint: true
-                                },
-                                jsPDF: {
-                                    unit: 'mm',
-                                    format: 'a4',
-                                    orientation: 'portrait'
-                                }
-                            };
-
-                            html2pdf().from(container).set(opt).outputPdf('blob').then(blob => {
-                                const parentFolder = localStorage.getItem('parent_folder');
-                                var twoWords = content.split(' ').slice(0, 2).join('-');
-                                var metadata = {
-                                    name: `PI-WDR N° ${formattedNumber}.pdf`,
-                                    mimeType: 'application/pdf',
-                                    parents: [parentFolder]
-                                };
-                                console.log('Creando archivo:', metadata.name);
-
-                                var formData = new FormData();
-                                formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-                                formData.append("file", blob);
-
-                                fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
-                                    method: 'POST',
-                                    headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
-                                    body: formData
-                                }).then(function (response) {
-                                    if (!response.ok) {
-                                        throw new Error('Error en la respuesta del servidor');
-                                    }
-                                    return response.json();
-                                }).then(function (value) {
-                                    console.log('Archivo subido:', value);
-                                    showList();
-                                    showModal();
-                                    const fileId = value.id;
-                                    const fileLink = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
-                                    localStorage.setItem('file_link', fileLink);
-                                }).catch(error => {
-                                    console.error('Error al subir:', error);
-                                    alert('Error al subir el archivo: ' + error.message);
-                                });
-                            }).catch(error => {
-                                console.error('Error al generar PDF:', error);
-                                alert('Error al generar el PDF: ' + error.message);
-                                document.body.removeChild(container);
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error al cargar las imágenes:', error);
-                            alert('Error al cargar las imágenes. Por favor, intente nuevamente.');
-                        });
-                } else {
-                    alert('Por favor, ingrese algún texto antes de crear el PDF');
-                }
-                menuItems.classList.remove('active');
-            } catch (error) {
-                console.error('Error en upload:', error);
-                alert('Error al procesar el archivo: ' + error.message);
+            
+            const content = tinymce.get('editor').getContent();
+            if (content === "") {
+                alert('Por favor, ingrese algún contenido antes de guardar');
+                return;
             }
+
+            const parentFolder = localStorage.getItem('parent_folder');
+            const metadata = {
+                name: `plantilla_${new Date().getTime()}.html`, // Nombre con timestamp
+                mimeType: 'text/html',
+                parents: [parentFolder]
+            };
+
+            const blob = new Blob([content], { type: 'text/html' });
+            const form = new FormData();
+            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+            form.append('file', blob);
+
+            fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+                method: 'POST',
+                headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
+                body: form
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Archivo guardado:', result);
+                refreshTemplates();
+                showModal();
+            })
+            .catch(error => {
+                console.error('Error al guardar:', error);
+                alert('Error al guardar el archivo: ' + error.message);
+            });
         }
         function createFolder() {
             var access_token = gapi.auth.getToken().access_token;
@@ -1472,7 +1394,7 @@
                     'Authorization': 'Bearer ' + access_token,
                 },
                 'body': {
-                    'title': 'Documentos PDF',
+                    'title': 'Borradores',
                     'mimeType': 'application/vnd.google-apps.folder'
                 }
             });
@@ -1965,57 +1887,125 @@
             const templatesGrid = document.getElementById('templatesGrid');
             templatesGrid.innerHTML = '<div class="loading">Cargando plantillas...</div>';
 
-            gapi.client.drive.files.list({
-                q: "mimeType='application/pdf' and name contains 'PI-WDR'",
-                orderBy: 'modifiedTime desc',
-                pageSize: 15,
-                fields: 'files(id, name, modifiedTime)'
-            }).then(function(response) {
-                const files = response.result.files;
-                templatesGrid.innerHTML = '';
+            // Obtener el ID de la carpeta Borradores
+            const parentFolder = localStorage.getItem('parent_folder');
+            
+            if (!parentFolder) {
+                console.error('No se encontró el ID de la carpeta Borradores');
+                checkFolder();
+                return;
+            }
 
-                if (files && files.length > 0) {
-                    files.forEach(file => {
-                        const modifiedDate = new Date(file.modifiedTime).toLocaleDateString();
-                        const fileName = file.name.replace(/\.pdf$/, '');
-                        const templateCard = document.createElement('div');
-                        templateCard.className = 'template-card';
-                        templateCard.innerHTML = `
-                            <div class="template-card-header">
-                                <i class="material-icons">description</i>
-                                <div>
-                                    <h3 class="template-card-title">${fileName}</h3>
-                                    <p class="template-card-date">${modifiedDate}</p>
+            // Consulta más simple y directa
+            const query = {
+                q: `'${parentFolder}' in parents and mimeType contains 'html'`,
+                orderBy: 'modifiedTime desc',
+                pageSize: 100,
+                fields: 'files(id, name, modifiedTime, mimeType)',
+                spaces: 'drive',
+                includeItemsFromAllDrives: true,
+                supportsAllDrives: true
+            };
+
+            // Realizar la consulta
+            gapi.client.drive.files.list(query)
+                .then(function(response) {
+                    console.log('Respuesta de la API:', response); // Para depuración
+                    const files = response.result.files;
+                    templatesGrid.innerHTML = '';
+
+                    if (files && files.length > 0) {
+                        console.log('Archivos encontrados:', files.length); // Para depuración
+                        files.forEach(file => {
+                            console.log('Procesando archivo:', file); // Para depuración
+                            const modifiedDate = new Date(file.modifiedTime).toLocaleDateString();
+                            const fileName = file.name;
+                            const templateCard = document.createElement('div');
+                            templateCard.className = 'template-card';
+                            templateCard.innerHTML = `
+                                <div class="template-card-header">
+                                    <i class="material-icons">description</i>
+                                    <div>
+                                        <h3 class="template-card-title">${fileName}</h3>
+                                        <p class="template-card-date">${modifiedDate}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="template-card-actions">
-                                <button class="template-action" onclick="viewTemplate('${file.id}')" title="Ver">
-                                    <i class="material-icons">visibility</i>
-                                </button>
-                                <button class="template-action" onclick="editTemplate('${file.id}')" title="Editar">
-                                    <i class="material-icons">edit</i>
-                                </button>
-                            </div>
-                        `;
-                        templatesGrid.appendChild(templateCard);
-                    });
-                } else {
-                    templatesGrid.innerHTML = '<div class="no-templates">No se encontraron plantillas</div>';
-                }
-            }).catch(function(error) {
-                console.error('Error al cargar las plantillas:', error);
-                templatesGrid.innerHTML = '<div class="error">Error al cargar las plantillas</div>';
+                                <div class="template-card-actions">
+                                    <button class="template-action" onclick="viewTemplate('${file.id}')" title="Ver">
+                                        <i class="material-icons">visibility</i>
+                                    </button>
+                                    <button class="template-action" onclick="editTemplate('${file.id}')" title="Editar">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button class="template-action" onclick="deleteTemplate('${file.id}')" title="Eliminar">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                </div>
+                            `;
+                            templatesGrid.appendChild(templateCard);
+                        });
+                    } else {
+                        console.log('No se encontraron archivos en la carpeta:', parentFolder); // Para depuración
+                        templatesGrid.innerHTML = '<div class="no-templates">No se encontraron plantillas HTML en la carpeta Borradores</div>';
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error completo:', error); // Para depuración
+                    templatesGrid.innerHTML = '<div class="error">Error al cargar las plantillas: ' + error.message + '</div>';
+                });
+        }
+
+        // Función para ver el archivo HTML
+        function viewTemplate(fileId) {
+            gapi.client.drive.files.get({
+                fileId: fileId,
+                alt: 'media'
+            }).then(function(response) {
+                // Crear una nueva ventana con el contenido HTML
+                const newWindow = window.open();
+                newWindow.document.write(response.body);
+            }).catch(error => {
+                console.error('Error al ver el archivo:', error);
+                alert('Error al abrir el archivo HTML');
             });
         }
 
-        function viewTemplate(fileId) {
-            const url = `https://drive.google.com/file/d/${fileId}/view`;
-            window.open(url, '_blank');
+        // Función para editar el archivo HTML
+        function editTemplate(fileId) {
+            gapi.client.drive.files.get({
+                fileId: fileId,
+                fields: 'name'  // Obtener el nombre del archivo
+            }).then(function(nameResponse) {
+                const fileName = nameResponse.result.name;
+                localStorage.setItem('current_file_id', fileId);
+                localStorage.setItem('current_file_name', fileName); // Guardar el nombre del archivo
+
+                // Ahora obtener el contenido
+                return gapi.client.drive.files.get({
+                    fileId: fileId,
+                    alt: 'media'
+                });
+            }).then(function(contentResponse) {
+                tinymce.get('editor').setContent(contentResponse.body);
+            }).catch(error => {
+                console.error('Error al cargar el archivo:', error);
+                alert('Error al cargar el archivo para edición');
+            });
         }
 
-        function editTemplate(fileId) {
-            // Implementar la lógica de edición según tus necesidades
-            console.log('Editar template:', fileId);
+        // Función para eliminar el archivo HTML
+        function deleteTemplate(fileId) {
+            if (confirm('¿Está seguro de que desea eliminar esta plantilla?')) {
+                gapi.client.drive.files.delete({
+                    fileId: fileId
+                }).then(function() {
+                    refreshTemplates(); // Actualizar la lista después de eliminar
+                    alert('Plantilla eliminada correctamente');
+                }).catch(error => {
+                    console.error('Error al eliminar el archivo:', error);
+                    alert('Error al eliminar la plantilla');
+                });
+            }
         }
 
         function checkAuth() {
@@ -2036,6 +2026,167 @@
                 refreshTemplates();
             }
         });
+
+        async function saveChangesAndCreatePDF() {
+            if (!checkAuth()) return;
+
+            try {
+                // 1. Guardar cambios en el archivo HTML original
+                const htmlResult = await saveHTMLChanges();
+                console.log('Resultado guardado HTML:', htmlResult); // Para depuración
+
+                // 2. Crear y guardar versión PDF
+                const pdfResult = await createAndSavePDF();
+                console.log('Resultado guardado PDF:', pdfResult); // Para depuración
+
+                // 3. Esperar un momento y luego actualizar la lista
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Aumentado a 2 segundos
+                
+                // 4. Forzar una recarga de la carpeta
+                await checkFolder();
+                
+                // 5. Actualizar la lista de plantillas
+                refreshTemplates();
+
+                // 6. Mostrar mensaje de éxito
+                alert('Cambios guardados exitosamente en HTML y PDF');
+            } catch (error) {
+                console.error('Error en el proceso de guardado:', error);
+                alert('Error al guardar los cambios: ' + error.message);
+            }
+        }
+
+        async function saveHTMLChanges() {
+            const content = tinymce.get('editor').getContent();
+            const fileId = localStorage.getItem('current_file_id');
+            const fileName = localStorage.getItem('current_file_name');
+
+            if (!fileId) {
+                throw new Error('No hay un archivo HTML activo para guardar');
+            }
+
+            const metadata = {
+                name: fileName,
+                mimeType: 'text/html'
+            };
+
+            const blob = new Blob([content], { type: 'text/html' });
+            const form = new FormData();
+            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+            form.append('file', blob);
+
+            return fetch(`https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart`, {
+                method: 'PATCH',
+                headers: new Headers({ 
+                    "Authorization": "Bearer " + gapi.auth.getToken().access_token
+                }),
+                body: form
+            }).then(response => response.json());
+        }
+
+        async function createAndSavePDF() {
+            const content = tinymce.get('editor').getContent();
+            const fileName = getCurrentFileName();
+
+            // Buscar la carpeta "Documentos PDF"
+            const pdfFolderId = await findOrCreatePDFFolder();
+
+            // Verificar si existe un PDF con el mismo nombre y eliminarlo
+            await deleteExistingPDF(fileName, pdfFolderId);
+
+            // Crear el nuevo PDF
+            const pdfBlob = await html2pdf().from(content).outputPdf('blob');
+
+            // Guardar el nuevo PDF con el mismo nombre base pero extensión .pdf
+            const metadata = {
+                name: `${fileName}.pdf`,  // Usar el mismo nombre base con extensión .pdf
+                mimeType: 'application/pdf',
+                parents: [pdfFolderId]
+            };
+
+            const form = new FormData();
+            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+            form.append('file', pdfBlob);
+
+            return fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+                method: 'POST',
+                headers: new Headers({ "Authorization": "Bearer " + gapi.auth.getToken().access_token }),
+                body: form
+            }).then(response => response.json());
+        }
+
+        async function findOrCreatePDFFolder() {
+            // Buscar la carpeta "Documentos PDF"
+            const response = await gapi.client.drive.files.list({
+                q: "name='Documentos PDF' and mimeType='application/vnd.google-apps.folder'",
+                fields: 'files(id)'
+            });
+
+            if (response.result.files.length > 0) {
+                return response.result.files[0].id;
+            }
+
+            // Si no existe, crear la carpeta
+            const fileMetadata = {
+                name: 'Documentos PDF',
+                mimeType: 'application/vnd.google-apps.folder'
+            };
+
+            const folder = await gapi.client.drive.files.create({
+                resource: fileMetadata,
+                fields: 'id'
+            });
+
+            return folder.result.id;
+        }
+
+        async function deleteExistingPDF(fileName, folderId) {
+            const response = await gapi.client.drive.files.list({
+                q: `name='${fileName}.pdf' and '${folderId}' in parents`,
+                fields: 'files(id)'
+            });
+
+            if (response.result.files.length > 0) {
+                await gapi.client.drive.files.delete({
+                    fileId: response.result.files[0].id
+                });
+            }
+        }
+
+        function getCurrentFileName() {
+            const fileName = localStorage.getItem('current_file_name');
+            if (fileName) {
+                // Remover la extensión .html si existe
+                return fileName.replace(/\.html$/, '');
+            }
+            // Fallback por si no hay nombre guardado
+            const content = tinymce.get('editor').getContent();
+            const match = content.match(/PI-WDR N° \d+/);
+            return match ? match[0] : `PI-WDR N° ${new Date().getTime()}`;
+        }
+
+        // Agregar una función para verificar el estado de la carpeta
+        async function checkFolder() {
+            try {
+                const response = await gapi.client.drive.files.list({
+                    q: "name = 'Borradores' and mimeType = 'application/vnd.google-apps.folder'",
+                    fields: 'files(id, name)'
+                });
+
+                const files = response.result.files;
+                if (files && files.length > 0) {
+                    localStorage.setItem('parent_folder', files[0].id);
+                    console.log('ID de carpeta actualizado:', files[0].id);
+                    return files[0].id;
+                } else {
+                    console.log('Carpeta no encontrada, creando nueva...');
+                    return await createFolder();
+                }
+            } catch (error) {
+                console.error('Error en checkFolder:', error);
+                throw error;
+            }
+        }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
     <script async defer src="https://accounts.google.com/gsi/client"></script>
