@@ -542,12 +542,11 @@
             }
             
             .wcpage {
-                width: 21cm;
-                min-height: 29.7cm;
-                padding: 2cm;
-                margin: 0 auto;
-                background: white;
+                width: 612pt;
+                height: 936pt;
                 position: relative;
+                background-color: white;
+                margin: 0 auto;
                 page-break-after: always;
             }
             
@@ -590,7 +589,7 @@
 
         /* Estilos específicos para la generación del PDF */
         @page {
-            size: A4;
+            size: legal;
             margin: 0;
         }
 
@@ -2104,19 +2103,35 @@
         async function createAndSavePDF() {
             const content = tinymce.get('editor').getContent();
             const fileName = getCurrentFileName();
-
-            // Buscar la carpeta "Documentos PDF"
             const pdfFolderId = await findOrCreatePDFFolder();
-
-            // Verificar si existe un PDF con el mismo nombre y eliminarlo
             await deleteExistingPDF(fileName, pdfFolderId);
 
-            // Crear el nuevo PDF
-            const pdfBlob = await html2pdf().from(content).outputPdf('blob');
+            // Configurar opciones de PDF
+            const pdfOptions = {
+                margin: 0,
+                filename: `${fileName}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true
+                },
+                jsPDF: {
+                    unit: 'pt',
+                    format: 'legal', // Formato oficio
+                    orientation: 'portrait'
+                }
+            };
 
-            // Guardar el nuevo PDF con el mismo nombre base pero extensión .pdf
+            // Crear el PDF con las nuevas opciones
+            const pdfBlob = await html2pdf()
+                .from(content)
+                .set(pdfOptions)
+                .outputPdf('blob');
+
+            // Resto del código para guardar el PDF...
             const metadata = {
-                name: `${fileName}.pdf`,  // Usar el mismo nombre base con extensión .pdf
+                name: `${fileName}.pdf`,
                 mimeType: 'application/pdf',
                 parents: [pdfFolderId]
             };
